@@ -1,1 +1,78 @@
 @import "defs.scss";
+
+.user-form-container{
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .user-form{
+    box-sizing: border-box;
+    width: 420px;
+    padding-inline: 40px;
+    padding-top: 30px;
+    position: relative;
+
+    background: $blueish-dark;
+    border: 3px solid $middle-gray;
+    border-radius: 8px;
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    align-items: center;
+
+    .form-head{
+      color: $light-salmon;
+      text-align: center;
+      font-size: 2em;
+    }
+
+    .form-inputs{
+      width: 100%;
+
+      display: flex;
+      flex-direction: column;
+      row-gap: 50px;
+
+      .form-input{
+        box-sizing: border-box;
+        height: 30px;
+        width: 100%;
+
+        &.text-input{
+          padding: 0 5px;
+          background: none;
+          border: none;
+          border-bottom: 3px solid $middle-gray;
+          color: $light-gray;
+
+          &:focus{
+            outline: none !important;
+            border-bottom: 3px solid $middle-gray;
+          }
+        }
+
+        &.form-checkbox-container{
+          display: inline-flex;
+          align-items: center;
+
+          input[type="checkbox"]{
+             margin-right: 5px;
+          }
+        }
+      }
+    }
+
+    .form-subtext{
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      top: calc(100% + 10px);
+    }
+  }
+}

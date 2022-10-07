@@ -1,0 +1,14 @@
+.form-btn {
+  color: #F2C4C2;
+  text-decoration: none;
+  border: 2px solid #4F4F51;
+  background: none;
+  padding: 15px;
+  border-radius: 3px;
+}
+.form-btn.btn-bottom {
+  border-bottom: 0;
+  border-radius: 3px 3px 0 0;
+}
+
+/*# sourceMappingURL=buttons.css.map */

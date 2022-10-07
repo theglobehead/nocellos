@@ -2,5 +2,40 @@
 {% block title %}{{ _("strings.login_page") }}{% endblock %}
 
 {% block content %}
-    <h1>NOCELLOS</h1>
+    <div class="user-form-container">
+        <form class="user-form">
+            <div class="form-head">{{ _("strings.login") }}</div>
+            <div class="form-inputs">
+                <input
+                        name="email"
+                        class="form-input text-input"
+                        placeholder="{{ _("strings.email") }}"
+                        type="email"
+                        pattern=""
+                        required
+                >
+                <input
+                        name="password"
+                        class="form-input text-input"
+                        placeholder="{{ _("strings.password") }}"
+                        type="password"
+                        required
+                >
+                <div class="form-input form-checkbox-container">
+                    <input name="remember_me" type="checkbox">
+                    <div>{{ _("strings.remember_me") }}</div>
+                </div>
+            </div>
+            <button
+                    class="form-btn btn-bottom"
+                    type="submit"
+            >
+                {{ _("strings.login") }}
+            </button>
+            <div class="form-subtext">
+                {{ _("strings.no_account_yet") }}
+                <a href="#">{{ _("strings.register_here") }}</a>
+            </div>
+        </form>
+    </div>
 {% endblock %}
