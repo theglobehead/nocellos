@@ -22,6 +22,7 @@ def home():
     return redirect(url_for("login.login"))
 
 
+@app.errorhandler(Exception)
 def error_page(error):
     """
     This function is called any time a fatal error occurs
@@ -34,7 +35,7 @@ def error_page(error):
     if isinstance(error, HTTPException):
         error_code = error.code
 
-    return error_code
+    return render_template("error_page.html", error_code=error_code), error_code
 
 
 if __name__ == "__main__":

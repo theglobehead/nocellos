@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
+
+from controllers.controller_database import ControllerDatabase
 
 login_view = Blueprint("login", __name__)
 

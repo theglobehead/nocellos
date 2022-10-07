@@ -3,14 +3,17 @@
 
 {% block content %}
     <div class="user-form-container">
-        <form class="user-form">
+        <form
+                class="user-form"
+                action="{{ url_for("register.register") }}"
+                method="post"
+        >
             <div class="form-head">{{ _("strings.register") }}</div>
             <div class="form-inputs">
                 <input
                         name="username"
                         class="form-input text-input"
                         placeholder="{{ _("strings.username") }}"
-                        pattern=""
                         required
                 >
                 <input
@@ -18,7 +21,6 @@
                         class="form-input text-input"
                         placeholder="{{ _("strings.email") }}"
                         type="email"
-                        pattern=""
                         required
                 >
                 <input
