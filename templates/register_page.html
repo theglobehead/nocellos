@@ -1,11 +1,18 @@
 {% extends "base.html" %}
-{% block title %}{{ _("strings.login_page") }}{% endblock %}
+{% block title %}{{ _("strings.register_page") }}{% endblock %}
 
 {% block content %}
     <div class="user-form-container">
         <form class="user-form">
-            <div class="form-head">{{ _("strings.login") }}</div>
+            <div class="form-head">{{ _("strings.register") }}</div>
             <div class="form-inputs">
+                <input
+                        name="username"
+                        class="form-input text-input"
+                        placeholder="{{ _("strings.username") }}"
+                        pattern=""
+                        required
+                >
                 <input
                         name="email"
                         class="form-input text-input"
@@ -15,26 +22,29 @@
                         required
                 >
                 <input
-                        name="password"
+                        name="password1"
                         class="form-input text-input"
                         placeholder="{{ _("strings.password") }}"
                         type="password"
                         required
                 >
-                <div class="form-input form-checkbox-container">
-                    <input name="remember_me" type="checkbox">
-                    <div>{{ _("strings.remember_me") }}</div>
-                </div>
+                <input
+                        name="password2"
+                        class="form-input text-input"
+                        placeholder="{{ _("strings.password") }}"
+                        type="password"
+                        required
+                >
             </div>
             <button
                     class="form-btn btn-bottom"
                     type="submit"
             >
-                {{ _("strings.login") }}
+                {{ _("strings.register") }}
             </button>
             <div class="form-subtext">
-                {{ _("strings.no_account_yet") }}
-                <a href="{{ url_for("register.register") }}">{{ _("strings.register_here") }}</a>
+                {{ _("strings.have_an_account") }}
+                <a href="{{ url_for("login.login") }}">{{ _("strings.login_here") }}</a>
             </div>
         </form>
     </div>

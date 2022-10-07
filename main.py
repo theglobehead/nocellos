@@ -1,8 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from flask_babel import Babel
 from loguru import logger
 from werkzeug.exceptions import HTTPException
 
+from web.login_page import login_view
+from web.register_page import register_view
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "8f42a73054b1749h8f58848be5e6502c"
@@ -17,7 +19,7 @@ def home():
     The home view
     :return: Renders the home page
     """
-    return render_template("login_page.html")
+    return redirect(url_for("login.login"))
 
 
 def error_page(error):
@@ -37,4 +39,6 @@ def error_page(error):
 
 if __name__ == "__main__":
     logger.add("./logs/{time:YYYY-MM-DD}.log", colorize=True, rotation="00:00")
+    app.register_blueprint(login_view, url_prefix="/login")
+    app.register_blueprint(register_view, url_prefix="/register")
     app.run(debug=True)
