@@ -1,10 +1,14 @@
 from flask import Flask, render_template
+from flask_babel import Babel
 from loguru import logger
 from werkzeug.exceptions import HTTPException
 
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "8f42a73054b1749h8f58848be5e6502c"
+app.config["BABEL_DEFAULT_LOCALE"] = "en"
+
+babel = Babel(app)
 
 
 @app.route('/')

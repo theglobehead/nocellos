@@ -1,0 +1,13 @@
+@import "defs.scss";
+
+body{
+  margin: 0;
+  padding: 0;
+  
+  background-color: $blueish-dark;
+  color: $light-gray;
+
+  font-family: "Inter", monospace;
+  font-style: normal;
+  font-weight: 500;
+}
