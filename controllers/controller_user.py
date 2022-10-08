@@ -69,7 +69,7 @@ class ControllerUser:
 
             if user.hashed_password == hashed_password:
                 if remember_me:
-                    pass
+                    user.token = ControllerUser.create_token(user)
 
                 result = user
 

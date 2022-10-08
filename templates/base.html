@@ -29,6 +29,9 @@
         {% endwith %}
     </div>
     <body>
+        {% block navbar %}
+            {% include "components/navbar.html" %}
+        {% endblock %}
         {% block content %}{% endblock %}
     </body>
 </html>

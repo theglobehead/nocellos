@@ -1,18 +1,17 @@
-from flask import Blueprint, render_template, flash
-from flask_babel import gettext
+from flask import Blueprint, render_template
+
+from utils.flask_utils import login_required
 
 dashboard_view = Blueprint("dashboard", __name__)
 
 
 @dashboard_view.route("/", methods=['GET', 'POST'])
+@login_required
 def dashboard():
     """
     View for the dashboard page.
     :return: renders the login view
     """
     result = render_template("dashboard_page.html")
-    flash(gettext("error_msg.incorrect_login_details"))
-    flash(gettext("error_msg.incorrect_login_details"))
-    flash(gettext("error_msg.incorrect_login_details"))
 
     return result

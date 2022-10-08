@@ -9,6 +9,5 @@ class Token:
     token_id: int = 0
     token_uuid: str = ""
     user_user_id: int = 0
-    modified: datetime = datetime.utcnow()
     created: datetime = datetime.utcnow()
     is_deleted: bool = False
