@@ -1,8 +1,9 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, session
 from flask_babel import Babel
 from loguru import logger
 from werkzeug.exceptions import HTTPException
 
+from web.dashboard_page import dashboard_view
 from web.login_page import login_view
 from web.register_page import register_view
 
@@ -19,7 +20,12 @@ def home():
     The home view
     :return: Renders the home page
     """
-    return redirect(url_for("login.login"))
+    result = redirect(url_for("login.login"))
+
+    if "user_id" in session:
+        result = redirect(url_for("dashboard.dashboard"))
+
+    return result
 
 
 @app.errorhandler(Exception)
@@ -42,4 +48,5 @@ if __name__ == "__main__":
     logger.add("./logs/{time:YYYY-MM-DD}.log", colorize=True, rotation="00:00")
     app.register_blueprint(login_view, url_prefix="/login")
     app.register_blueprint(register_view, url_prefix="/register")
+    app.register_blueprint(dashboard_view, url_prefix="/dashboard")
     app.run(debug=True)

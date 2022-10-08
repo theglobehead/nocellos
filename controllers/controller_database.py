@@ -28,25 +28,74 @@ class ControllerDatabase:
         return result
 
     @staticmethod
-    def check_if_username_taken(name: str) -> bool:
+    def check_if_user_email_taken(user_email: str) -> bool:
         """
         Checks if a username is taken
-        :param name: the username
+        :param user_email: the users email
         :return: True if the username is taken else False
         """
         result = True
+        print("user_email", user_email)
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         "SELECT user_id "
-                        "FROM users WHERE user_name = %(name)s "
+                        "FROM users WHERE user_email = %(user_email)s "
                         "LIMIT 1 ",
                         {
-                            "name": name
+                            "user_email": user_email
                         }
                     )
                     result = bool(cur.fetchone())
+                    print("aaaa", result)
         except Exception as e:
             logger.exception(e)
         return result
+
+    @staticmethod
+    def get_user_by_query(query_str: str, parameters: dict) -> User:
+        """
+        Used for getting a user with a query
+        :param parameters: A dictionary of values vor the query
+        :param query_str: The WHERE query
+        :return: a User model
+        """
+        result = None
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT user_id, user_uuid, user_name, user_email, password_hash, password_salt, modified, created, is_deleted "
+                        "FROM users "
+                        f"{query_str}",
+                        parameters
+                    )
+                    user_id, user_uuid, user_name, user_email, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
+
+            result = User(
+                user_id=user_id,
+                user_uuid=str(user_uuid),
+                user_name=user_name,
+                user_email=user_email,
+                hashed_password=hashed_password,
+                password_salt=password_salt,
+                modified=modified,
+                created=created,
+                is_deleted=is_deleted,
+            )
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def get_user_by_email(email: str) -> User:
+        query_str = "WHERE user_email = %(email)s " \
+                    "AND is_deleted = false "
+        parameters = {"email": email}
+
+        user = ControllerDatabase.get_user_by_query(query_str, parameters)
+
+        return user

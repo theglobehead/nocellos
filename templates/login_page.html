@@ -3,7 +3,11 @@
 
 {% block content %}
     <div class="user-form-container">
-        <form class="user-form">
+        <form
+                class="user-form"
+                action="{{ url_for("login.login") }}"
+                method="post"
+        >
             <div class="form-head">{{ _("strings.login") }}</div>
             <div class="form-inputs">
                 <input

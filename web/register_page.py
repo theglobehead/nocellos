@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from loguru import logger
 
 from controllers.controller_database import ControllerDatabase
@@ -15,9 +15,13 @@ def register():
     """
     result = render_template("register_page.html")
 
+    if "user_id" in session:
+        return redirect(url_for("dashboard.dashboard"))
+
     if request.method == "POST":
         form = request.form
         name = form.get("username").strip()
+        email = form.get("email").strip()
         password1 = form.get("password1").strip()
         password2 = form.get("password2").strip()
 
@@ -25,7 +29,7 @@ def register():
 
         if form_is_valid:
             try:
-                ControllerUser.create_user(name=name, password=password1)
+                ControllerUser.create_user(email=email, name=name, password=password1)
                 result = redirect(url_for("login.login"))
             except Exception as e:
                 logger.exception(e)
