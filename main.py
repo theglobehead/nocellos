@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, redirect, url_for, session, request
 from flask_babel import Babel
 from loguru import logger
@@ -80,4 +82,4 @@ if __name__ == "__main__":
     app.register_blueprint(register_view, url_prefix="/register")
     app.register_blueprint(dashboard_view, url_prefix="/dashboard")
     app.register_blueprint(site, url_prefix="/site")
-    app.run(debug=True)
+    app.run(debug=True, port=os.getenv("PORT", default=5000))
