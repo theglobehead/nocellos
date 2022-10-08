@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from flask_babel import gettext
 from loguru import logger
 
 from controllers.controller_database import ControllerDatabase
@@ -37,10 +38,11 @@ def register():
     return result
 
 
-def validate_form(name: str, pass1: str, pass2: str):
+def validate_form(email: str, name: str, pass1: str, pass2: str):
     """
     Used for validating a register form.
     If the form is invalid, it flashes a message.
+    :param email: the email entered
     :param name: the username entered
     :param pass1: the first password entered
     :param pass2: the second password entered
@@ -48,13 +50,20 @@ def validate_form(name: str, pass1: str, pass2: str):
     """
     result = True
 
-    if not all((pass1, pass2)):
+    if not email:
         result = False
+        flash(gettext("error_msg.enter_email"))
+    elif not all((pass1, pass2)):
+        result = False
+        flash(gettext("error_msg.enter_both_passwords"))
     elif not name:
         result = False
+        flash(gettext("error_msg.enter_name"))
     elif len(name) > 100:
         result = False
+        flash(gettext("error_msg.name_is_too_long"))
     elif pass1 != pass2:
         result = False
+        flash(gettext("error_msg.passwords_do_not_match"))
 
     return result

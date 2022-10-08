@@ -63,8 +63,6 @@ class ControllerUser:
 
         user_email_taken = ControllerDatabase.check_if_user_email_taken(email)
 
-        print("user_email_taken", user_email_taken)
-
         if user_email_taken:
             user = ControllerDatabase.get_user_by_email(email)
             hashed_password = ControllerUser.hash_password(password, user.password_salt)

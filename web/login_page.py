@@ -1,6 +1,7 @@
 import datetime
 
-from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask import Blueprint, render_template, request, session, redirect, url_for, flash
+from flask_babel import gettext
 
 from controllers.controller_database import ControllerDatabase
 from controllers.controller_user import ControllerUser
@@ -36,5 +37,7 @@ def login():
                     user.token.token_uuid,
                     expires=datetime.datetime.now() + datetime.timedelta(days=3)
                 )
+        else:
+            flash(gettext("error_msg.incorrect_login_details"))
 
     return result

@@ -13,6 +13,40 @@ a {
   text-decoration: none;
 }
 
+.message-wrapper {
+  position: absolute;
+  left: 50px;
+  top: 30px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.alert-message {
+  width: 300px;
+  height: fit-content;
+  display: inline-flex;
+  border: 2px solid #F2C4C2;
+  border-radius: 10px;
+}
+.alert-message .message-message {
+  width: 230px;
+  padding: 10px 15px;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+.alert-message .message-x {
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 2px solid #F2C4C2;
+  color: #F2C4C2;
+}
+.alert-message .message-x:hover {
+  cursor: pointer;
+}
+
 .user-form-container {
   box-sizing: border-box;
   width: 100%;
