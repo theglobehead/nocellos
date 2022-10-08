@@ -3,7 +3,6 @@ import datetime
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash
 from flask_babel import gettext
 
-from controllers.controller_database import ControllerDatabase
 from controllers.controller_user import ControllerUser
 
 login_view = Blueprint("login", __name__)

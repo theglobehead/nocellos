@@ -1,0 +1,100 @@
+# Translations template for PROJECT.
+# Copyright (C) 2022 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2022-10-08 14:15+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: templates/components/navbar.html:7 templates/dashboard_page.html:2
+msgid "strings.dashboard_page"
+msgstr ""
+
+#: templates/login_page.html:2
+msgid "strings.login_page"
+msgstr ""
+
+#: templates/login_page.html:12 templates/login_page.html:37
+msgid "strings.login"
+msgstr ""
+
+#: templates/login_page.html:17 templates/register_page.html:23
+msgid "strings.email"
+msgstr ""
+
+#: templates/login_page.html:24 templates/register_page.html:30
+#: templates/register_page.html:37
+msgid "strings.password"
+msgstr ""
+
+#: templates/login_page.html:30
+msgid "strings.remember_me"
+msgstr ""
+
+#: templates/login_page.html:40
+msgid "strings.no_account_yet"
+msgstr ""
+
+#: templates/login_page.html:41
+msgid "strings.register_here"
+msgstr ""
+
+#: templates/register_page.html:2
+msgid "strings.register_page"
+msgstr ""
+
+#: templates/register_page.html:12 templates/register_page.html:46
+msgid "strings.register"
+msgstr ""
+
+#: templates/register_page.html:17
+msgid "strings.username"
+msgstr ""
+
+#: templates/register_page.html:49
+msgid "strings.have_an_account"
+msgstr ""
+
+#: templates/register_page.html:50
+msgid "strings.login_here"
+msgstr ""
+
+#: templates/components/navbar.html:12
+msgid "strings.log_out"
+msgstr ""
+
+#: web/login_page.py:41
+msgid "error_msg.incorrect_login_details"
+msgstr ""
+
+#: web/register_page.py:55
+msgid "error_msg.enter_email"
+msgstr ""
+
+#: web/register_page.py:58
+msgid "error_msg.enter_both_passwords"
+msgstr ""
+
+#: web/register_page.py:61
+msgid "error_msg.enter_name"
+msgstr ""
+
+#: web/register_page.py:64
+msgid "error_msg.name_is_too_long"
+msgstr ""
+
+#: web/register_page.py:67
+msgid "error_msg.passwords_do_not_match"
+msgstr ""
+

@@ -36,7 +36,6 @@ class ControllerDatabase:
         :return: True if the username is taken else False
         """
         result = True
-        print("user_email", user_email)
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -49,7 +48,6 @@ class ControllerDatabase:
                         }
                     )
                     result = bool(cur.fetchone())
-                    print("aaaa", result)
         except Exception as e:
             logger.exception(e)
         return result

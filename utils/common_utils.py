@@ -7,7 +7,6 @@ from os import environ
 class CommonUtils:
     @staticmethod
     def connection() -> connection:
-        print("aaaaaaaaaaaaaaaaaa")
         conn = psycopg2.connect(
             host=environ["DB_HOST"],
             database=environ["DB_NAME"],

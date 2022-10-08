@@ -30,6 +30,15 @@ def home():
     return result
 
 
+@babel.localeselector
+def get_locale() -> str:
+    """
+    Used for determining the language of the website
+    :return: string of "en"
+    """
+    return "en"
+
+
 @app.errorhandler(Exception)
 def error_page(error):
     """
