@@ -18,6 +18,7 @@ class User:
     session_token: str = ""
     hashed_password: str = ""
     password_salt: str = ""
+    email_verified: bool = False
     modified: datetime = datetime.utcnow()
     created: datetime = datetime.utcnow()
     is_deleted: bool = False

@@ -6,25 +6,33 @@ from loguru import logger
 
 class ControllerDatabase:
     @staticmethod
-    def insert_user(user: User) -> bool:
+    def insert_user(user: User) -> User:
         """
         Used for creating a new user
         :param user: the user to insert
         :return: bool of weather or not the insert was successful
         """
-        result = False
+        result = None
+        result_user_id = 0
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         "INSERT INTO USERS "
-                        "(user_name, password_hash, password_salt) "
-                        "values (%(user_name)s, %(password_hash)s, %(password_salt)s) ",
+                        "(user_name, user_email, hashed_password, password_salt) "
+                        "values (%(user_name)s, %(user_email)s, %(hashed_password)s, %(password_salt)s) "
+                        "RETURNING user_id ",
                         user.to_dict()
                     )
-                    result = True
+
+                    if cur.rowcount:
+                        result_user_id = cur.fetchone()[0]
+
         except Exception as e:
             logger.exception(e)
+
+        if result_user_id:
+            result = ControllerDatabase.get_user(result_user_id)
 
         return result
 
@@ -66,12 +74,33 @@ class ControllerDatabase:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "SELECT user_id, user_uuid, user_name, user_email, password_hash, password_salt, modified, created, is_deleted "
+                        "SELECT "
+                        "   user_id, "
+                        "   user_uuid, "
+                        "   user_name, "
+                        "   user_email, "
+                        "   hashed_password, "
+                        "   password_salt, "
+                        "   email_verified, "
+                        "   modified, "
+                        "   created, "
+                        "   is_deleted "
                         "FROM users "
                         f"{query_str}",
                         parameters
                     )
-                    user_id, user_uuid, user_name, user_email, hashed_password, password_salt, modified, created, is_deleted = cur.fetchone()
+                    (
+                        user_id,
+                        user_uuid,
+                        user_name,
+                        user_email,
+                        hashed_password,
+                        password_salt,
+                        email_verified,
+                        modified,
+                        created,
+                        is_deleted
+                    ) = cur.fetchone()
 
             result = User(
                 user_id=user_id,
@@ -80,6 +109,7 @@ class ControllerDatabase:
                 user_email=user_email,
                 hashed_password=hashed_password,
                 password_salt=password_salt,
+                email_verified=email_verified,
                 modified=modified,
                 created=created,
                 is_deleted=is_deleted,
@@ -136,9 +166,20 @@ class ControllerDatabase:
 
     @staticmethod
     def get_user(user_id: int) -> User:
+        print("what the user id?", user_id)
         query_str = "WHERE user_id = %(user_id)s " \
                     "AND is_deleted = false "
         parameters = {"user_id": user_id}
+
+        user = ControllerDatabase.get_user_by_query(query_str, parameters)
+
+        return user
+
+    @staticmethod
+    def get_user_by_uuid(user_uuid: str) -> User:
+        query_str = "WHERE user_uuid = %(user_uuid)s " \
+                    "AND is_deleted = false "
+        parameters = {"user_uuid": user_uuid}
 
         user = ControllerDatabase.get_user_by_query(query_str, parameters)
 
@@ -207,6 +248,30 @@ class ControllerDatabase:
                         "SET is_deleted = true "
                         "WHERE (token_id = %(token_id)s AND is_deleted = false) ",
                         token.to_dict()
+                    )
+                    result = True
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def set_user_email_verified(user: User) -> bool:
+        """
+        Used for verifying a users email
+        :param user: the user whose email must be verified
+        :return: bool of weather or not the update was successful
+        """
+        result = False
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE users "
+                        "SET email_verified = true "
+                        "WHERE (user_id = %(user_id)s AND is_deleted = false) ",
+                        user.to_dict()
                     )
                     result = True
         except Exception as e:

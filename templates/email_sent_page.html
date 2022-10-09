@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Error: {{ error_code }}{% endblock %}
+{% block navbar %}{% endblock %}
+
+{% block content %}
+    <div class="user-form-container">
+        <div class="email-sent-container">
+            <h2>{{ _("strings.email_sent") }}</h2>
+            <p>{{ _("strings.verify_email") }}</p>
+        </div>
+    </div>
+{% endblock %}

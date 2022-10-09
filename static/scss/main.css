@@ -70,6 +70,21 @@ a {
   font-size: 2em;
 }
 
+.email-sent-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 40px;
+  width: 500px;
+  height: 400px;
+  border: 2px solid #4F4F51;
+  background-color: #2C2B30;
+}
+.email-sent-container h2 {
+  color: #F58F7C;
+}
+
 .user-form-container {
   box-sizing: border-box;
   width: 100%;

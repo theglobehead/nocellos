@@ -18,7 +18,7 @@ def logout():
     session["user_id"] = None
     session.clear()
 
-    if user.token.token_uuid:
+    if user and user.token.token_uuid:
         ControllerDatabase.delete_token(user.token)
 
     result = redirect(url_for("login.login"))

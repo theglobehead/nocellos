@@ -19,8 +19,8 @@ class ControllerUser:
         :return: returns the hashed password
         """
         password_utf8 = (password + salt).encode("utf-8")
-        password_hash = sha256(password_utf8)
-        result = password_hash.hexdigest()
+        hashed_password = sha256(password_utf8)
+        result = hashed_password.hexdigest()
 
         return result
 
@@ -37,7 +37,7 @@ class ControllerUser:
         return result
 
     @staticmethod
-    def create_user(email: str, name: str, password: str):
+    def create_user(email: str, name: str, password: str) -> User:
         salt = ControllerUser.generate_salt()
         hashed_password = ControllerUser.hash_password(password, salt)
 
@@ -45,7 +45,7 @@ class ControllerUser:
             user_name=name,
             user_email=email,
             password_salt=salt,
-            password_hash=hashed_password,
+            hashed_password=hashed_password,
         )
 
         return ControllerDatabase.insert_user(user)
