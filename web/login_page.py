@@ -57,8 +57,6 @@ def verify_user_email(user_uuid: str):
     """
     result = redirect(url_for("login.login"))
 
-    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", user_uuid)
-
     user = ControllerDatabase.get_user_by_uuid(user_uuid)
     ControllerDatabase.set_user_email_verified(user)
 
