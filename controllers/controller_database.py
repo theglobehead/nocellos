@@ -120,6 +120,36 @@ class ControllerDatabase:
         return result
 
     @staticmethod
+    def get_user_by_email(email: str) -> User:
+        query_str = "WHERE user_email = %(email)s " \
+                    "AND is_deleted = false "
+        parameters = {"email": email}
+
+        user = ControllerDatabase.get_user_by_query(query_str, parameters)
+
+        return user
+
+    @staticmethod
+    def get_user(user_id: int) -> User:
+        query_str = "WHERE user_id = %(user_id)s " \
+                    "AND is_deleted = false "
+        parameters = {"user_id": user_id}
+
+        user = ControllerDatabase.get_user_by_query(query_str, parameters)
+
+        return user
+
+    @staticmethod
+    def get_user_by_uuid(user_uuid: str) -> User:
+        query_str = "WHERE user_uuid = %(user_uuid)s " \
+                    "AND is_deleted = false "
+        parameters = {"user_uuid": user_uuid}
+
+        user = ControllerDatabase.get_user_by_query(query_str, parameters)
+
+        return user
+
+    @staticmethod
     def get_token_by_query(query_str: str, parameters: dict) -> Token:
         """
         Used for getting a session token with a query
@@ -153,37 +183,6 @@ class ControllerDatabase:
             logger.exception(e)
 
         return result
-
-    @staticmethod
-    def get_user_by_email(email: str) -> User:
-        query_str = "WHERE user_email = %(email)s " \
-                    "AND is_deleted = false "
-        parameters = {"email": email}
-
-        user = ControllerDatabase.get_user_by_query(query_str, parameters)
-
-        return user
-
-    @staticmethod
-    def get_user(user_id: int) -> User:
-        print("what the user id?", user_id)
-        query_str = "WHERE user_id = %(user_id)s " \
-                    "AND is_deleted = false "
-        parameters = {"user_id": user_id}
-
-        user = ControllerDatabase.get_user_by_query(query_str, parameters)
-
-        return user
-
-    @staticmethod
-    def get_user_by_uuid(user_uuid: str) -> User:
-        query_str = "WHERE user_uuid = %(user_uuid)s " \
-                    "AND is_deleted = false "
-        parameters = {"user_uuid": user_uuid}
-
-        user = ControllerDatabase.get_user_by_query(query_str, parameters)
-
-        return user
 
     @staticmethod
     def get_token(token_id: int) -> Token:
