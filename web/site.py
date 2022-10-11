@@ -5,6 +5,19 @@ from controllers.controller_database import ControllerDatabase
 site = Blueprint("site", __name__)
 
 
+def debug_def(text: str):
+    """
+    Used for debugging the prod environment. Will delete later
+    """
+    print("---------------------------------------------------------------------")
+    print("---------------------------------------------------------------------")
+    print(text)
+    print("---------------------------------------------------------------------")
+    print("---------------------------------------------------------------------")
+
+    return f"---- {text} -----"
+
+
 @site.route("/logout", methods=['GET'])
 def logout():
     """

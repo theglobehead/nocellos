@@ -8,7 +8,7 @@ from werkzeug.exceptions import HTTPException
 from controllers.constants import ADMIN_EMAIL
 from controllers.controller_database import ControllerDatabase
 from utils.flask_utils import initialize_flask_mail
-from web.site import site
+from web.site import site, debug_def
 from web.dashboard_page import dashboard_view
 from web.login_page import login_view
 from web.register_page import register_view
@@ -33,6 +33,9 @@ def home():
     The home view
     :return: Renders the home page
     """
+
+    debug_def("test text")
+
     result = redirect(url_for("login.login"))
 
     if "user_id" in session:
@@ -78,8 +81,6 @@ def check_user_in():
 
     token_uuid = request.cookies.get("token")
     if token_uuid:
-        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-        print(token_uuid)
         token = ControllerDatabase.get_token_by_uuid(token_uuid)
         user = ControllerDatabase.get_user(token.user_user_id)
 
