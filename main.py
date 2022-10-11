@@ -1,17 +1,16 @@
+import datetime
 import os
 
-from flask import Flask, render_template, redirect, url_for, session, request
-from flask_babel import Babel
+from flask import Flask, render_template, redirect, url_for, session, request, flash
+from flask_babel import Babel, gettext
 from loguru import logger
 from werkzeug.exceptions import HTTPException
 
 from controllers.constants import ADMIN_EMAIL
 from controllers.controller_database import ControllerDatabase
-from utils.flask_utils import initialize_flask_mail
-from web.site import site, debug_def
-from web.dashboard_page import dashboard_view
-from web.login_page import login_view
-from web.register_page import register_view
+from controllers.controller_user import ControllerUser
+from utils.flask_utils import initialize_flask_mail, login_required
+from web.register_page import validate_form, send_confirmation_email
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "8f42a73054b1749h8f58848be5e6502c"
@@ -33,13 +32,10 @@ def home():
     The home view
     :return: Renders the home page
     """
-
-    debug_def("test text")
-
-    result = redirect(url_for("login.login"))
+    result = redirect(url_for("login"))
 
     if "user_id" in session:
-        result = redirect(url_for("dashboard.dashboard"))
+        result = redirect(url_for("dashboard"))
 
     return result
 
@@ -88,10 +84,139 @@ def check_user_in():
             session["user_id"] = user.user_id
 
 
+@app.route("/logout", methods=['GET'])
+def logout():
+    """
+    Used for logging a user out.
+    Clears the session
+    :return: Redirects to the login view
+    """
+    user = ControllerDatabase.get_user(user_id=session["user_id"])
+
+    session["user"] = None
+    session["user_id"] = None
+    session.clear()
+
+    if user and user.token.token_uuid:
+        ControllerDatabase.delete_token(user.token)
+
+    result = redirect(url_for("login"))
+    result.delete_cookie("token")
+
+    return result
+
+
+@app.route("/email-sent", methods=['GET'])
+def email_sent():
+    """
+    View for the verify email page.
+    :return: renders the register view
+    """
+    result = render_template("email_sent_page.html")
+
+    return result
+
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    """
+    View for the register page.
+    :return: renders the register view
+    """
+    result = None
+
+    if "user_id" in session:
+        return redirect(url_for("dashboard"))
+
+    if request.method == "POST":
+        form = request.form
+        name = form.get("username").strip()
+        email = form.get("email").strip()
+        password1 = form.get("password1").strip()
+        password2 = form.get("password2").strip()
+
+        form_is_valid = validate_form(email=email, name=name, pass1=password1, pass2=password2)
+
+        if form_is_valid:
+            try:
+                new_user = ControllerUser.create_user(email=email, name=name, password=password1)
+                send_confirmation_email(new_user)
+                result = redirect(url_for("email_sent"))
+            except Exception as e:
+                logger.exception(e)
+
+    if not result:
+        result = render_template("register_page.html")
+
+    return result
+
+
+@app.route("/verify-email/<user_uuid>", methods=['GET'])
+def verify_user_email(user_uuid: str):
+    """
+    Used for verifying a users email
+    :user_uuid: the uuid of the user
+    :return: Sends the user to the login view
+    """
+    result = redirect(url_for("login"))
+
+    user = ControllerDatabase.get_user_by_uuid(user_uuid)
+    ControllerDatabase.set_user_email_verified(user)
+
+    return result
+
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    """
+    View for the login page.
+    :return: renders the login view
+    """
+    result = None
+
+    if "user_id" in session:
+        return redirect(url_for("dashboard"))
+
+    if request.method == "POST":
+        form = request.form
+        email = form.get("email").strip()
+        password = form.get("password").strip()
+        remember_me = bool(form.get("remember_me"))
+
+        user = ControllerUser.log_user_in(email, password, remember_me)
+
+        if user and user.email_verified:
+            session["user_id"] = user.user_id
+            result = redirect(url_for("dashboard"))
+            if user.token.token_uuid:
+                result.set_cookie(
+                    "token",
+                    user.token.token_uuid,
+                    expires=datetime.datetime.now() + datetime.timedelta(days=3)
+                )
+        elif user:
+            flash(gettext("error_msg.email_not_verified"))
+        else:
+            flash(gettext("error_msg.incorrect_login_details"))
+
+    if not result:
+        result = render_template("login_page.html")
+
+    return result
+
+
+@app.route("/dashboard", methods=['GET', 'POST'])
+@login_required
+def dashboard():
+    """
+    View for the dashboard page.
+    :return: renders the login view
+    """
+    result = render_template("dashboard_page.html")
+
+    return result
+
+
 if __name__ == "__main__":
     logger.add("./logs/{time:YYYY-MM-DD}.log", colorize=True, rotation="00:00")
-    app.register_blueprint(login_view, url_prefix="/login")
-    app.register_blueprint(register_view, url_prefix="/register")
-    app.register_blueprint(dashboard_view, url_prefix="/dashboard")
-    app.register_blueprint(site, url_prefix="/site")
     app.run(debug=True, port=os.getenv("PORT", default=5000))

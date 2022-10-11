@@ -1,6 +1,6 @@
 <body style="background: #2C2B30; width: 500px; height: 800px;">
     <h1 style="color: #F58F7C;">{{ _("strings.thanks_for_registering") }}</h1>
-    <a style="color: #D6D6D6;" href="{{ server_name }}{{ url_for("login.verify_user_email", user_uuid=user.user_uuid,) }}">
+    <a style="color: #D6D6D6;" href="{{ server_name }}{{ url_for("verify_user_email", user_uuid=user.user_uuid,) }}">
         {{ _("strings.click_here_to_verify") }}
     </a>
 </body>

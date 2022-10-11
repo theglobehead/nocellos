@@ -1,14 +1,14 @@
 <div class="navbar">
     <div class="button-group">
-        <a class="navbar-nocellos" href="{{ url_for("dashboard.dashboard") }}">
+        <a class="navbar-nocellos" href="{{ url_for("dashboard") }}">
             NOCELLOS
         </a>
-        <a class="navbar-button" href="{{ url_for("dashboard.dashboard") }}">
+        <a class="navbar-button" href="{{ url_for("dashboard") }}">
             {{ _("strings.dashboard_page") }}
         </a>
     </div>
     <div class="button-group">
-        <a class="navbar-button" href="{{ url_for("site.logout") }}">
+        <a class="navbar-button" href="{{ url_for("logout") }}">
             {{ _("strings.log_out") }}
         </a>
     </div>

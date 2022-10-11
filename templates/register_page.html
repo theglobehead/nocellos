@@ -6,7 +6,7 @@
     <div class="user-form-container">
         <form
                 class="user-form"
-                action="{{ url_for("register.register") }}"
+                action="{{ url_for("register") }}"
                 method="post"
         >
             <div class="form-head">{{ _("strings.register") }}</div>
@@ -47,7 +47,7 @@
             </button>
             <div class="form-subtext">
                 {{ _("strings.have_an_account") }}
-                <a href="{{ url_for("login.login") }}">{{ _("strings.login_here") }}</a>
+                <a href="{{ url_for("login") }}">{{ _("strings.login_here") }}</a>
             </div>
         </form>
     </div>

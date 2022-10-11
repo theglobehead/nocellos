@@ -28,7 +28,7 @@ def login_required(f: Callable) -> Callable:
         if user_id:
             result = f(*args, **kwargs)
         else:
-            result = redirect(url_for("login.login"))
+            result = redirect(url_for("login"))
         return result
 
     return decorated_function
