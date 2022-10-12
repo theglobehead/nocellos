@@ -85,6 +85,19 @@ a {
   color: #F58F7C;
 }
 
+input[type=checkbox]:before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  background-color: #2C2B30;
+  position: absolute;
+  border: 2px solid #4F4F51;
+}
+input[type=checkbox]:checked:before {
+  background-color: #F2C4C2;
+  border-color: #F58F7C;
+}
+
 .user-form-container {
   box-sizing: border-box;
   width: 100%;
