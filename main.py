@@ -1,4 +1,5 @@
 import datetime
+import http
 import os
 
 from flask import Flask, render_template, redirect, url_for, session, request, flash
@@ -9,6 +10,7 @@ from werkzeug.exceptions import HTTPException
 from controllers.constants import ADMIN_EMAIL
 from controllers.controller_database import ControllerDatabase
 from controllers.controller_user import ControllerUser
+from models.friend_request import FriendRequest
 from utils.flask_utils import initialize_flask_mail, login_required
 from web.register_page import validate_form, send_confirmation_email
 
@@ -210,11 +212,66 @@ def login():
 def dashboard():
     """
     View for the dashboard page.
-    :return: renders the login view
+    :return: renders the dashboard view
     """
     result = render_template("dashboard_page.html")
 
     return result
+
+
+@app.route("/send-friend-request", methods=['GET', 'POST'])
+@login_required
+def send_friend_request():
+    """
+    Ajax endpoint for sending a friend request
+    :return: "", http.HTTPStatus.NO_CONTENT
+    """
+    sender_user_id = session.get("user_id")
+    receiver_user_uuid = request.form.get("receiver_user_uuid")
+    receiver_user_id = ControllerDatabase.get_user_id_by_uuid(receiver_user_uuid)
+
+    friend_request = FriendRequest(
+        sender_user_id=sender_user_id,
+        receiver_user_id=receiver_user_id,
+    )
+
+    ControllerDatabase.insert_friend_request(friend_request)
+
+    return "", http.HTTPStatus.NO_CONTENT
+
+
+@app.route("/accept-friend-request", methods=['GET', 'POST'])
+@login_required
+def accept_friend_request():
+    """
+    Ajax endpoint for accepting a friend request
+    :return: "", http.HTTPStatus.NO_CONTENT
+    """
+    friend_request_uuid = request.form.get("receiver_user_uuid")
+    friend_request_id = ControllerDatabase.get_friend_request_id_by_uuid(friend_request_uuid)
+
+    ControllerDatabase.accept_friend_request(
+        FriendRequest(friend_request_id=friend_request_id)
+    )
+
+    return "", http.HTTPStatus.NO_CONTENT
+
+
+@app.route("/remove-friend-request", methods=['GET', 'POST'])
+@login_required
+def remove_friend_request():
+    """
+    Ajax endpoint for removing a friend request
+    :return: "", http.HTTPStatus.NO_CONTENT
+    """
+    friend_request_uuid = request.form.get("receiver_user_uuid")
+    friend_request_id = ControllerDatabase.get_friend_request_id_by_uuid(friend_request_uuid)
+
+    ControllerDatabase.delete_friend_request(
+        FriendRequest(friend_request_id=friend_request_id)
+    )
+
+    return "", http.HTTPStatus.NO_CONTENT
 
 
 if __name__ == "__main__":

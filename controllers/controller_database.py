@@ -1,3 +1,4 @@
+from models.friend_request import FriendRequest
 from models.token import Token
 from models.user import User
 from utils.common_utils import CommonUtils
@@ -150,6 +151,34 @@ class ControllerDatabase:
         return user
 
     @staticmethod
+    def get_user_id_by_uuid(user_uuid: str) -> int:
+        """
+        Used for getting the id of a user
+        :param user_uuid: the uuid of the friend request
+        :return: the id of the user
+        """
+        result = 0
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT user_id "
+                        "FROM users "
+                        "WHERE user_uuid = %(user_uuid)s "
+                        "AND is_deleted = false ",
+                        {"user_uuid", user_uuid}
+                    )
+
+                    if cur.rowcount:
+                        (result, ) = cur.fetchone()
+
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
     def get_token_by_query(query_str: str, parameters: dict) -> Token:
         """
         Used for getting a session token with a query
@@ -207,9 +236,9 @@ class ControllerDatabase:
     @staticmethod
     def insert_token(token: Token) -> Token:
         """
-        Used for creating a playlist
+        Used for inserting a token into the database
         :param token: the token to insert
-        :return: bool of weather or not the insertion was successful
+        :return: The token
         """
         result = None
 
@@ -273,6 +302,181 @@ class ControllerDatabase:
                         user.to_dict()
                     )
                     result = True
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def get_friend_request_by_query(query_str: str, parameters: dict) -> FriendRequest:
+        """
+        Used for getting a friend request with a query
+        :param parameters: A dictionary of values vor the query
+        :param query_str: The WHERE query
+        :return: a User model
+        """
+        result = None
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT "
+                        "   friend_request_id, "
+                        "   sender_user_id, "
+                        "   friend_request_uuid, "
+                        "   receiver_user_id, "
+                        "   is_accepted, "
+                        "   modified, "
+                        "   created, "
+                        "   is_deleted "
+                        "FROM friend_requests "
+                        f"{query_str}",
+                        parameters
+                    )
+                    (
+                        friend_request_id,
+                        friend_request_uuid,
+                        sender_user_id,
+                        receiver_user_id,
+                        is_accepted,
+                        modified,
+                        created,
+                        is_deleted,
+                    ) = cur.fetchone()
+
+            result = FriendRequest(
+                friend_request_id=friend_request_id,
+                friend_request_uuid=friend_request_uuid,
+                sender_user_id=sender_user_id,
+                receiver_user_id=receiver_user_id,
+                is_accepted=is_accepted,
+                modified=modified,
+                created=created,
+                is_deleted=is_deleted,
+            )
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def get_friend_request(friend_request_id: int) -> FriendRequest:
+        query_str = "WHERE friend_request_id = %(friend_request_id)s " \
+                    "AND is_deleted = false "
+        parameters = {"friend_request_id": friend_request_id}
+
+        user = ControllerDatabase.get_friend_request_by_query(query_str, parameters)
+
+        return user
+
+    @staticmethod
+    def get_friend_request_by_uuid(friend_request_uuid: str) -> FriendRequest:
+        query_str = "WHERE friend_request_uuid = %(friend_request_uuid)s " \
+                    "AND is_deleted = false "
+        parameters = {"friend_request_uuid": friend_request_uuid}
+
+        user = ControllerDatabase.get_friend_request_by_query(query_str, parameters)
+
+        return user
+
+    @staticmethod
+    def insert_friend_request(friend_request: FriendRequest) -> bool:
+        """
+        Used for inserting a friend request into the database
+        :param friend_request: the friend request to insert
+        :return: bool of weather or not the insertion was successful
+        """
+        result = False
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO friend_requests "
+                        "(sender_user_id, receiver_user_id) "
+                        "values (%(sender_user_id)s, %(receiver_user_id)s) ",
+                        friend_request.to_dict()
+                    )
+                    result = True
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def delete_friend_request(friend_request: FriendRequest) -> bool:
+        """
+        Used for deleting a friend request
+        :param friend_request: the friend request to be deleted
+        :return: bool of weather or not the deletion was successful
+        """
+        result = False
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE friend_requests "
+                        "SET is_deleted = true "
+                        "WHERE (friend_request_id = %(friend_request_id)s "
+                        "AND is_deleted = false) ",
+                        friend_request.to_dict()
+                    )
+                    result = True
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def accept_friend_request(friend_request: FriendRequest) -> bool:
+        """
+        Used for accepting a friend request
+        :param friend_request: the friend request to be deleted
+        :return: bool of weather or not the deletion was successful
+        """
+        result = False
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE friend_requests "
+                        "SET is_accepted = true "
+                        "WHERE (friend_request_id = %(friend_request_id)s "
+                        "AND is_deleted = false) ",
+                        friend_request.to_dict()
+                    )
+                    result = True
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def get_friend_request_id_by_uuid(friend_request_uuid: str) -> int:
+        """
+        Used for getting the id of a friend request
+        :param friend_request_uuid: the uuid of the friend request
+        :return: the id of the friend request
+        """
+        result = 0
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT friend_request_id "
+                        "FROM friend_requests "
+                        "WHERE friend_request_uuid = %(friend_request_uuid)s "
+                        "AND is_deleted = false ",
+                        {"friend_request_uuid", friend_request_uuid}
+                    )
+
+                    if cur.rowcount:
+                        (result,) = cur.fetchone()
+
         except Exception as e:
             logger.exception(e)
 

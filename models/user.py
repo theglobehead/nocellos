@@ -19,6 +19,6 @@ class User:
     hashed_password: str = ""
     password_salt: str = ""
     email_verified: bool = False
-    modified: datetime = datetime.utcnow()
-    created: datetime = datetime.utcnow()
+    modified: datetime = datetime.now()
+    created: datetime = datetime.now()
     is_deleted: bool = False
