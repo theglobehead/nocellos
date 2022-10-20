@@ -19,6 +19,7 @@ class User:
     hashed_password: str = ""
     password_salt: str = ""
     email_verified: bool = False
+    random_id: int = 0
     modified: datetime = datetime.now()
     created: datetime = datetime.now()
     is_deleted: bool = False

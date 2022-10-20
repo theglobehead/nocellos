@@ -274,6 +274,24 @@ def remove_friend_request():
     return "", http.HTTPStatus.NO_CONTENT
 
 
+@app.route("/load-searched-users", methods=['GET', 'POST'])
+@login_required
+def load_searched_users():
+    """
+    Ajax endpoint for getting searched users
+    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    """
+    search_phrase = request.form.get("search_phrase", type=str)
+    search_page = request.form.get("search_phrase", type=int)
+
+    result = ControllerDatabase.load_searched_users(
+        search_phrase=search_phrase,
+        search_page=search_page
+    )
+
+    return result
+
+
 if __name__ == "__main__":
     logger.add("./logs/{time:YYYY-MM-DD}.log", colorize=True, rotation="00:00")
     app.run(debug=True, port=os.getenv("PORT", default=5000))

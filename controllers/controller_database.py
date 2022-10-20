@@ -1,3 +1,5 @@
+from typing import List, Dict
+
 from models.friend_request import FriendRequest
 from models.token import Token
 from models.user import User
@@ -83,6 +85,7 @@ class ControllerDatabase:
                         "   hashed_password, "
                         "   password_salt, "
                         "   email_verified, "
+                        "   random_id, "
                         "   modified, "
                         "   created, "
                         "   is_deleted "
@@ -98,6 +101,7 @@ class ControllerDatabase:
                         hashed_password,
                         password_salt,
                         email_verified,
+                        random_id,
                         modified,
                         created,
                         is_deleted
@@ -111,6 +115,7 @@ class ControllerDatabase:
                 hashed_password=hashed_password,
                 password_salt=password_salt,
                 email_verified=email_verified,
+                random_id=random_id,
                 modified=modified,
                 created=created,
                 is_deleted=is_deleted,
@@ -172,6 +177,43 @@ class ControllerDatabase:
 
                     if cur.rowcount:
                         (result, ) = cur.fetchone()
+
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def load_searched_users(search_phrase: str, search_page: int = 1) -> List[Dict]:
+        page_size = 10
+        search_page -= 1
+        page_offset = page_size*search_page
+        result = []
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT user_uuid, user_name, random_id "
+                        "FROM users "
+                        "WHERE (user_name = %(search_phrase)s "
+                        "OR user_email = %(search_phrase)s) "
+                        "AND is_deleted = false "
+                        "OFFSET %(page_offset)s "
+                        "LIMIT %(page_size)s ",
+                        {
+                            "search_phrase": search_phrase,
+                            "search_page": search_page,
+                            "page_offset": page_offset,
+                        }
+                    )
+
+                    for user_uuid, user_name, random_id in cur.fetchall():
+                        result.append({
+                            "user_uuid": user_uuid,
+                            "user_name": user_name,
+                            "random_id": random_id,
+                        })
 
         except Exception as e:
             logger.exception(e)
