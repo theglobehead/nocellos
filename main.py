@@ -252,6 +252,67 @@ def create_card(
         response.status_code = status.HTTP_500
 
 
+@app.post("/get_user_study_sets", status_code=status.HTTP_200_OK)
+def get_user_study_sets(
+        user_uuid: str = Form(...),
+):
+    """
+    Ajax endpoint for getting searched users
+    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    """
+    study_sets = []
+    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+
+    for study_set in ControllerDatabase.get_user_study_sets(user_id):
+        study_sets.append({
+            "study_set_name": study_set.study_set_name,
+            "study_set_uuid": study_set.study_set_uuid,
+        })
+
+    return {"study_sets": study_sets}
+
+
+@app.post("/get_user_decks", status_code=status.HTTP_200_OK)
+def get_user_decks(
+        user_uuid: str = Form(...),
+):
+    """
+    Ajax endpoint for getting searched users
+    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    """
+    decks = []
+    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+
+    for deck in ControllerDatabase.get_user_decks(user_id):
+        decks.append({
+            "deck_name": deck.deck_name,
+            "deck_uuid": deck.deck_uuid,
+        })
+
+    return {"decks": decks}
+
+
+@app.post("/get_deck_cards", status_code=status.HTTP_200_OK)
+def get_deck_cards(
+        deck_uuid: str = Form(...),
+):
+    """
+    Ajax endpoint for getting searched users
+    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    """
+    cards = []
+    deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
+
+    for card in ControllerDatabase.get_deck_cards(deck.id):
+        cards.append({
+            "card_uuid": card.card_uuid,
+            "front_text": card.front_text,
+            "back_text": card.back_text,
+        })
+
+    return {"cards": cards}
+
+
 if __name__ == "__main__":
     logger.add("./logs/{time:YYYY-MM-DD}.log", colorize=True, rotation="00:00")
     uvicorn.run(app='main:app', reload=True)

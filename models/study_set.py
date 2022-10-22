@@ -1,11 +1,19 @@
+from dataclasses import field
+from typing import List
+
 from dataclasses_json import dataclass_json
 from pydantic.dataclasses import dataclass
 from datetime import datetime
+
+from models.label import Label
 
 
 @dataclass_json
 @dataclass
 class StudySet:
+    deck_count: int = 0
+    labels: List[Label] = field(default_factory=List)
+
     study_set_id: int = 0
     study_set_uuid: str = ""
     study_set_name: str = ""

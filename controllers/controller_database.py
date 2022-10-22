@@ -614,6 +614,7 @@ class ControllerDatabase:
                 is_in_set=is_in_set,
                 is_public=is_public,
             )
+
         except Exception as e:
             logger.exception(e)
 
@@ -624,6 +625,16 @@ class ControllerDatabase:
         query_str = "WHERE deck_id = %(deck_id)s " \
                     "AND is_deleted = false "
         parameters = {"deck_id": deck_id}
+
+        deck = ControllerDatabase.get_deck_by_query(query_str, parameters)
+
+        return deck
+
+    @staticmethod
+    def get_deck_by_uuid(deck_uuid: str) -> Deck:
+        query_str = "WHERE deck_uuid = %(deck_uuid)s " \
+                    "AND is_deleted = false "
+        parameters = {"deck_uuid": deck_uuid}
 
         deck = ControllerDatabase.get_deck_by_query(query_str, parameters)
 
