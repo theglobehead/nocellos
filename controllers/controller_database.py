@@ -194,7 +194,7 @@ class ControllerDatabase:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "SELECT user_uuid, user_name, random_id "
+                        "SELECT DISTINCT user_uuid, user_name, random_id "
                         "FROM users "
                         "WHERE (user_name = %(search_phrase)s "
                         "OR user_email = %(search_phrase)s) "
@@ -203,7 +203,7 @@ class ControllerDatabase:
                         "LIMIT %(page_size)s ",
                         {
                             "search_phrase": search_phrase,
-                            "search_page": search_page,
+                            "page_size": page_size,
                             "page_offset": page_offset,
                         }
                     )
