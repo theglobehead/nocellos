@@ -1,6 +1,10 @@
 from typing import List, Dict
 
+from models.card import Card
+from models.deck import Deck
 from models.friend_request import FriendRequest
+from models.label import Label
+from models.study_set import StudySet
 from models.token import Token
 from models.user import User
 from utils.common_utils import CommonUtils
@@ -522,6 +526,644 @@ class ControllerDatabase:
                     if cur.rowcount:
                         (result,) = cur.fetchone()
 
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    #  Functions for decks table
+    @staticmethod
+    def insert_deck(deck: Deck) -> Deck:
+        """
+        Used for creating a new deck
+        :param deck: the deck to insert
+        :return: The inserted deck as a Deck model
+        """
+        result = None
+        result_deck_id = 0
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO decks "
+                        "(deck_name, creator_user_id, is_in_set) "
+                        "values (%(deck_name)s, %(creator_user_id)s, %(is_in_set)s) "
+                        "RETURNING deck_id ",
+                        deck.to_dict()
+                    )
+
+                    if cur.rowcount:
+                        result_deck_id = cur.fetchone()[0]
+
+        except Exception as e:
+            logger.exception(e)
+
+        if result_deck_id:
+            result = ControllerDatabase.get_deck(result_deck_id)
+
+        return result
+
+    @staticmethod
+    def get_deck_by_query(query_str: str, parameters: dict) -> Deck:
+        """
+        Used for getting a deck with a query
+        :param parameters: A dictionary of values vor the query
+        :param query_str: The WHERE query
+        :return: a Deck model
+        """
+        result = None
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT "
+                        "   deck_id, "
+                        "   deck_name, "
+                        "   deck_uuid, "
+                        "   created, "
+                        "   modified, "
+                        "   is_deleted, "
+                        "   creator_user_id, "
+                        "   is_in_set, "
+                        "   is_public, "
+                        "FROM decks "
+                        f"{query_str}",
+                        parameters
+                    )
+                    (
+                        deck_id,
+                        deck_name,
+                        deck_uuid,
+                        created,
+                        modified,
+                        is_deleted,
+                        creator_user_id,
+                        is_in_set,
+                        is_public,
+                    ) = cur.fetchone()
+
+            result = Deck(
+                deck_id=deck_id,
+                deck_name=deck_name,
+                deck_uuid=deck_uuid,
+                created=created,
+                modified=modified,
+                is_deleted=is_deleted,
+                creator_user_id=creator_user_id,
+                is_in_set=is_in_set,
+                is_public=is_public,
+            )
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def get_deck(deck_id: int) -> Deck:
+        query_str = "WHERE deck_id = %(deck_id)s " \
+                    "AND is_deleted = false "
+        parameters = {"deck_id": deck_id}
+
+        deck = ControllerDatabase.get_deck_by_query(query_str, parameters)
+
+        return deck
+
+    @staticmethod
+    def get_user_decks(user_id: int, is_owner: bool = False) -> List[Deck]:
+        """
+        Used for getting a users decks
+        :param user_id: The id of the deck
+        :param is_owner: Boolean of weather or not to show non-public cards
+        :return: a lists of Deck models
+        """
+        decks = []
+        show_public_str = "AND is_public = true "
+        if is_owner:
+            show_public_str = ""
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT "
+                        "   deck_id, "
+                        "   deck_name, "
+                        "   deck_uuid, "
+                        "   created, "
+                        "   modified, "
+                        "   is_deleted, "
+                        "   creator_user_id, "
+                        "   is_in_set, "
+                        "   is_public "
+                        "FROM decks "
+                        "WHERE creator_user_id = %(user_id)s "
+                        f"{ show_public_str }"
+                        "AND is_deleted = false ",
+                        {"user_id": user_id}
+                    )
+                    for (
+                        deck_id,
+                        deck_name,
+                        deck_uuid,
+                        created,
+                        modified,
+                        is_deleted,
+                        creator_user_id,
+                        is_in_set,
+                        is_public,
+                    ) in cur.fetchall():
+                        new_deck = Deck(
+                            deck_id=deck_id,
+                            deck_name=deck_name,
+                            deck_uuid=deck_uuid,
+                            created=created,
+                            modified=modified,
+                            is_deleted=is_deleted,
+                            creator_user_id=creator_user_id,
+                            is_in_set=is_in_set,
+                            is_public=is_public,
+                        )
+                        decks.append(new_deck)
+
+        except Exception as e:
+            logger.exception(e)
+
+        return decks
+
+    @staticmethod
+    def delete_deck(deck: Deck) -> bool:
+        """
+        Used for deleting a deck
+        :param deck: the deck to be deleted
+        :return: bool of weather or not the deletion was successful
+        """
+        result = False
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE decks "
+                        "SET is_deleted = true "
+                        "WHERE (deck_id = %(deck_id)s AND is_deleted = false) ",
+                        deck.to_dict()
+                    )
+                    result = True
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    #  Functions for cards table
+    @staticmethod
+    def insert_card(card: Card) -> Card:
+        """
+        Used for creating a new card
+        :param card: the card to insert
+        :return: bool of weather or not the insert was successful
+        """
+        result = None
+        result_card_id = 0
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO cards "
+                        "(front_text, back_text, deck_deck_id) "
+                        "values (%(front_text)s, %(back_text)s, %(deck_deck_id)s) "
+                        "RETURNING card_id ",
+                        card.to_dict()
+                    )
+
+                    if cur.rowcount:
+                        result_card_id = cur.fetchone()[0]
+
+        except Exception as e:
+            logger.exception(e)
+
+        if result_card_id:
+            result = ControllerDatabase.get_card(result_card_id)
+
+        return result
+
+    @staticmethod
+    def get_card_by_query(query_str: str, parameters: dict) -> Card:
+        """
+        Used for getting a card with a query
+        :param parameters: A dictionary of values vor the query
+        :param query_str: The WHERE query
+        :return: a Card model
+        """
+        result = None
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT "
+                        "   card_id, "
+                        "   front_text, "
+                        "   back_text, "
+                        "   card_uuid, "
+                        "   created, "
+                        "   modified, "
+                        "   is_deleted, "
+                        "   deck_deck_id, "
+                        "FROM cards "
+                        f"{query_str}",
+                        parameters
+                    )
+                    (
+                        card_id,
+                        front_text,
+                        back_text,
+                        card_uuid,
+                        created,
+                        modified,
+                        is_deleted,
+                        deck_deck_id,
+                    ) = cur.fetchone()
+
+            result = Card(
+                card_id=card_id,
+                front_text=front_text,
+                back_text=back_text,
+                card_uuid=card_uuid,
+                created=created,
+                modified=modified,
+                is_deleted=is_deleted,
+                deck_deck_id=deck_deck_id,
+            )
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def get_card(card_id: int) -> Card:
+        query_str = "WHERE card_id = %(card_id)s " \
+                    "AND is_deleted = false "
+        parameters = {"card_id": card_id}
+
+        card = ControllerDatabase.get_card_by_query(query_str, parameters)
+
+        return card
+
+    @staticmethod
+    def get_deck_cards(deck_id: int) -> List[Card]:
+        """
+        Used for getting a cards from a certain deck
+        :param deck_id: The id of the deck
+        :return: a lists of Card models
+        """
+        cards = []
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT "
+                        "   card_id, "
+                        "   front_text, "
+                        "   back_text, "
+                        "   card_uuid, "
+                        "   created, "
+                        "   modified, "
+                        "   is_deleted, "
+                        "   deck_deck_id "
+                        "FROM cards "
+                        "WHERE deck_deck_id = %(deck_deck_id)s "
+                        "AND is_deleted = false ",
+                        {"deck_deck_id": deck_id}
+                    )
+                    for (
+                        card_id,
+                        front_text,
+                        back_text,
+                        card_uuid,
+                        created,
+                        modified,
+                        is_deleted,
+                        deck_deck_id,
+                    ) in cur.fetchall():
+                        new_card = Card(
+                            card_id=card_id,
+                            front_text=front_text,
+                            back_text=back_text,
+                            card_uuid=card_uuid,
+                            created=created,
+                            modified=modified,
+                            is_deleted=is_deleted,
+                            deck_deck_id=deck_deck_id,
+                        )
+                        cards.append(new_card)
+
+        except Exception as e:
+            logger.exception(e)
+
+        return cards
+
+    @staticmethod
+    def delete_card(card: Card) -> bool:
+        """
+        Used for deleting a card
+        :param card: the card to be deleted
+        :return: bool of weather or not the deletion was successful
+        """
+        result = False
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE cards "
+                        "SET is_deleted = true "
+                        "WHERE (card_id = %(card_id)s AND is_deleted = false) ",
+                        card.to_dict()
+                    )
+                    result = True
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    #  Functions for study_sets table
+    @staticmethod
+    def insert_study_set(study_set: StudySet) -> StudySet:
+        """
+        Used for creating a new study_set
+        :param study_set: the study_set to insert
+        :return: bool of weather or not the insert was successful
+        """
+        result = None
+        result_study_set_id = 0
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO study_sets "
+                        "(creator_user_id, study_set_name, is_public) "
+                        "values (%(creator_user_id)s, %(study_set_name)s, %(is_public)s) "
+                        "RETURNING study_set_id ",
+                        study_set.to_dict()
+                    )
+
+                    if cur.rowcount:
+                        result_study_set_id = cur.fetchone()[0]
+
+        except Exception as e:
+            logger.exception(e)
+
+        if result_study_set_id:
+            result = ControllerDatabase.get_study_set(result_study_set_id)
+
+        return result
+
+    @staticmethod
+    def get_study_set_by_query(query_str: str, parameters: dict) -> StudySet:
+        """
+        Used for getting a study_set with a query
+        :param parameters: A dictionary of values vor the query
+        :param query_str: The WHERE query
+        :return: a StudySet model
+        """
+        result = None
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT "
+                        "   study_set_id, "
+                        "   creator_user_id, "
+                        "   created, "
+                        "   modified, "
+                        "   is_deleted, "
+                        "   study_set_name, "
+                        "   is_public "
+                        "FROM study_sets "
+                        f"{query_str}",
+                        parameters
+                    )
+                    (
+                        study_set_id,
+                        creator_user_id,
+                        created,
+                        modified,
+                        is_deleted,
+                        study_set_name,
+                        is_public,
+                    ) = cur.fetchone()
+
+            result = StudySet(
+                study_set_id=study_set_id,
+                creator_user_id=creator_user_id,
+                created=created,
+                modified=modified,
+                is_deleted=is_deleted,
+                study_set_name=study_set_name,
+                is_public=is_public,
+            )
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def get_study_set(study_set_id: int) -> StudySet:
+        query_str = "WHERE study_set_id = %(study_set_id)s " \
+                    "AND is_deleted = false "
+        parameters = {"study_set_id": study_set_id}
+
+        study_set = ControllerDatabase.get_study_set_by_query(query_str, parameters)
+
+        return study_set
+
+    @staticmethod
+    def get_user_study_sets(user_id: int, is_owner: bool = False) -> List[StudySet]:
+        """
+        Used for getting a users study_sets
+        :param user_id: The id of the user
+        :param is_owner: Boolean of weather or not to show non-public cards
+        :return: a lists of StudySet models
+        """
+        study_sets = []
+        show_public_str = "AND is_public = true "
+        if is_owner:
+            show_public_str = ""
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT "
+                        "   study_set_id, "
+                        "   creator_user_id, "
+                        "   created, "
+                        "   modified, "
+                        "   is_deleted, "
+                        "   study_set_name, "
+                        "   is_public "
+                        "FROM study_sets "
+                        "WHERE creator_user_id = %(user_id)s "
+                        f"{show_public_str}"
+                        "AND is_deleted = false ",
+                        {"user_id": user_id}
+                    )
+                    for (
+                        study_set_id,
+                        creator_user_id,
+                        created,
+                        modified,
+                        is_deleted,
+                        study_set_name,
+                        is_public,
+                    ) in cur.fetchall():
+                        new_study_sets = StudySet(
+                            study_set_id=study_set_id,
+                            creator_user_id=creator_user_id,
+                            created=created,
+                            modified=modified,
+                            is_deleted=is_deleted,
+                            study_set_name=study_set_name,
+                            is_public=is_public,
+                        )
+                        study_sets.append(new_study_sets)
+
+        except Exception as e:
+            logger.exception(e)
+
+        return study_sets
+
+    @staticmethod
+    def delete_study_set(study_set: StudySet) -> bool:
+        """
+        Used for deleting a study_set
+        :param study_set: the study_set to be deleted
+        :return: bool of weather or not the deletion was successful
+        """
+        result = False
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE study_sets "
+                        "SET is_deleted = true "
+                        "WHERE (study_set_id = %(token_id)s AND is_deleted = false) ",
+                        study_set.to_dict()
+                    )
+                    result = True
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    #  Functions for labels table
+    @staticmethod
+    def insert_label(label: Label) -> Label:
+        """
+        Used for creating a new label
+        :param label: the label to insert
+        :return: bool of weather or not the insert was successful
+        """
+        result = None
+        result_label_id = 0
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO labels "
+                        "(label_id, label_name) "
+                        "values (%(label_id)s, %(label_name)s) "
+                        "RETURNING label_id ",
+                        label.to_dict()
+                    )
+
+                    if cur.rowcount:
+                        result_label_id = cur.fetchone()[0]
+
+        except Exception as e:
+            logger.exception(e)
+
+        if result_label_id:
+            result = ControllerDatabase.get_label(result_label_id)
+
+        return result
+
+    @staticmethod
+    def get_label_by_query(query_str: str, parameters: dict) -> Label:
+        """
+        Used for getting a label with a query
+        :param parameters: A dictionary of values vor the query
+        :param query_str: The WHERE query
+        :return: a Label model
+        """
+        result = None
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT "
+                        "   label_id, "
+                        "   label_name, "
+                        "   modified, "
+                        "   created, "
+                        "   is_deleted "
+                        "FROM labels "
+                        f"{query_str}",
+                        parameters
+                    )
+                    (
+                        label_id,
+                        label_name,
+                        modified,
+                        created,
+                        is_deleted,
+                    ) = cur.fetchone()
+
+            result = Label(
+                label_id=label_id,
+                label_name=label_name,
+                modified=modified,
+                created=created,
+                is_deleted=is_deleted,
+            )
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def get_label(label_id: int) -> Label:
+        query_str = "WHERE label_id = %(label_id)s " \
+                    "AND is_deleted = false "
+        parameters = {"label_id": label_id}
+
+        user = ControllerDatabase.get_label_by_query(query_str, parameters)
+
+        return user
+
+    @staticmethod
+    def delete_label(label: Label) -> bool:
+        """
+        Used for deleting a label
+        :param label: the label to be deleted
+        :return: bool of weather or not the deletion was successful
+        """
+        result = False
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE labels "
+                        "SET is_deleted = true "
+                        "WHERE (label_id = %(label_id)s AND is_deleted = false) ",
+                        label.to_dict()
+                    )
+                    result = True
         except Exception as e:
             logger.exception(e)
 
