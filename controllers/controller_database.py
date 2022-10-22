@@ -8,6 +8,7 @@ from loguru import logger
 
 
 class ControllerDatabase:
+    #  Functions for users table
     @staticmethod
     def insert_user(user: User) -> User:
         """
@@ -221,6 +222,31 @@ class ControllerDatabase:
         return result
 
     @staticmethod
+    def set_user_email_verified(user: User) -> bool:
+        """
+        Used for verifying a users email
+        :param user: the user whose email must be verified
+        :return: bool of weather or not the update was successful
+        """
+        result = False
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE users "
+                        "SET email_verified = true "
+                        "WHERE (user_id = %(user_id)s AND is_deleted = false) ",
+                        user.to_dict()
+                    )
+                    result = True
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    #  Functions for tokens table
+    @staticmethod
     def get_token_by_query(query_str: str, parameters: dict) -> Token:
         """
         Used for getting a session token with a query
@@ -325,30 +351,7 @@ class ControllerDatabase:
 
         return result
 
-    @staticmethod
-    def set_user_email_verified(user: User) -> bool:
-        """
-        Used for verifying a users email
-        :param user: the user whose email must be verified
-        :return: bool of weather or not the update was successful
-        """
-        result = False
-
-        try:
-            with CommonUtils.connection() as conn:
-                with conn.cursor() as cur:
-                    cur.execute(
-                        "UPDATE users "
-                        "SET email_verified = true "
-                        "WHERE (user_id = %(user_id)s AND is_deleted = false) ",
-                        user.to_dict()
-                    )
-                    result = True
-        except Exception as e:
-            logger.exception(e)
-
-        return result
-
+    #  Functions for friend_requests table
     @staticmethod
     def get_friend_request_by_query(query_str: str, parameters: dict) -> FriendRequest:
         """
