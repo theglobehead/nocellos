@@ -10,7 +10,10 @@ from loguru import logger
 from controllers.constants import ADMIN_EMAIL, ADMIN_EMAIL_PASSWORD, SERVER_NAME, ADMIN_EMAIL_USERNAME
 from controllers.controller_database import ControllerDatabase
 from controllers.controller_user import ControllerUser
+from models.card import Card
+from models.deck import Deck
 from models.friend_request import FriendRequest
+from models.study_set import StudySet
 from web.register_page import validate_form
 
 app = FastAPI()
@@ -173,6 +176,80 @@ def load_searched_users(
     )
 
     return result
+
+
+@app.post("/create_study_set", status_code=status.HTTP_200_OK)
+def create_study_set(
+        response: Response,
+        user_uuid: str = Form(...),
+        study_set_name: str = Form(...),
+        is_public: bool = Form(...),
+):
+    """
+    Ajax endpoint for getting searched users
+    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    """
+    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+
+    study_set = StudySet(
+        creator_user_id=user_id,
+        is_public=is_public,
+        study_set_name=study_set_name,
+    )
+
+    study_set = ControllerDatabase.insert_study_set(study_set)
+
+    if not study_set:
+        response.status_code = status.HTTP_500
+
+
+@app.post("/create_deck", status_code=status.HTTP_200_OK)
+def create_deck(
+        response: Response,
+        user_uuid: str = Form(...),
+        deck_name: str = Form(...),
+        is_public: bool = Form(...),
+):
+    """
+    Ajax endpoint for getting searched users
+    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    """
+    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+
+    deck = Deck(
+        creator_user_id=user_id,
+        is_public=is_public,
+        deck_name=deck_name,
+    )
+
+    deck = ControllerDatabase.insert_deck(deck)
+
+    if not deck:
+        response.status_code = status.HTTP_500
+
+
+@app.post("/create_card", status_code=status.HTTP_200_OK)
+def create_card(
+        response: Response,
+        front_text: str = Form(...),
+        back_text: str = Form(...),
+        deck_id: int = Form(...),
+):
+    """
+    Ajax endpoint for getting searched users
+    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    """
+
+    card = Card(
+        front_text=front_text,
+        back_text=back_text,
+        deck_deck_id=deck_id,
+    )
+
+    card = ControllerDatabase.insert_card(card)
+
+    if not card:
+        response.status_code = status.HTTP_500
 
 
 if __name__ == "__main__":
