@@ -504,6 +504,64 @@ class ControllerDatabase:
         return result
 
     @staticmethod
+    def get_user_friend_requests(user_id, is_accepted: bool) -> List[FriendRequest]:
+        """
+        Used for getting friend_requests of a user.
+        :param user_id: The id of the user
+        :param is_accepted: If true, it gets the users friends
+        :return: A list of FriendRequest objects
+        """
+        friend_requests = []
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT "
+                        "   friend_request_id, "
+                        "   sender_user_id, "
+                        "   receiver_user_id, "
+                        "   is_accepted, "
+                        "   modified, "
+                        "   created, "
+                        "   is_deleted, "
+                        "   friend_request_uuid "
+                        "FROM friend_requests "
+                        "WHERE (sender_user_id = %(user_id)s "
+                        "OR receiver_user_id = %(user_id)s) "
+                        "AND is_deleted = false "
+                        "AND is_accepted = %(is_accepted)s ",
+                        {
+                            "user_id": user_id,
+                            "is_accepted": is_accepted,
+                        }
+                    )
+                    for (
+                        friend_request_id,
+                        sender_user_id,
+                        receiver_user_id,
+                        is_accepted,
+                        modified,
+                        created,
+                        is_deleted,
+                        friend_request_uuid,
+                    ) in cur.fetchall():
+                        friend_requests.append(FriendRequest(
+                            friend_request_id,
+                            sender_user_id=sender_user_id,
+                            receiver_user_id=receiver_user_id,
+                            is_accepted=is_accepted,
+                            modified=modified,
+                            created=created,
+                            is_deleted=is_deleted,
+                            friend_request_uuid=friend_request_uuid,
+                        ))
+        except Exception as e:
+            logger.exception(e)
+
+        return friend_requests
+
+    @staticmethod
     def get_friend_request_id_by_uuid(friend_request_uuid: str) -> int:
         """
         Used for getting the id of a friend request

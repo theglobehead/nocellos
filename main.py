@@ -132,6 +132,35 @@ def get_deck_cards(
     return {"cards": cards}
 
 
+@app.get("/get_user_friend_requests", status_code=status.HTTP_200_OK)
+def get_user_friend_requests(
+        user_uuid: str = Form(...),
+        is_accepted: bool = Form(...),
+):
+    """
+    Ajax endpoint for getting a users friend_requests.
+    It gets them from the friend_requests table.
+    Can also be used to get a users friends, if is_accepted is true
+    :param user_uuid: the uuid of the user
+    :param is_accepted: Are the friend requests accepted
+    :return: A list of dictionaries. Check below
+    """
+    friend_requests = []
+    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+
+    for friend_request in ControllerDatabase.get_user_friend_requests(user_id=user_id, is_accepted=is_accepted):
+        sender_user = ControllerDatabase.get_user(friend_request.sender_user_id)
+        receiver_user = ControllerDatabase.get_user(friend_request.receiver_user_id)
+
+        friend_requests.append({
+            "friend_request_uuid": friend_request.friend_request_uuid,
+            "sender_user_uuid": sender_user.user_uuid,
+            "receiver_user_uuid": receiver_user.user_uuid,
+        })
+
+    return {"friend_requests": friend_requests}
+
+
 @app.post("/register_user", status_code=status.HTTP_201_CREATED)
 async def register_user(
         response: Response,
