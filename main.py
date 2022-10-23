@@ -45,13 +45,112 @@ jinja_env = Environment(
 )
 
 
+@app.get("/load_searched_users", status_code=status.HTTP_200_OK)
+def load_searched_users(
+        search_phrase: str = Form(...),
+        search_page: int = Form(...),
+):
+    """
+    Ajax endpoint for getting searched users
+    :return: A list of dictionaries {
+        "user_uuid": Str of the users uuid,
+        "user_name": Str of the users name,
+        "random_id": Int of the 4 random numbers "username #1234",
+    }
+    """
+
+    result = ControllerDatabase.load_searched_users(
+        search_phrase=search_phrase,
+        search_page=search_page
+    )
+
+    return result
+
+
+@app.get("/get_user_study_sets", status_code=status.HTTP_200_OK)
+def get_user_study_sets(
+        user_uuid: str = Form(...),
+):
+    """
+    Ajax endpoint for getting a users study sets
+    :return: A list of dictionaries. Check below
+    """
+    study_sets = []
+    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+
+    for study_set in ControllerDatabase.get_user_study_sets(user_id):
+        study_sets.append({
+            "study_set_name": study_set.study_set_name,
+            "study_set_uuid": study_set.study_set_uuid,
+            "deck_count": study_set.deck_count,
+            "labels": ControllerLabels.labels_to_dict(labels=study_set.labels),
+        })
+
+    return {"study_sets": study_sets}
+
+
+@app.get("/get_user_decks", status_code=status.HTTP_200_OK)
+def get_user_decks(
+        user_uuid: str = Form(...),
+):
+    """
+    Ajax endpoint for getting a users decks
+    :return: A list of dictionaries. Check below
+    """
+    decks = []
+    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+
+    for deck in ControllerDatabase.get_user_decks(user_id):
+        decks.append({
+            "deck_name": deck.deck_name,
+            "deck_uuid": deck.deck_uuid,
+            "card_count": deck.card_count,
+            "labels": ControllerLabels.labels_to_dict(labels=deck.labels),
+        })
+
+    return {"decks": decks}
+
+
+@app.get("/get_deck_cards", status_code=status.HTTP_200_OK)
+def get_deck_cards(
+        deck_uuid: str = Form(...),
+):
+    """
+    Ajax endpoint for getting cards in a deck
+    :return: A list of dictionaries. Check below
+    """
+    cards = []
+    deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
+
+    for card in ControllerDatabase.get_deck_cards(deck.id):
+        cards.append({
+            "card_uuid": card.card_uuid,
+            "front_text": card.front_text,
+            "back_text": card.back_text,
+        })
+
+    return {"cards": cards}
+
+
 @app.post("/register_user", status_code=status.HTTP_201_CREATED)
 async def register_user(
+        response: Response,
         email: str = Form(""),
         name: str = Form(""),
         password1: str = Form(""),
         password2: str = Form(""),
 ):
+    """
+    Used for registering a new user.
+    Creates a new user with unverified email.
+    Sends confirmation message to the provided email
+    :param response: The fastapi response
+    :param email: The email
+    :param name: The name
+    :param password1: The first password
+    :param password2: The second password (must be the same as the first)
+    :return: HTTP_201_CREATED
+    """
     form_is_valid = validate_form(
         email=email,
         name=name,
@@ -75,13 +174,15 @@ async def register_user(
             fm = FastMail(email_conf)
             await fm.send_message(message)
         except Exception as e:
+            response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             logger.exception(e)
 
 
-@app.get("/verify_email/{user_uuid}")
+@app.post("/verify_email/{user_uuid}")
 async def verify_email(user_uuid: str):
     """
-    Used for verifying a users email
+    Used for verifying a users email.
+    Sets is_email_verified in the bd to true.
     :user_uuid: the uuid of the user
     :return: Sends the user to the login view
     """
@@ -97,6 +198,14 @@ def login(
         password: str = Form(...),
         remember_me: bool = Form(...)
 ):
+    """
+    Used for logging a user in.
+    :param response: the fastapi response
+    :param email: user email
+    :param password: user password
+    :param remember_me: bool of weather or not to remember the user
+    :return: dict of user_uuid and token_uuid. Token_uuid is "" if remember_me = false
+    """
     result = {}
     user = ControllerUser.log_user_in(email, password, remember_me)
 
@@ -117,7 +226,8 @@ def send_friend_request(
 ):
     """
     Used for verifying a users email
-    :user_uuid: the uuid of the user
+    :param user_uuid: the uuid of the user
+    :param receiver_user_uuid: the uuid of the request receiver user
     :return: Sends the user to the login view
     """
     sender_user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
@@ -137,6 +247,7 @@ def accept_friend_request(
 ):
     """
     Ajax endpoint for accepting a friend request
+    :param friend_request_uuid: the uuid of the friend request
     :return: "", http.HTTPStatus.NO_CONTENT
     """
     friend_request_id = ControllerDatabase.get_friend_request_id_by_uuid(friend_request_uuid)
@@ -144,39 +255,6 @@ def accept_friend_request(
     ControllerDatabase.accept_friend_request(
         FriendRequest(friend_request_id=friend_request_id)
     )
-
-
-@app.post("/remove_friend_request", status_code=status.HTTP_200_OK)
-def remove_friend_request(
-        friend_request_uuid: str = Form(...),
-):
-    """
-    Ajax endpoint for removing a friend request
-    :return: "", http.HTTPStatus.NO_CONTENT
-    """
-    friend_request_id = ControllerDatabase.get_friend_request_id_by_uuid(friend_request_uuid)
-
-    ControllerDatabase.delete_friend_request(
-        FriendRequest(friend_request_id=friend_request_id)
-    )
-
-
-@app.post("/load_searched_users", status_code=status.HTTP_200_OK)
-def load_searched_users(
-        search_phrase: str = Form(...),
-        search_page: int = Form(...),
-):
-    """
-    Ajax endpoint for getting searched users
-    :return: A list of dictionaries containing the user_uuid, user_name and random_id
-    """
-
-    result = ControllerDatabase.load_searched_users(
-        search_phrase=search_phrase,
-        search_page=search_page
-    )
-
-    return result
 
 
 @app.post("/create_study_set", status_code=status.HTTP_200_OK)
@@ -187,8 +265,12 @@ def create_study_set(
         is_public: bool = Form(...),
 ):
     """
-    Ajax endpoint for getting searched users
-    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    Ajax endpoint for creating a new study set
+    :param response: the fastapi response
+    :param user_uuid: the uuid of the user
+    :param study_set_name: the name of the study set to be created
+    :param is_public: bool of weather or not the study set is publicly available
+    :return: HTTP_200_OK ot HTTP_500
     """
     user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
 
@@ -212,8 +294,12 @@ def create_deck(
         is_public: bool = Form(...),
 ):
     """
-    Ajax endpoint for getting searched users
-    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    Ajax endpoint for creating a deck
+    :param response: the fastapi response
+    :param user_uuid: the uuid of the user
+    :param deck_name: the name of the deck
+    :param is_public: bool of weather or not the deck is public
+    :return: HTTP_200_OK or HTTP_500
     """
     user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
 
@@ -237,8 +323,12 @@ def create_card(
         deck_id: int = Form(...),
 ):
     """
-    Ajax endpoint for getting searched users
-    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    Ajax endpoint for creating a card in a deck
+    :param response: a fastapi response
+    :param front_text: the card prompt
+    :param back_text: the card answer
+    :param deck_id: the id of the deck where the card is in
+    :return: HTTP_200_OK or HTTP_500
     """
 
     card = Card(
@@ -253,71 +343,6 @@ def create_card(
         response.status_code = status.HTTP_500
 
 
-@app.post("/get_user_study_sets", status_code=status.HTTP_200_OK)
-def get_user_study_sets(
-        user_uuid: str = Form(...),
-):
-    """
-    Ajax endpoint for getting searched users
-    :return: A list of dictionaries containing the user_uuid, user_name and random_id
-    """
-    study_sets = []
-    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
-
-    for study_set in ControllerDatabase.get_user_study_sets(user_id):
-        study_sets.append({
-            "study_set_name": study_set.study_set_name,
-            "study_set_uuid": study_set.study_set_uuid,
-            "deck_count": study_set.deck_count,
-            "labels": ControllerLabels.labels_to_dict(labels=study_set.labels),
-        })
-
-    return {"study_sets": study_sets}
-
-
-@app.post("/get_user_decks", status_code=status.HTTP_200_OK)
-def get_user_decks(
-        user_uuid: str = Form(...),
-):
-    """
-    Ajax endpoint for getting searched users
-    :return: A list of dictionaries containing the user_uuid, user_name and random_id
-    """
-    decks = []
-    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
-
-    for deck in ControllerDatabase.get_user_decks(user_id):
-        decks.append({
-            "deck_name": deck.deck_name,
-            "deck_uuid": deck.deck_uuid,
-            "card_count": deck.card_count,
-            "labels": ControllerLabels.labels_to_dict(labels=deck.labels),
-        })
-
-    return {"decks": decks}
-
-
-@app.post("/get_deck_cards", status_code=status.HTTP_200_OK)
-def get_deck_cards(
-        deck_uuid: str = Form(...),
-):
-    """
-    Ajax endpoint for getting searched users
-    :return: A list of dictionaries containing the user_uuid, user_name and random_id
-    """
-    cards = []
-    deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
-
-    for card in ControllerDatabase.get_deck_cards(deck.id):
-        cards.append({
-            "card_uuid": card.card_uuid,
-            "front_text": card.front_text,
-            "back_text": card.back_text,
-        })
-
-    return {"cards": cards}
-
-
 @app.post("/add_label_to_deck", status_code=status.HTTP_200_OK)
 def add_label_to_deck(
         response: Response,
@@ -325,8 +350,12 @@ def add_label_to_deck(
         label_name: str = Form(...),
 ):
     """
-    Ajax endpoint for getting searched users
-    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    Ajax endpoint for adding a label to a deck.
+    If the label doesn't yet exist, it is created.
+    :param response: a fastapi response
+    :param deck_uuid: the uuid of the deck
+    :param label_name: the name of the label
+    :return: HTTP_200_OK or HTTP_500
     """
     deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
     is_successful = ControllerDatabase.add_label_to_study_set(deck.id, label_name)
@@ -342,14 +371,32 @@ def add_label_to_study_set(
         label_name: str = Form(...),
 ):
     """
-    Ajax endpoint for getting searched users
-    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    Ajax endpoint for adding a label to a study set
+    :param response: a fastapi response
+    :param study_set_uuid: the uuid of the study_set
+    :param label_name: the name of the label
+    :return: HTTP_200_OK or HTTP_500
     """
     study_set = ControllerDatabase.get_deck_by_uuid(study_set_uuid)
     is_successful = ControllerDatabase.add_label_to_study_set(study_set.id, label_name)
 
     if not is_successful:
         response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+
+@app.delete("/remove_friend_request", status_code=status.HTTP_200_OK)
+def remove_friend_request(
+        friend_request_uuid: str = Form(...),
+):
+    """
+    Ajax endpoint for removing a friend request
+    :return: HTTP_200_OK or HTTP_500
+    """
+    friend_request_id = ControllerDatabase.get_friend_request_id_by_uuid(friend_request_uuid)
+
+    ControllerDatabase.delete_friend_request(
+        FriendRequest(friend_request_id=friend_request_id)
+    )
 
 
 if __name__ == "__main__":
