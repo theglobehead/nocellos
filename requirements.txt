@@ -24,3 +24,4 @@ uvloop==0.16.0
 watchfiles==0.16.1
 websockets==10.3
 fastapi_mail==1.2.0
+python-multipart
