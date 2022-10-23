@@ -384,12 +384,41 @@ def add_label_to_study_set(
         response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
 
 
+@app.post("/edit_card", status_code=status.HTTP_200_OK)
+def edit_card(
+        response: Response,
+        front_text: str = Form(...),
+        back_text: str = Form(...),
+        card_uuid: str = Form(...),
+):
+    """
+    Ajax endpoint for editing a card
+    :param response: a fastapi response
+    :param front_text: the card prompt
+    :param back_text: the card answer
+    :param card_uuid: the uuid of the card
+    :return: HTTP_200_OK or HTTP_500
+    """
+
+    card = Card(
+        front_text=front_text,
+        back_text=back_text,
+        card_uuid=card_uuid,
+    )
+
+    card = ControllerDatabase.edit_card(card)
+
+    if not card:
+        response.status_code = status.HTTP_500
+
+
 @app.delete("/remove_friend_request", status_code=status.HTTP_200_OK)
 def remove_friend_request(
         friend_request_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for removing a friend request
+    :param friend_request_uuid: uuid of the friend_request
     :return: HTTP_200_OK or HTTP_500
     """
     friend_request_id = ControllerDatabase.get_friend_request_id_by_uuid(friend_request_uuid)
@@ -397,6 +426,45 @@ def remove_friend_request(
     ControllerDatabase.delete_friend_request(
         FriendRequest(friend_request_id=friend_request_id)
     )
+
+
+@app.delete("/remove_card", status_code=status.HTTP_200_OK)
+def remove_card(
+        card_uuid: str = Form(...),
+):
+    """
+    Ajax endpoint for removing a card
+    :param card_uuid: uuid of the card
+    :return: HTTP_200_OK or HTTP_500
+    """
+    card = ControllerDatabase.get_card_by_uuid(card_uuid)
+    ControllerDatabase.delete_card(card)
+
+
+@app.delete("/remove_deck", status_code=status.HTTP_200_OK)
+def remove_deck(
+        deck_uuid: str = Form(...),
+):
+    """
+    Ajax endpoint for removing a deck
+    :param deck_uuid: uuid of the deck
+    :return: HTTP_200_OK or HTTP_500
+    """
+    deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
+    ControllerDatabase.delete_deck(deck)
+
+
+@app.delete("/remove_study_set", status_code=status.HTTP_200_OK)
+def remove_study_set(
+        study_set_uuid: str = Form(...),
+):
+    """
+    Ajax endpoint for removing a study_set
+    :param study_set_uuid: uuid of the study_set
+    :return: HTTP_200_OK or HTTP_500
+    """
+    study_set = ControllerDatabase.get_study_set_by_uuid(study_set_uuid)
+    ControllerDatabase.delete_study_set(study_set)
 
 
 if __name__ == "__main__":

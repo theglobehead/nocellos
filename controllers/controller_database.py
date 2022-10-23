@@ -850,6 +850,16 @@ class ControllerDatabase:
         return card
 
     @staticmethod
+    def get_card_by_uuid(card_uuid: str) -> Card:
+        query_str = "WHERE card_uuid = %(card_uuid)s " \
+                    "AND is_deleted = false "
+        parameters = {"card_uuid": card_uuid}
+
+        card = ControllerDatabase.get_card_by_query(query_str, parameters)
+
+        return card
+
+    @staticmethod
     def get_deck_cards(deck_id: int) -> List[Card]:
         """
         Used for getting a cards from a certain deck
@@ -921,6 +931,35 @@ class ControllerDatabase:
                         card.to_dict()
                     )
                     result = True
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def edit_card(card: Card) -> Card:
+        """
+        Used for getting a card with a query
+        :param card: Card model. Used for getting the card_uuid, front_text, back_text
+        :return: a Card model
+        """
+        result = None
+        card_id = 0
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE cards "
+                        "SET front_text = %(front_text)s, back_text = %(back_text)s "
+                        "WHERE card_uuid = %(card_uuid)s "
+                        "OR card_id = %(card_id)s "
+                        "RETURNING card_id ",
+                        card.to_dict()
+                    )
+
+                    (card_id, ) = cur.fetchone()
+            result = ControllerDatabase.get_card(card_id)
         except Exception as e:
             logger.exception(e)
 
@@ -1013,6 +1052,16 @@ class ControllerDatabase:
         query_str = "WHERE study_set_id = %(study_set_id)s " \
                     "AND is_deleted = false "
         parameters = {"study_set_id": study_set_id}
+
+        study_set = ControllerDatabase.get_study_set_by_query(query_str, parameters)
+
+        return study_set
+
+    @staticmethod
+    def get_study_set_by_uuid(study_set_uuid: str) -> StudySet:
+        query_str = "WHERE study_set_uuid = %(study_set_uuid)s " \
+                    "AND is_deleted = false "
+        parameters = {"study_set_uuid": study_set_uuid}
 
         study_set = ControllerDatabase.get_study_set_by_query(query_str, parameters)
 
