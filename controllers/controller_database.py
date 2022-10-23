@@ -1126,6 +1126,7 @@ class ControllerDatabase:
         """
         result = None
         result_label_id = 0
+
         try:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
@@ -1197,6 +1198,16 @@ class ControllerDatabase:
         query_str = "WHERE label_id = %(label_id)s " \
                     "AND is_deleted = false "
         parameters = {"label_id": label_id}
+
+        user = ControllerDatabase.get_label_by_query(query_str, parameters)
+
+        return user
+
+    @staticmethod
+    def get_label_by_name(label_name: str) -> Label:
+        query_str = "WHERE label_name = %(label_name)s " \
+                    "AND is_deleted = false "
+        parameters = {"label_name": label_name}
 
         user = ControllerDatabase.get_label_by_query(query_str, parameters)
 
@@ -1277,3 +1288,56 @@ class ControllerDatabase:
             labels.append(new_label)
 
         return labels
+
+    @staticmethod
+    def add_label_to_deck(deck_id: int, label_name: str) -> bool:
+        result = False
+
+        label = ControllerDatabase.insert_label(Label(label_name=label_name))
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO labels_in_decks "
+                        "(label_label_id, deck_deck_id) "
+                        "values (%(label_id)s, %(deck_id)s) ",
+                        {
+                            "label_id": label.id,
+                            "deck_id": deck_id,
+                        }
+                    )
+
+                    result = True
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
+    @staticmethod
+    def add_label_to_study_set(study_set_id: int, label_name: str) -> bool:
+        result = False
+
+        label = ControllerDatabase.get_label_by_name(label_name)
+
+        if not label or (label and not label.label_id):
+            label = ControllerDatabase.insert_label(Label(label_name=label_name))
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO labels_in_study_sets "
+                        "(label_label_id, study_set_study_set_id) "
+                        "values (%(label_id)s, %(study_set_id)s) ",
+                        {
+                            "label_id": label.id,
+                            "study_set_id": study_set_id,
+                        }
+                    )
+
+                    result = True
+        except Exception as e:
+            logger.exception(e)
+
+        return result

@@ -318,6 +318,40 @@ def get_deck_cards(
     return {"cards": cards}
 
 
+@app.post("/add_label_to_deck", status_code=status.HTTP_200_OK)
+def add_label_to_deck(
+        response: Response,
+        deck_uuid: str = Form(...),
+        label_name: str = Form(...),
+):
+    """
+    Ajax endpoint for getting searched users
+    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    """
+    deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
+    is_successful = ControllerDatabase.add_label_to_deck(deck.id, label_name)
+
+    if not is_successful:
+        response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+
+@app.post("/add_label_to_deck", status_code=status.HTTP_200_OK)
+def add_label_to_deck(
+        response: Response,
+        study_set_uuid: str = Form(...),
+        label_name: str = Form(...),
+):
+    """
+    Ajax endpoint for getting searched users
+    :return: A list of dictionaries containing the user_uuid, user_name and random_id
+    """
+    study_set = ControllerDatabase.get_deck_by_uuid(study_set_uuid)
+    is_successful = ControllerDatabase.add_label_to_study_set(study_set.id, label_name)
+
+    if not is_successful:
+        response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+
 if __name__ == "__main__":
     logger.add("./logs/{time:YYYY-MM-DD}.log", colorize=True, rotation="00:00")
     uvicorn.run(app='main:app', reload=True)
