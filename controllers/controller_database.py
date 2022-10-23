@@ -1,7 +1,5 @@
 from typing import List, Dict
 
-from psycopg2 import cursor
-
 from models.card import Card
 from models.deck import Deck
 from models.friend_request import FriendRequest
@@ -711,7 +709,13 @@ class ControllerDatabase:
         return decks
 
     @staticmethod
-    def get_deck_card_count_w_cur(cur: cursor, deck_id: int) -> int:
+    def get_deck_card_count_w_cur(cur, deck_id: int) -> int:
+        """
+        Used for counting cards in a deck
+        :param cur: psycopg2 cursor
+        :param deck_id: id of the deck
+        :return: count of non deleted cards in the deck
+        """
         count = 0
         cur.execute(
             "SELECT COUNT(*) "
@@ -1077,14 +1081,21 @@ class ControllerDatabase:
         return study_sets
 
     @staticmethod
-    def get_study_set_deck_count(cur: cursor, study_set_id: int) -> int:
+    def get_study_set_deck_count(cur, study_set_id: int) -> int:
+        """
+        Used for counting deck in a study set
+        :param cur: psycopg2 cursor
+        :param study_set_id: id of the study_set
+        :return: count of non deleted decks in the study set
+        """
         count = 0
 
         cur.execute(
             "SELECT COUNT(*) "
             "FROM decks "
             "WHERE study_set_study_set_id = %(study_set_id)s "
-            "AND is_deleted = false "
+            "AND is_deleted = false ",
+            {"study_set_id": study_set_id}
         )
 
         if cur.rowcount:
@@ -1238,7 +1249,13 @@ class ControllerDatabase:
         return result
 
     @staticmethod
-    def get_deck_labels_w_cur(cur: cursor, deck_id: int) -> List[Label]:
+    def get_deck_labels_w_cur(cur, deck_id: int) -> List[Label]:
+        """
+        Used for getting the labels in a deck
+        :param cur: psycopg2 cursor
+        :param deck_id: the id of the deck
+        :return: A list of label objects belonging to the deck
+        """
         labels = []
 
         cur.execute(
@@ -1264,7 +1281,13 @@ class ControllerDatabase:
         return labels
 
     @staticmethod
-    def get_study_set_labels_w_cur(cur: cursor, study_set_id: int) -> List[Label]:
+    def get_study_set_labels_w_cur(cur, study_set_id: int) -> List[Label]:
+        """
+        Used for getting the labels in a study_set
+        :param cur: psycopg2 cursor
+        :param study_set_id: the id of the study_set
+        :return: A list of label objects belonging to the study_set
+        """
         labels = []
 
         cur.execute(

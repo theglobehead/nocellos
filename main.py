@@ -329,14 +329,14 @@ def add_label_to_deck(
     :return: A list of dictionaries containing the user_uuid, user_name and random_id
     """
     deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
-    is_successful = ControllerDatabase.add_label_to_deck(deck.id, label_name)
+    is_successful = ControllerDatabase.add_label_to_study_set(deck.id, label_name)
 
     if not is_successful:
         response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
 
 
-@app.post("/add_label_to_deck", status_code=status.HTTP_200_OK)
-def add_label_to_deck(
+@app.post("/add_label_to_study_set", status_code=status.HTTP_200_OK)
+def add_label_to_study_set(
         response: Response,
         study_set_uuid: str = Form(...),
         label_name: str = Form(...),
