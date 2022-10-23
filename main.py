@@ -71,7 +71,7 @@ def load_searched_users(
 @app.post("/get_user_study_sets", status_code=status.HTTP_200_OK)
 def get_user_study_sets(
         user_uuid: str = Form(...),
-        requester_user_uuid: bool = Form(...),
+        requester_user_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for getting a users study sets
@@ -131,7 +131,7 @@ def get_deck_cards(
     cards = []
     deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
 
-    for card in ControllerDatabase.get_deck_cards(deck.id):
+    for card in ControllerDatabase.get_deck_cards(deck.deck_id):
         cards.append({
             "card_uuid": card.card_uuid,
             "front_text": card.front_text,
@@ -398,7 +398,7 @@ def add_label_to_deck(
     :return: HTTP_200_OK or HTTP_500
     """
     deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
-    is_successful = ControllerDatabase.add_label_to_study_set(deck.id, label_name)
+    is_successful = ControllerDatabase.add_label_to_deck(deck.deck_id, label_name)
 
     if not is_successful:
         response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -417,8 +417,8 @@ def add_label_to_study_set(
     :param label_name: the name of the label
     :return: HTTP_200_OK or HTTP_500
     """
-    study_set = ControllerDatabase.get_deck_by_uuid(study_set_uuid)
-    is_successful = ControllerDatabase.add_label_to_study_set(study_set.id, label_name)
+    study_set = ControllerDatabase.get_study_set_by_uuid(study_set_uuid)
+    is_successful = ControllerDatabase.add_label_to_study_set(study_set.study_set_id, label_name)
 
     if not is_successful:
         response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR

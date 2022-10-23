@@ -578,7 +578,7 @@ class ControllerDatabase:
                         "FROM friend_requests "
                         "WHERE friend_request_uuid = %(friend_request_uuid)s "
                         "AND is_deleted = false ",
-                        {"friend_request_uuid", friend_request_uuid}
+                        {"friend_request_uuid": friend_request_uuid}
                     )
 
                     if cur.rowcount:
@@ -1231,7 +1231,7 @@ class ControllerDatabase:
                     cur.execute(
                         "UPDATE study_sets "
                         "SET is_deleted = true "
-                        "WHERE (study_set_id = %(token_id)s AND is_deleted = false) ",
+                        "WHERE (study_set_id = %(study_set_id)s AND is_deleted = false) ",
                         study_set.to_dict()
                     )
                     result = True
@@ -1256,8 +1256,8 @@ class ControllerDatabase:
                 with conn.cursor() as cur:
                     cur.execute(
                         "INSERT INTO labels "
-                        "(label_id, label_name) "
-                        "values (%(label_id)s, %(label_name)s) "
+                        "(label_name) "
+                        "values (%(label_name)s) "
                         "RETURNING label_id ",
                         label.to_dict()
                     )
@@ -1297,21 +1297,23 @@ class ControllerDatabase:
                         f"{query_str}",
                         parameters
                     )
-                    (
-                        label_id,
-                        label_name,
-                        modified,
-                        created,
-                        is_deleted,
-                    ) = cur.fetchone()
 
-            result = Label(
-                label_id=label_id,
-                label_name=label_name,
-                modified=modified,
-                created=created,
-                is_deleted=is_deleted,
-            )
+                    if cur.rowcount:
+                        (
+                            label_id,
+                            label_name,
+                            modified,
+                            created,
+                            is_deleted,
+                        ) = cur.fetchone()
+
+                        result = Label(
+                            label_id=label_id,
+                            label_name=label_name,
+                            modified=modified,
+                            created=created,
+                            is_deleted=is_deleted,
+                        )
         except Exception as e:
             logger.exception(e)
 
@@ -1372,7 +1374,7 @@ class ControllerDatabase:
         labels = []
 
         cur.execute(
-            "SELECT label_id, label_name, l.modified, l.created, l.is_deleted "
+            "SELECT DISTINCT label_id, label_name, l.modified, l.created, l.is_deleted "
             "FROM labels AS l "
             "INNER JOIN labels_in_decks AS l_in_d "
             "ON l.label_id = l_in_d.label_label_id "
@@ -1404,7 +1406,7 @@ class ControllerDatabase:
         labels = []
 
         cur.execute(
-            "SELECT label_id, label_name, l.modified, l.created, l.is_deleted "
+            "SELECT DISTINCT label_id, label_name, l.modified, l.created, l.is_deleted "
             "FROM labels AS l "
             "INNER JOIN labels_in_study_sets AS l_in_s "
             "ON l.label_id = l_in_s.label_label_id "
@@ -1429,7 +1431,10 @@ class ControllerDatabase:
     def add_label_to_deck(deck_id: int, label_name: str) -> bool:
         result = False
 
-        label = ControllerDatabase.insert_label(Label(label_name=label_name))
+        label = ControllerDatabase.get_label_by_name(label_name)
+
+        if not label or (label and not label.label_id):
+            label = ControllerDatabase.insert_label(Label(label_name=label_name))
 
         try:
             with CommonUtils.connection() as conn:
@@ -1439,7 +1444,7 @@ class ControllerDatabase:
                         "(label_label_id, deck_deck_id) "
                         "values (%(label_id)s, %(deck_id)s) ",
                         {
-                            "label_id": label.id,
+                            "label_id": label.label_id,
                             "deck_id": deck_id,
                         }
                     )
@@ -1467,7 +1472,7 @@ class ControllerDatabase:
                         "(label_label_id, study_set_study_set_id) "
                         "values (%(label_id)s, %(study_set_id)s) ",
                         {
-                            "label_id": label.id,
+                            "label_id": label.label_id,
                             "study_set_id": study_set_id,
                         }
                     )
