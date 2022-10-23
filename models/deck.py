@@ -5,14 +5,14 @@ from dataclasses_json import dataclass_json
 from pydantic.dataclasses import dataclass
 from datetime import datetime
 
-from models.card import Card
+from models.label import Label
 
 
 @dataclass_json
 @dataclass
 class Deck:
     card_count: int = 0
-    labels: List[Card] = field(default_factory=List)
+    labels: List[Label] = field(default_factory=List)
 
     deck_id: int = 0
     deck_uuid: str = ""

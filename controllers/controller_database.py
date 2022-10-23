@@ -1,5 +1,7 @@
 from typing import List, Dict
 
+from psycopg2 import cursor
+
 from models.card import Card
 from models.deck import Deck
 from models.friend_request import FriendRequest
@@ -695,12 +697,34 @@ class ControllerDatabase:
                             is_in_set=is_in_set,
                             is_public=is_public,
                         )
+                        new_deck.card_count = ControllerDatabase.get_deck_card_count_w_cur(
+                            cur, deck_id
+                        )
+                        new_deck.labels = ControllerDatabase.get_deck_labels_w_cur(
+                            cur, deck_id
+                        )
                         decks.append(new_deck)
 
         except Exception as e:
             logger.exception(e)
 
         return decks
+
+    @staticmethod
+    def get_deck_card_count_w_cur(cur: cursor, deck_id: int) -> int:
+        count = 0
+        cur.execute(
+            "SELECT COUNT(*) "
+            "FROM cards "
+            "WHERE deck_deck_id = %(deck_id)s "
+            "AND is_deleted = false ",
+            {"deck_id": deck_id}
+        )
+
+        if cur.rowcount:
+            (count, ) = cur.fetchone()
+
+        return count
 
     @staticmethod
     def delete_deck(deck: Deck) -> bool:
@@ -1039,12 +1063,34 @@ class ControllerDatabase:
                             study_set_name=study_set_name,
                             is_public=is_public,
                         )
+                        new_study_sets.labels = ControllerDatabase.get_study_set_labels_w_cur(
+                            cur, study_set_id
+                        )
+                        new_study_sets.deck_count = ControllerDatabase.get_study_set_deck_count(
+                            cur, study_set_id
+                        )
                         study_sets.append(new_study_sets)
 
         except Exception as e:
             logger.exception(e)
 
         return study_sets
+
+    @staticmethod
+    def get_study_set_deck_count(cur: cursor, study_set_id: int) -> int:
+        count = 0
+
+        cur.execute(
+            "SELECT COUNT(*) "
+            "FROM decks "
+            "WHERE study_set_study_set_id = %(study_set_id)s "
+            "AND is_deleted = false "
+        )
+
+        if cur.rowcount:
+            (count, ) = cur.fetchone()
+
+        return count
 
     @staticmethod
     def delete_study_set(study_set: StudySet) -> bool:
@@ -1179,3 +1225,55 @@ class ControllerDatabase:
             logger.exception(e)
 
         return result
+
+    @staticmethod
+    def get_deck_labels_w_cur(cur: cursor, deck_id: int) -> List[Label]:
+        labels = []
+
+        cur.execute(
+            "SELECT label_id, label_name, l.modified, l.created, l.is_deleted "
+            "FROM labels AS l "
+            "INNER JOIN labels_in_decks AS l_in_d "
+            "ON l.label_id = l_in_d.label_label_id "
+            "WHERE deck_deck_id = %(deck_id)s "
+            "AND l_in_d.is_deleted = false ",
+            {"deck_id": deck_id}
+        )
+
+        for label_id, label_name, modified, created, is_deleted in cur.fetchall():
+            new_label = Label(
+                label_id=label_id,
+                label_name=label_name,
+                modified=modified,
+                created=created,
+                is_deleted=is_deleted,
+            )
+            labels.append(new_label)
+
+        return labels
+
+    @staticmethod
+    def get_study_set_labels_w_cur(cur: cursor, study_set_id: int) -> List[Label]:
+        labels = []
+
+        cur.execute(
+            "SELECT label_id, label_name, l.modified, l.created, l.is_deleted "
+            "FROM labels AS l "
+            "INNER JOIN labels_in_study_sets AS l_in_s "
+            "ON l.label_id = l_in_s.label_label_id "
+            "WHERE study_set_study_set_id = %(study_set_id)s "
+            "AND l_in_s.is_deleted = false ",
+            {"study_set_id": study_set_id}
+        )
+
+        for label_id, label_name, modified, created, is_deleted in cur.fetchall():
+            new_label = Label(
+                label_id=label_id,
+                label_name=label_name,
+                modified=modified,
+                created=created,
+                is_deleted=is_deleted,
+            )
+            labels.append(new_label)
+
+        return labels

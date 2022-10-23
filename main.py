@@ -9,6 +9,7 @@ from loguru import logger
 
 from controllers.constants import ADMIN_EMAIL, ADMIN_EMAIL_PASSWORD, SERVER_NAME, ADMIN_EMAIL_USERNAME
 from controllers.controller_database import ControllerDatabase
+from controllers.controller_labels import ControllerLabels
 from controllers.controller_user import ControllerUser
 from models.card import Card
 from models.deck import Deck
@@ -267,6 +268,8 @@ def get_user_study_sets(
         study_sets.append({
             "study_set_name": study_set.study_set_name,
             "study_set_uuid": study_set.study_set_uuid,
+            "deck_count": study_set.deck_count,
+            "labels": ControllerLabels.labels_to_dict(labels=study_set.labels),
         })
 
     return {"study_sets": study_sets}
@@ -287,6 +290,8 @@ def get_user_decks(
         decks.append({
             "deck_name": deck.deck_name,
             "deck_uuid": deck.deck_uuid,
+            "card_count": deck.card_count,
+            "labels": ControllerLabels.labels_to_dict(labels=deck.labels),
         })
 
     return {"decks": decks}
