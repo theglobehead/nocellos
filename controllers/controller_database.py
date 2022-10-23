@@ -177,7 +177,7 @@ class ControllerDatabase:
                         "FROM users "
                         "WHERE user_uuid = %(user_uuid)s "
                         "AND is_deleted = false ",
-                        {"user_uuid", user_uuid}
+                        {"user_uuid": user_uuid}
                     )
 
                     if cur.rowcount:
@@ -604,8 +604,8 @@ class ControllerDatabase:
                 with conn.cursor() as cur:
                     cur.execute(
                         "INSERT INTO decks "
-                        "(deck_name, creator_user_id, is_in_set) "
-                        "values (%(deck_name)s, %(creator_user_id)s, %(is_in_set)s) "
+                        "(deck_name, creator_user_id, is_in_set, is_public) "
+                        "values (%(deck_name)s, %(creator_user_id)s, %(is_in_set)s, %(is_public)s) "
                         "RETURNING deck_id ",
                         deck.to_dict()
                     )
@@ -644,7 +644,7 @@ class ControllerDatabase:
                         "   is_deleted, "
                         "   creator_user_id, "
                         "   is_in_set, "
-                        "   is_public, "
+                        "   is_public "
                         "FROM decks "
                         f"{query_str}",
                         parameters
@@ -866,7 +866,7 @@ class ControllerDatabase:
                         "   created, "
                         "   modified, "
                         "   is_deleted, "
-                        "   deck_deck_id, "
+                        "   deck_deck_id "
                         "FROM cards "
                         f"{query_str}",
                         parameters
@@ -1076,7 +1076,8 @@ class ControllerDatabase:
                         "   modified, "
                         "   is_deleted, "
                         "   study_set_name, "
-                        "   is_public "
+                        "   is_public,"
+                        "   study_set_uuid "
                         "FROM study_sets "
                         f"{query_str}",
                         parameters
@@ -1089,6 +1090,7 @@ class ControllerDatabase:
                         is_deleted,
                         study_set_name,
                         is_public,
+                        study_set_uuid,
                     ) = cur.fetchone()
 
             result = StudySet(
@@ -1099,6 +1101,7 @@ class ControllerDatabase:
                 is_deleted=is_deleted,
                 study_set_name=study_set_name,
                 is_public=is_public,
+                study_set_uuid=study_set_uuid,
             )
         except Exception as e:
             logger.exception(e)
@@ -1149,7 +1152,8 @@ class ControllerDatabase:
                         "   modified, "
                         "   is_deleted, "
                         "   study_set_name, "
-                        "   is_public "
+                        "   is_public,"
+                        "   study_set_uuid "
                         "FROM study_sets "
                         "WHERE creator_user_id = %(user_id)s "
                         f"{show_public_str}"
@@ -1164,6 +1168,7 @@ class ControllerDatabase:
                         is_deleted,
                         study_set_name,
                         is_public,
+                        study_set_uuid,
                     ) in cur.fetchall():
                         new_study_sets = StudySet(
                             study_set_id=study_set_id,
@@ -1173,6 +1178,7 @@ class ControllerDatabase:
                             is_deleted=is_deleted,
                             study_set_name=study_set_name,
                             is_public=is_public,
+                            study_set_uuid=study_set_uuid,
                         )
                         new_study_sets.labels = ControllerDatabase.get_study_set_labels_w_cur(
                             cur, study_set_id

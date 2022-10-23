@@ -12,12 +12,12 @@ from models.label import Label
 @dataclass
 class Deck:
     card_count: int = 0
-    labels: List[Label] = field(default_factory=List)
+    labels: List[Label] = field(default_factory=list)
 
     deck_id: int = 0
     deck_uuid: str = ""
     deck_name: str = ""
-    user_user_id: int = 0
+    creator_user_id: int = 0
     is_in_set: bool = False
     is_public: bool = False
     created: datetime = datetime.utcnow()

@@ -12,7 +12,7 @@ from models.label import Label
 @dataclass
 class StudySet:
     deck_count: int = 0
-    labels: List[Label] = field(default_factory=List)
+    labels: List[Label] = field(default_factory=list)
 
     study_set_id: int = 0
     study_set_uuid: str = ""

@@ -45,7 +45,8 @@ jinja_env = Environment(
 )
 
 
-@app.get("/load_searched_users", status_code=status.HTTP_200_OK)
+# These post methods act as get methods, but they have forms
+@app.post("/load_searched_users", status_code=status.HTTP_200_OK)
 def load_searched_users(
         search_phrase: str = Form(...),
         search_page: int = Form(...),
@@ -67,31 +68,37 @@ def load_searched_users(
     return result
 
 
-@app.get("/get_user_study_sets", status_code=status.HTTP_200_OK)
+@app.post("/get_user_study_sets", status_code=status.HTTP_200_OK)
 def get_user_study_sets(
         user_uuid: str = Form(...),
+        requester_user_uuid: bool = Form(...),
 ):
     """
     Ajax endpoint for getting a users study sets
+    :param user_uuid: the uuid of the user whose sets to get
+    :param requester_user_uuid: the uuid of the user who requested it. Will be replaced with token soon
     :return: A list of dictionaries. Check below
     """
     study_sets = []
     user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+    is_owner = requester_user_uuid == user_uuid
 
-    for study_set in ControllerDatabase.get_user_study_sets(user_id):
+    for study_set in ControllerDatabase.get_user_study_sets(user_id, is_owner=is_owner):
         study_sets.append({
             "study_set_name": study_set.study_set_name,
             "study_set_uuid": study_set.study_set_uuid,
             "deck_count": study_set.deck_count,
+            "is_public": study_set.is_public,
             "labels": ControllerLabels.labels_to_dict(labels=study_set.labels),
         })
 
     return {"study_sets": study_sets}
 
 
-@app.get("/get_user_decks", status_code=status.HTTP_200_OK)
+@app.post("/get_user_decks", status_code=status.HTTP_200_OK)
 def get_user_decks(
         user_uuid: str = Form(...),
+        requester_user_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for getting a users decks
@@ -99,19 +106,21 @@ def get_user_decks(
     """
     decks = []
     user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+    is_owner = requester_user_uuid == user_uuid
 
-    for deck in ControllerDatabase.get_user_decks(user_id):
+    for deck in ControllerDatabase.get_user_decks(user_id, is_owner=is_owner):
         decks.append({
             "deck_name": deck.deck_name,
             "deck_uuid": deck.deck_uuid,
             "card_count": deck.card_count,
+            "is_public": deck.is_public,
             "labels": ControllerLabels.labels_to_dict(labels=deck.labels),
         })
 
     return {"decks": decks}
 
 
-@app.get("/get_deck_cards", status_code=status.HTTP_200_OK)
+@app.post("/get_deck_cards", status_code=status.HTTP_200_OK)
 def get_deck_cards(
         deck_uuid: str = Form(...),
 ):
@@ -132,7 +141,7 @@ def get_deck_cards(
     return {"cards": cards}
 
 
-@app.get("/get_user_friend_requests", status_code=status.HTTP_200_OK)
+@app.post("/get_user_friend_requests", status_code=status.HTTP_200_OK)
 def get_user_friend_requests(
         user_uuid: str = Form(...),
         is_accepted: bool = Form(...),
@@ -161,6 +170,7 @@ def get_user_friend_requests(
     return {"friend_requests": friend_requests}
 
 
+# Methods used for posting
 @app.post("/register_user", status_code=status.HTTP_201_CREATED)
 async def register_user(
         response: Response,
@@ -349,21 +359,22 @@ def create_card(
         response: Response,
         front_text: str = Form(...),
         back_text: str = Form(...),
-        deck_id: int = Form(...),
+        deck_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for creating a card in a deck
     :param response: a fastapi response
     :param front_text: the card prompt
     :param back_text: the card answer
-    :param deck_id: the id of the deck where the card is in
+    :param deck_uuid: the uuid of the deck where the card will be in
     :return: HTTP_200_OK or HTTP_500
     """
+    deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
 
     card = Card(
         front_text=front_text,
         back_text=back_text,
-        deck_deck_id=deck_id,
+        deck_deck_id=deck.deck_id,
     )
 
     card = ControllerDatabase.insert_card(card)
@@ -441,6 +452,7 @@ def edit_card(
         response.status_code = status.HTTP_500
 
 
+# Methods used for deleting something
 @app.delete("/remove_friend_request", status_code=status.HTTP_200_OK)
 def remove_friend_request(
         friend_request_uuid: str = Form(...),
