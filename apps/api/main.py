@@ -246,7 +246,7 @@ def login(
     :return: dict of user_uuid and token_uuid. Token_uuid is "" if remember_me = false
     """
     result = {}
-    user = ControllerUser.log_user_in(email, password, remember_me)
+    user = ControllerUser.log_user_in(email, password)
 
     if user and user.email_verified:
         result = {
