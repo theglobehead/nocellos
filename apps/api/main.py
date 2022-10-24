@@ -46,8 +46,8 @@ jinja_env = Environment(
 
 
 # These post methods act as get methods, but they have forms
-@app.post("/load_searched_users", status_code=status.HTTP_200_OK)
-def load_searched_users(
+@app.post("/get_searched_users", status_code=status.HTTP_200_OK)
+def get_searched_users(
         search_phrase: str = Form(...),
         search_page: int = Form(...),
 ):
