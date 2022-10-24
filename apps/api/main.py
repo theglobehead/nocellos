@@ -46,8 +46,8 @@ jinja_env = Environment(
 
 
 # These post methods act as get methods, but they have forms
-@app.post("/load_searched_users", status_code=status.HTTP_200_OK)
-def load_searched_users(
+@app.post("/get_searched_users", status_code=status.HTTP_200_OK)
+def get_searched_users(
         search_phrase: str = Form(...),
         search_page: int = Form(...),
 ):
@@ -246,7 +246,7 @@ def login(
     :return: dict of user_uuid and token_uuid. Token_uuid is "" if remember_me = false
     """
     result = {}
-    user = ControllerUser.log_user_in(email, password, remember_me)
+    user = ControllerUser.log_user_in(email, password)
 
     if user and user.email_verified:
         result = {

@@ -1,6 +1,6 @@
 FROM python:3.9.8-slim
 
-WORKDIR /code
+WORKDIR /src/app
 
 RUN apt-get update \
     && apt-get -y install libpq-dev gcc \

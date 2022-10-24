@@ -51,27 +51,30 @@ class ControllerUser:
         return ControllerDatabase.insert_user(user)
 
     @staticmethod
-    def log_user_in(email: str, password: str, remember_me: bool) -> User | None:
+    def log_user_in(email: str, password: str) -> User | None:
         """
         Used for checking if the user entered valid data, when logging in
         :param email: the email entered
         :param password: the password entered
-        :param remember_me: weather or not to remember the user
         :return: Returns the User, if the form is valid, else it returns false
         """
         result = None
+
+        print("eeeeeeeeeeeeeeeeeeeeeee")
 
         user_email_taken = ControllerDatabase.check_if_user_email_taken(email)
 
         if user_email_taken:
             user = ControllerDatabase.get_user_by_email(email)
-            hashed_password = ControllerUser.hash_password(password, user.password_salt)
 
-            if user.hashed_password == hashed_password:
-                if remember_me:
-                    user.token = ControllerUser.create_token(user)
+            if user:
+                hashed_password = ControllerUser.hash_password(password, user.password_salt)
 
-                result = user
+                if user.hashed_password == hashed_password:
+                    token = ControllerUser.create_token(user)
+                    print(token, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                    user.token = token
+                    result = user
 
         return result
 
