@@ -1479,14 +1479,25 @@ class ControllerDatabase:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "INSERT INTO labels_in_study_sets "
-                        "(label_label_id, study_set_study_set_id) "
-                        "values (%(label_id)s, %(study_set_id)s) ",
-                        {
-                            "label_id": label.label_id,
-                            "study_set_id": study_set_id,
-                        }
+                        "SELECT label_in_study_set_id "
+                        "FROM labels_in_study_sets as l_in_s "
+                        "INNER JOIN labels as l "
+                        "ON l.label_id = l_in_s.label_label_id "
+                        "WHERE label_name = %(label_name)s "
+                        "AND l_in_s.is_deleted = false",
+                        {"label_name": label_name}
                     )
+
+                    if not cur.rowcount:
+                        cur.execute(
+                            "INSERT INTO labels_in_study_sets "
+                            "(label_label_id, study_set_study_set_id) "
+                            "values (%(label_id)s, %(study_set_id)s) ",
+                            {
+                                "label_id": label.label_id,
+                                "study_set_id": study_set_id,
+                            }
+                        )
 
                     result = True
         except Exception as e:
