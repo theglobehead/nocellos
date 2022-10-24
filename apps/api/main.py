@@ -71,17 +71,18 @@ def get_searched_users(
 @app.post("/get_user_study_sets", status_code=status.HTTP_200_OK)
 def get_user_study_sets(
         user_uuid: str = Form(...),
-        requester_user_uuid: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for getting a users study sets
     :param user_uuid: the uuid of the user whose sets to get
-    :param requester_user_uuid: the uuid of the user who requested it. Will be replaced with token soon
+    :param token_uuid: the token_uuid of the user who requested it
     :return: A list of dictionaries. Check below
     """
     study_sets = []
     user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
-    is_owner = requester_user_uuid == user_uuid
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+    is_owner = requester_user_id == user_id and user_id
 
     for study_set in ControllerDatabase.get_user_study_sets(user_id, is_owner=is_owner):
         study_sets.append({
@@ -98,15 +99,18 @@ def get_user_study_sets(
 @app.post("/get_user_decks", status_code=status.HTTP_200_OK)
 def get_user_decks(
         user_uuid: str = Form(...),
-        requester_user_uuid: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for getting a users decks
+    :param user_uuid: the uuid of the user whose sets to get
+    :param token_uuid: the token_uuid of the user who requested it
     :return: A list of dictionaries. Check below
     """
     decks = []
     user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
-    is_owner = requester_user_uuid == user_uuid
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+    is_owner = requester_user_id == user_id and user_id
 
     for deck in ControllerDatabase.get_user_decks(user_id, is_owner=is_owner):
         decks.append({
@@ -122,14 +126,25 @@ def get_user_decks(
 
 @app.post("/get_deck_cards", status_code=status.HTTP_200_OK)
 def get_deck_cards(
+        response: Response,
         deck_uuid: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for getting cards in a deck
+    :param response: The fastapi response
+    :param deck_uuid: uuid of the deck
+    :param token_uuid: the token_uuid of the user who requested it
     :return: A list of dictionaries. Check below
     """
     cards = []
     deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+    
+    # Check if user has permission
+    if requester_user_id != deck.creator_user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
 
     for card in ControllerDatabase.get_deck_cards(deck.deck_id):
         cards.append({
@@ -143,19 +158,29 @@ def get_deck_cards(
 
 @app.post("/get_user_friend_requests", status_code=status.HTTP_200_OK)
 def get_user_friend_requests(
+        response: Response,
         user_uuid: str = Form(...),
         is_accepted: bool = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for getting a users friend_requests.
     It gets them from the friend_requests table.
     Can also be used to get a users friends, if is_accepted is true
+    :param response: The fastapi response
     :param user_uuid: the uuid of the user
     :param is_accepted: Are the friend requests accepted
+    :param token_uuid: the token_uuid of the user who requested it
     :return: A list of dictionaries. Check below
     """
     friend_requests = []
     user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+
+    # Check if user has permission
+    if requester_user_id != user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
 
     for friend_request in ControllerDatabase.get_user_friend_requests(user_id=user_id, is_accepted=is_accepted):
         sender_user = ControllerDatabase.get_user(friend_request.sender_user_id)
@@ -222,7 +247,8 @@ async def verify_email(user_uuid: str):
     """
     Used for verifying a users email.
     Sets is_email_verified in the bd to true.
-    :user_uuid: the uuid of the user
+    :param response: The fastapi response
+    :param user_uuid: the uuid of the user
     :return: Sends the user to the login view
     """
 
@@ -260,17 +286,27 @@ def login(
 
 @app.post("/send_friend_request", status_code=status.HTTP_200_OK)
 def send_friend_request(
+        response: Response,
         user_uuid: str = Form(...),
         receiver_user_uuid: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Used for verifying a users email
+    :param response: The fastapi response
     :param user_uuid: the uuid of the user
     :param receiver_user_uuid: the uuid of the request receiver user
+    :param token_uuid: the token_uuid of the user who requested it
     :return: Sends the user to the login view
     """
     sender_user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
     receiver_user_id = ControllerDatabase.get_user_id_by_uuid(receiver_user_uuid)
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+
+    # Check if user has permission
+    if requester_user_id != sender_user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
 
     friend_request = FriendRequest(
         sender_user_id=sender_user_id,
@@ -282,36 +318,48 @@ def send_friend_request(
 
 @app.post("/accept_friend_request", status_code=status.HTTP_200_OK)
 def accept_friend_request(
+        response: Response,
         friend_request_uuid: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for accepting a friend request
+    :param response: The fastapi response
     :param friend_request_uuid: the uuid of the friend request
+    :param token_uuid: the token_uuid of the user who requested it
     :return: "", http.HTTPStatus.NO_CONTENT
     """
     friend_request_id = ControllerDatabase.get_friend_request_id_by_uuid(friend_request_uuid)
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+    
+    friend_request = ControllerDatabase.get_friend_request(friend_request_id)
+
+    # Check if user has permission
+    if requester_user_id != friend_request.receiver_user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
 
     ControllerDatabase.accept_friend_request(
-        FriendRequest(friend_request_id=friend_request_id)
+        FriendRequest(friend_request)
     )
 
 
 @app.post("/create_study_set", status_code=status.HTTP_200_OK)
 def create_study_set(
         response: Response,
-        user_uuid: str = Form(...),
         study_set_name: str = Form(...),
         is_public: bool = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for creating a new study set
     :param response: the fastapi response
-    :param user_uuid: the uuid of the user
     :param study_set_name: the name of the study set to be created
     :param is_public: bool of weather or not the study set is publicly available
+    :param token_uuid: the token_uuid of the user who requested it
     :return: HTTP_200_OK ot HTTP_500
     """
-    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+    user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
 
     study_set = StudySet(
         creator_user_id=user_id,
@@ -328,19 +376,19 @@ def create_study_set(
 @app.post("/create_deck", status_code=status.HTTP_200_OK)
 def create_deck(
         response: Response,
-        user_uuid: str = Form(...),
         deck_name: str = Form(...),
         is_public: bool = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for creating a deck
     :param response: the fastapi response
-    :param user_uuid: the uuid of the user
     :param deck_name: the name of the deck
     :param is_public: bool of weather or not the deck is public
+    :param token_uuid: the token_uuid of the user who requested it
     :return: HTTP_200_OK or HTTP_500
     """
-    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+    user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
 
     deck = Deck(
         creator_user_id=user_id,
@@ -360,6 +408,7 @@ def create_card(
         front_text: str = Form(...),
         back_text: str = Form(...),
         deck_uuid: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for creating a card in a deck
@@ -367,9 +416,16 @@ def create_card(
     :param front_text: the card prompt
     :param back_text: the card answer
     :param deck_uuid: the uuid of the deck where the card will be in
+    :param token_uuid: the token_uuid of the user who requested it
     :return: HTTP_200_OK or HTTP_500
     """
     deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+
+    # Check if user has permission
+    if requester_user_id != deck.creator_user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
 
     card = Card(
         front_text=front_text,
@@ -388,6 +444,7 @@ def add_label_to_deck(
         response: Response,
         deck_uuid: str = Form(...),
         label_name: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for adding a label to a deck.
@@ -395,9 +452,17 @@ def add_label_to_deck(
     :param response: a fastapi response
     :param deck_uuid: the uuid of the deck
     :param label_name: the name of the label
+    :param token_uuid: the token_uuid of the user who requested it
     :return: HTTP_200_OK or HTTP_500
     """
     deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+
+    # Check if user has permission
+    if requester_user_id != deck.creator_user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
+
     is_successful = ControllerDatabase.add_label_to_deck(deck.deck_id, label_name)
 
     if not is_successful:
@@ -409,15 +474,24 @@ def add_label_to_study_set(
         response: Response,
         study_set_uuid: str = Form(...),
         label_name: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for adding a label to a study set
     :param response: a fastapi response
     :param study_set_uuid: the uuid of the study_set
     :param label_name: the name of the label
+    :param token_uuid: the token_uuid of the user who requested it
     :return: HTTP_200_OK or HTTP_500
     """
     study_set = ControllerDatabase.get_study_set_by_uuid(study_set_uuid)
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+
+    # Check if user has permission
+    if requester_user_id != study_set.creator_user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
+
     is_successful = ControllerDatabase.add_label_to_study_set(study_set.study_set_id, label_name)
 
     if not is_successful:
@@ -430,6 +504,7 @@ def edit_card(
         front_text: str = Form(...),
         back_text: str = Form(...),
         card_uuid: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for editing a card
@@ -437,14 +512,20 @@ def edit_card(
     :param front_text: the card prompt
     :param back_text: the card answer
     :param card_uuid: the uuid of the card
+    :param token_uuid: the token_uuid of the user who requested it
     :return: HTTP_200_OK or HTTP_500
     """
+    card = ControllerDatabase.get_card_by_uuid(card_uuid)
+    card_parent_deck = ControllerDatabase.get_deck(card.deck_deck_id)
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
 
-    card = Card(
-        front_text=front_text,
-        back_text=back_text,
-        card_uuid=card_uuid,
-    )
+    # Check if user has permission
+    if requester_user_id != card_parent_deck.creator_user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
+
+    card.front_text = front_text
+    card.back_text = back_text
 
     card = ControllerDatabase.edit_card(card)
 
@@ -455,56 +536,100 @@ def edit_card(
 # Methods used for deleting something
 @app.delete("/remove_friend_request", status_code=status.HTTP_200_OK)
 def remove_friend_request(
+        response: Response,
         friend_request_uuid: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for removing a friend request
+    :param response: The fastapi response
     :param friend_request_uuid: uuid of the friend_request
+    :param token_uuid: the token_uuid of the user who requested it
     :return: HTTP_200_OK or HTTP_500
     """
-    friend_request_id = ControllerDatabase.get_friend_request_id_by_uuid(friend_request_uuid)
+    friend_request = ControllerDatabase.get_friend_request_by_uuid(friend_request_uuid)
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+
+    # Check if user has permission
+    if requester_user_id not in (friend_request.receiver_user_id, friend_request.sender_user_id):
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
 
     ControllerDatabase.delete_friend_request(
-        FriendRequest(friend_request_id=friend_request_id)
+        FriendRequest(friend_request_id=friend_request.friend_request_id)
     )
 
 
 @app.delete("/remove_card", status_code=status.HTTP_200_OK)
 def remove_card(
+        response: Response,
         card_uuid: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for removing a card
+    :param response: The fastapi response
     :param card_uuid: uuid of the card
+    :param token_uuid: the token_uuid of the user who requested it
     :return: HTTP_200_OK or HTTP_500
     """
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
     card = ControllerDatabase.get_card_by_uuid(card_uuid)
+    card_parent_deck = ControllerDatabase.get_deck(card.deck_deck_id)
+
+    # Check if user has permission
+    if requester_user_id != card_parent_deck.creator_user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
+    
     ControllerDatabase.delete_card(card)
 
 
 @app.delete("/remove_deck", status_code=status.HTTP_200_OK)
 def remove_deck(
+        response: Response,
         deck_uuid: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for removing a deck
+    :param response: The fastapi response
     :param deck_uuid: uuid of the deck
+    :param token_uuid: the token_uuid of the user who requested it
     :return: HTTP_200_OK or HTTP_500
     """
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
     deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
+
+    # Check if user has permission
+    if requester_user_id != deck.creator_user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
+    
     ControllerDatabase.delete_deck(deck)
 
 
 @app.delete("/remove_study_set", status_code=status.HTTP_200_OK)
 def remove_study_set(
+        response: Response,
         study_set_uuid: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for removing a study_set
+    :param response: The fastapi response
     :param study_set_uuid: uuid of the study_set
+    :param token_uuid: the token_uuid of the user who requested it
     :return: HTTP_200_OK or HTTP_500
     """
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
     study_set = ControllerDatabase.get_study_set_by_uuid(study_set_uuid)
+
+    # Check if user has permission
+    if requester_user_id != study_set.creator_user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
+    
     ControllerDatabase.delete_study_set(study_set)
 
 

@@ -355,6 +355,36 @@ class ControllerDatabase:
 
         return result
 
+    @staticmethod
+    def get_user_id_by_token_uuid(token_uuid: str) -> int:
+        """
+        Used for deleting a playlist
+        :param token_uuid: the uuid of the token
+        :return: bool of weather or not the deletion was successful
+        """
+        result = 0
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT u.user_id "
+                        "FROM users as u "
+                        "INNER JOIN tokens as t "
+                        "ON t.user_user_id = u.user_id "
+                        "WHERE t.token_uuid = %(token_uuid)s "
+                        "AND u.is_deleted = false "
+                        "AND t.is_deleted = false ",
+                        {"token_uuid": token_uuid}
+                    )
+
+                    if cur.rowcount:
+                        (result, ) = cur.fetchone()
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
     #  Functions for friend_requests table
     @staticmethod
     def get_friend_request_by_query(query_str: str, parameters: dict) -> FriendRequest:

@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://containers-us-west-69.railway.app:7673/railway</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="railway" uuid="427eb966-6cc7-482d-ae0d-1e7ab420b7ea">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://containers-us-west-69.railway.app:7673/railway</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
