@@ -1440,14 +1440,25 @@ class ControllerDatabase:
             with CommonUtils.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
-                        "INSERT INTO labels_in_decks "
-                        "(label_label_id, deck_deck_id) "
-                        "values (%(label_id)s, %(deck_id)s) ",
-                        {
-                            "label_id": label.label_id,
-                            "deck_id": deck_id,
-                        }
+                        "SELECT label_in_deck_id "
+                        "FROM labels_in_decks as l_in_d "
+                        "INNER JOIN labels as l "
+                        "ON l.label_id = l_in_d.label_label_id "
+                        "WHERE label_name = %(label_name)s "
+                        "AND l_in_d.is_deleted = false",
+                        {"label_name": label_name}
                     )
+
+                    if not cur.rowcount:
+                        cur.execute(
+                            "INSERT INTO labels_in_decks "
+                            "(label_label_id, deck_deck_id) "
+                            "values (%(label_id)s, %(deck_id)s) ",
+                            {
+                                "label_id": label.label_id,
+                                "deck_id": deck_id,
+                            }
+                        )
 
                     result = True
         except Exception as e:
