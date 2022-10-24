@@ -4,23 +4,19 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'pink-400': '#F187FC',
-        'blue-100': '#5D6770',
-        'blue-100-opacity-0.05': 'rgba(93, 103, 112, 0.05)',
-        'blue-100-opacity-0.1': 'rgba(93, 103, 112, 0.1)',
-        'blue-200': '#151617',
-        'blue-400': '#439CFB',
-      },
-      gradientColorStops: {
-        'white-opacity-0.2': 'rgba(255, 255, 255, 0.2)',
-        'white-opacity-0.05': 'rgba(255, 255, 255, 0.05)',
+        'blue-dark-500': '#02050D',
+        'blue-dark-400': '#10131C',
+        'blue-dark-300': '#202B49',
+        'blue-light-100': '#DCDCE4',
+        'green-light-100': '#A9EA3E',
+        'green-light-50': 'rgba(168, 234, 62, 0.1)',
+        'red-light-100': '#EA3E3E',
+        'red-light-50': 'rgba(234, 62, 62, 0.1)',
+        'orange-200': '#EA7644',
       },
       fontFamily: {
-        'clash-display': 'Clash Display',
+        poppins: 'Poppins',
         inter: 'Inter',
-      },
-      boxShadow: {
-        widget: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)',
       },
     },
   },
