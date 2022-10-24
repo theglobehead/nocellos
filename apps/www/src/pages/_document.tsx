@@ -13,7 +13,7 @@ export default function Document() {
           rel="stylesheet"
         />
       </Head>
-      <body className="h-screen max-w-5xl m-auto text-blue-light-100 bg-blue-dark-500 font-poppins">
+      <body className="h-screen max-w-6xl m-auto text-blue-light-100 bg-blue-dark-500 font-poppins">
         <Main />
         <NextScript />
       </body>

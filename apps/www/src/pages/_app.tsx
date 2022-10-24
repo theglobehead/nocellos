@@ -1,3 +1,4 @@
+import { Navbar } from '@/components';
 import '@/styles/globals.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AppProps } from 'next/app';
@@ -12,6 +13,7 @@ function App({ Component, pageProps }: AppProps) {
         <title>Nocellos</title>
       </Head>
       <QueryClientProvider client={queryClient}>
+        <Navbar />
         <Component {...pageProps} />
       </QueryClientProvider>
     </>

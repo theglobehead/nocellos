@@ -9,9 +9,7 @@ module.exports = {
         'blue-dark-300': '#202B49',
         'blue-light-100': '#DCDCE4',
         'green-light-100': '#A9EA3E',
-        'green-light-50': 'rgba(168, 234, 62, 0.1)',
         'red-light-100': '#EA3E3E',
-        'red-light-50': 'rgba(234, 62, 62, 0.1)',
         'orange-200': '#EA7644',
       },
       fontFamily: {
