@@ -1,3 +1,4 @@
+import datetime
 from typing import List, Dict
 
 from models.card import Card
@@ -7,6 +8,7 @@ from models.label import Label
 from models.study_set import StudySet
 from models.token import Token
 from models.user import User
+from models.xp import Xp
 from utils.common_utils import CommonUtils
 from loguru import logger
 
@@ -1608,4 +1610,101 @@ class ControllerDatabase:
         except Exception as e:
             logger.exception(e)
 
+        return result
+    
+    # Functions for the xp table
+    @staticmethod
+    def update_user_xp(user_id: int, xp_count: int) -> bool:
+        """
+        Used for updating a users xp.
+        If no xp earned today it creates a new xp row
+        If already exists, it simply updates today's row
+        :param user_id: the id of the user
+        :param xp_count: the amount of xp earned
+        :return: bool of weather or not everything was successful
+        """
+        result = False
+
+        start_date = datetime.datetime.now().date()
+        start_date = datetime.datetime.combine(start_date, datetime.time())
+        
+        todays_xp = ControllerDatabase.get_user_xp_in_timeframe(
+            user_id, start_date, datetime.datetime.now()
+        )
+        
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    if todays_xp and len(todays_xp):
+                        xp_id = todays_xp[0].xp_id
+                        
+                        cur.execute(
+                            "UPDATE xp "
+                            "SET xp_count = xp_count + %(xp_count)s "
+                            "WHERE xp_id = %(xp_id)s ",
+                            {
+                                "xp_count": xp_count,
+                                "xp_id": xp_id,
+                            }
+                        )
+                    else:
+                        cur.execute(
+                            "INSERT INTO xp "
+                            "(user_user_id, xp_count) "
+                            "VALUES (%(user_id)s, %(xp_count)s) ",
+                            {
+                                "xp_count": xp_count,
+                                "user_id": user_id,
+                            }
+                        )
+                        
+                    result = True
+        except Exception as e:
+            logger.exception(e)
+            
+        return result
+
+    @staticmethod
+    def get_user_xp_in_timeframe(
+            user_id: int,
+            start_date: datetime.datetime,
+            end_date: datetime.datetime
+    ) -> list[Xp]:
+        """
+        Used for updating a users xp.
+        If no xp earned today it creates a new xp row
+        If already exists, it simply updates today's row
+        :param user_id: the id of the user
+        :param start_date: the earliest date that can be fetched
+        :param end_date: the latest date that can be fetched
+        :return: the amount of xp earned
+        """
+        result = []
+        
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT xp_id, created, xp_count "
+                        "FROM xp "
+                        "WHERE user_user_id = %(user_id)s "
+                        "AND created > %(start_date)s "
+                        "AND created < %(end_date)s "
+                        "AND is_deleted = false ",
+                        {
+                            "user_id": user_id,
+                            "start_date": start_date,
+                            "end_date": end_date,
+                        }
+                    )
+                    
+                    for xp_id, created, xp_count in cur.fetchall():
+                        result.append(Xp(
+                            xp_id=xp_id,
+                            created=created,
+                            xp_count=xp_count,
+                        ))
+        except Exception as e:
+            logger.exception(e)
+    
         return result

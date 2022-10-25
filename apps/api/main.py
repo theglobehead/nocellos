@@ -1,3 +1,5 @@
+import datetime
+
 import uvicorn
 from fastapi import FastAPI, Form, status, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -185,6 +187,54 @@ def get_user_friend_requests(
         })
 
     return {"friend_requests": friend_requests}
+
+
+@app.post("/get_user_xp", status_code=status.HTTP_200_OK)
+def get_user_xp(
+        token_uuid: str = Form(...),
+        only_sum: bool = Form(...),
+):
+    """
+    Used for getting a users xp in the last 7 days
+    :param token_uuid: the token_uuid of the user who requested it
+    :param only_sum: bool weather to send an integer or a list of integers
+    :return: {"xp_count": int}
+    """
+    user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+    xp_count = 0
+    days = []
+    
+    start_date = datetime.datetime.now().date() - datetime.timedelta(days=6)
+    start_date = datetime.datetime.combine(start_date, datetime.time())
+    
+    user_xp = ControllerDatabase.get_user_xp_in_timeframe(
+        user_id=user_id,
+        start_date=start_date,
+        end_date=datetime.datetime.now(),
+    )
+    
+    xp_int_list = list(map(lambda xp: xp.xp_count, user_xp))
+    xp_count = sum(xp_int_list)
+    
+    if not only_sum:
+        date_delta = datetime.datetime.now() - start_date
+        for i in range(date_delta.days + 1):
+            day_date = (start_date + datetime.timedelta(days=i)).date()
+            day_xp = [xp.xp_count for xp in user_xp if xp.created.date() == day_date]
+            
+            day_xp_count = 0
+            if len(day_xp):
+                day_xp_count = day_xp[0]
+            
+            days.append({
+                "date": day_date.strftime("%Y/%m/%d"),
+                "xp_count": day_xp_count,
+            })
+    
+    return {
+        "xp_count": xp_count,
+        "days": days,
+    }
 
 
 # Methods used for posting
@@ -562,6 +612,26 @@ def invite_user_to_study_set(
         study_set.study_set_id, user_id, can_edit
     )
 
+    return {"is_successful": is_successful}
+
+
+@app.post("/update_user_xp", status_code=status.HTTP_200_OK)
+def update_user_xp(
+        response: Response,
+        token_uuid: str = Form(...),
+        xp_count: int = Form(...),
+):
+    """
+    Ajax endpoint for adding a label to a study set
+    :param response: a fastapi response
+    :param token_uuid: the token_uuid of the user who requested it
+    :param xp_count: the amount of xp uploaded
+    :return: HTTP_200_OK or HTTP_500
+    """
+    user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+    
+    is_successful = ControllerDatabase.update_user_xp(user_id, xp_count)
+    
     return {"is_successful": is_successful}
    
 
