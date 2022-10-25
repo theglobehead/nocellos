@@ -191,16 +191,16 @@ def get_user_friend_requests(
 
 @app.post("/get_user_xp", status_code=status.HTTP_200_OK)
 def get_user_xp(
-        token_uuid: str = Form(...),
+        user_uuid: str = Form(...),
         only_sum: bool = Form(...),
 ):
     """
     Used for getting a users xp in the last 7 days
-    :param token_uuid: the token_uuid of the user who requested it
+    :param user_uuid: the user_uuid of the user
     :param only_sum: bool weather to send an integer or a list of integers
     :return: {"xp_count": int}
     """
-    user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
     xp_count = 0
     days = []
     
