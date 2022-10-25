@@ -1031,7 +1031,7 @@ class ControllerDatabase:
         :param card: Card model. Used for getting the card_uuid, front_text, back_text
         :return: a Card model
         """
-        result = None
+        result = Card()
         card_id = 0
 
         try:

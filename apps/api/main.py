@@ -15,6 +15,7 @@ from models.card import Card
 from models.deck import Deck
 from models.friend_request import FriendRequest
 from models.study_set import StudySet
+from models.user import User
 from web.register_page import validate_form
 
 app = FastAPI()
@@ -158,8 +159,6 @@ def get_deck_cards(
 
 @app.post("/get_user_friend_requests", status_code=status.HTTP_200_OK)
 def get_user_friend_requests(
-        response: Response,
-        user_uuid: str = Form(...),
         is_accepted: bool = Form(...),
         token_uuid: str = Form(...),
 ):
@@ -168,19 +167,12 @@ def get_user_friend_requests(
     It gets them from the friend_requests table.
     Can also be used to get a users friends, if is_accepted is true
     :param response: The fastapi response
-    :param user_uuid: the uuid of the user
     :param is_accepted: Are the friend requests accepted
     :param token_uuid: the token_uuid of the user who requested it
     :return: A list of dictionaries. Check below
     """
     friend_requests = []
-    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
-    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
-
-    # Check if user has permission
-    if requester_user_id != user_id:
-        response.status_code = status.HTTP_403_FORBIDDEN
-        return
+    user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
 
     for friend_request in ControllerDatabase.get_user_friend_requests(user_id=user_id, is_accepted=is_accepted):
         sender_user = ControllerDatabase.get_user(friend_request.sender_user_id)
@@ -215,6 +207,7 @@ async def register_user(
     :param password2: The second password (must be the same as the first)
     :return: HTTP_201_CREATED
     """
+    new_user = User()
     form_is_valid = validate_form(
         email=email,
         name=name,
@@ -241,9 +234,12 @@ async def register_user(
             response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             logger.exception(e)
 
+    if new_user.user_uuid:
+        return {"user_uuid": new_user.user_uuid}
+
 
 @app.post("/verify_email/{user_uuid}")
-async def verify_email(user_uuid: str):
+async def verify_email(response: Response, user_uuid: str):
     """
     Used for verifying a users email.
     Sets is_email_verified in the bd to true.
@@ -251,9 +247,9 @@ async def verify_email(user_uuid: str):
     :param user_uuid: the uuid of the user
     :return: Sends the user to the login view
     """
-
     user = ControllerDatabase.get_user_by_uuid(user_uuid)
-    ControllerDatabase.set_user_email_verified(user)
+    is_successful = ControllerDatabase.set_user_email_verified(user)
+    return {"is_successful": is_successful}
 
 
 @app.post("/login", status_code=status.HTTP_401_UNAUTHORIZED)
@@ -313,7 +309,9 @@ def send_friend_request(
         receiver_user_id=receiver_user_id,
     )
 
-    ControllerDatabase.insert_friend_request(friend_request)
+    is_successful = ControllerDatabase.insert_friend_request(friend_request)
+
+    return {"is_successful": is_successful}
 
 
 @app.post("/accept_friend_request", status_code=status.HTTP_200_OK)
@@ -339,9 +337,11 @@ def accept_friend_request(
         response.status_code = status.HTTP_403_FORBIDDEN
         return
 
-    ControllerDatabase.accept_friend_request(
+    is_successful = ControllerDatabase.accept_friend_request(
         FriendRequest(friend_request)
     )
+
+    return {"is_successful": is_successful}
 
 
 @app.post("/create_study_set", status_code=status.HTTP_200_OK)
@@ -372,6 +372,8 @@ def create_study_set(
     if not study_set:
         response.status_code = status.HTTP_500
 
+    return {"study_set_uuid": study_set.study_set_uuid}
+
 
 @app.post("/create_deck", status_code=status.HTTP_200_OK)
 def create_deck(
@@ -400,6 +402,8 @@ def create_deck(
 
     if not deck:
         response.status_code = status.HTTP_500
+
+    return {"deck_uuid": deck.deck_uuid}
 
 
 @app.post("/create_card", status_code=status.HTTP_200_OK)
@@ -438,6 +442,8 @@ def create_card(
     if not card:
         response.status_code = status.HTTP_500
 
+    return {"card_uuid": card.card_uuid}
+
 
 @app.post("/add_label_to_deck", status_code=status.HTTP_200_OK)
 def add_label_to_deck(
@@ -464,9 +470,7 @@ def add_label_to_deck(
         return
 
     is_successful = ControllerDatabase.add_label_to_deck(deck.deck_id, label_name)
-
-    if not is_successful:
-        response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+    return {"is_successful": is_successful}
 
 
 @app.post("/add_label_to_study_set", status_code=status.HTTP_200_OK)
@@ -493,9 +497,7 @@ def add_label_to_study_set(
         return
 
     is_successful = ControllerDatabase.add_label_to_study_set(study_set.study_set_id, label_name)
-
-    if not is_successful:
-        response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+    return {"is_successful": is_successful}
 
 
 @app.post("/edit_card", status_code=status.HTTP_200_OK)
@@ -529,8 +531,7 @@ def edit_card(
 
     card = ControllerDatabase.edit_card(card)
 
-    if not card:
-        response.status_code = status.HTTP_500
+    return {"card_uuid": card.card_uuid}
 
 
 # Methods used for deleting something
@@ -555,9 +556,11 @@ def remove_friend_request(
         response.status_code = status.HTTP_403_FORBIDDEN
         return
 
-    ControllerDatabase.delete_friend_request(
+    is_successful = ControllerDatabase.delete_friend_request(
         FriendRequest(friend_request_id=friend_request.friend_request_id)
     )
+
+    return {"is_successful": is_successful}
 
 
 @app.delete("/remove_card", status_code=status.HTTP_200_OK)
@@ -582,7 +585,9 @@ def remove_card(
         response.status_code = status.HTTP_403_FORBIDDEN
         return
     
-    ControllerDatabase.delete_card(card)
+    is_successful = ControllerDatabase.delete_card(card)
+
+    return {"is_successful": is_successful}
 
 
 @app.delete("/remove_deck", status_code=status.HTTP_200_OK)
@@ -606,7 +611,9 @@ def remove_deck(
         response.status_code = status.HTTP_403_FORBIDDEN
         return
     
-    ControllerDatabase.delete_deck(deck)
+    is_successful = ControllerDatabase.delete_deck(deck)
+
+    return {"is_successful": is_successful}
 
 
 @app.delete("/remove_study_set", status_code=status.HTTP_200_OK)
@@ -630,7 +637,9 @@ def remove_study_set(
         response.status_code = status.HTTP_403_FORBIDDEN
         return
     
-    ControllerDatabase.delete_study_set(study_set)
+    is_successful = ControllerDatabase.delete_study_set(study_set)
+
+    return {"is_successful": is_successful}
 
 
 if __name__ == "__main__":
