@@ -1163,6 +1163,72 @@ class ControllerDatabase:
         study_set = ControllerDatabase.get_study_set_by_query(query_str, parameters)
 
         return study_set
+    
+    @staticmethod
+    def invite_user_to_study_set(study_set_id: int, user_id: int, can_edit: bool) -> bool:
+        """
+        Used for creating a new study_set
+        :param study_set_id: the id of the study set
+        :param user_id: the id of the invited user
+        :return: bool of weather or not the insert was successful
+        """
+        result = False
+        
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO study_sets_in_users "
+                        "(study_set_study_set_id, user_user_id, can_edit) "
+                        "VALUES (%(study_set_id)s, %(user_id)s, %(can_edit)s) "
+                        "RETURNING study_set_study_set_id ",
+                        {
+                            "study_set_id": study_set_id,
+                            "user_id": user_id,
+                            "can_edit": can_edit,
+                        }
+                    )
+            
+                    if cur.rowcount:
+                        result = True
+
+        except Exception as e:
+            logger.exception(e)
+            
+        return result
+    
+    @staticmethod
+    def remove_user_from_study_set(study_set_id: int, user_id: int) -> bool:
+        """
+        Used for creating a new study_set
+        :param study_set_id: the id of the study set
+        :param user_id: the id of the invited user
+        :return: bool of weather or not the insert was successful
+        """
+        result = False
+        
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE study_sets_in_users "
+                        "SET modified = now(), "
+                        "is_deleted = true "
+                        "WHERE user_user_id = %(user_id)s "
+                        "AND study_set_study_set_id = %(study_set_id)s ",
+                        {
+                            "study_set_id": study_set_id,
+                            "user_id": user_id,
+                        }
+                    )
+                
+                    if cur.rowcount:
+                        result = True
+    
+        except Exception as e:
+            logger.exception(e)
+            
+        return result
 
     @staticmethod
     def get_user_study_sets(user_id: int, is_owner: bool = False) -> List[StudySet]:

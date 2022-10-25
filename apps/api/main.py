@@ -534,6 +534,37 @@ def edit_card(
     return {"card_uuid": card.card_uuid}
 
 
+@app.post("/invite_user_to_study_set", status_code=status.HTTP_200_OK)
+def invite_user_to_study_set(
+        response: Response,
+        study_set_uuid: str = Form(...),
+        user_uuid: str = Form(...),
+        token_uuid: str = Form(...),
+        can_edit: bool = Form(...),
+):
+    """
+    Ajax endpoint for adding a label to a study set
+    :param response: a fastapi response
+    :param study_set_uuid: the uuid of the study_set
+    :param user_uuid: the uuid of the user
+    :param token_uuid: the token_uuid of the user who requested it
+    :param can_edit: bool of can the user edit the study set
+    :return: HTTP_200_OK or HTTP_500
+    """
+    study_set = ControllerDatabase.get_study_set_by_uuid(study_set_uuid)
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+    
+    if requester_user_id != study_set.creator_user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+
+    is_successful = ControllerDatabase.invite_user_to_study_set(
+        study_set.study_set_id, user_id, can_edit
+    )
+
+    return {"is_successful": is_successful}
+   
+
 # Methods used for deleting something
 @app.delete("/remove_friend_request", status_code=status.HTTP_200_OK)
 def remove_friend_request(
@@ -639,6 +670,37 @@ def remove_study_set(
     
     is_successful = ControllerDatabase.delete_study_set(study_set)
 
+    return {"is_successful": is_successful}
+
+
+@app.delete("/remove_user_from_study_set", status_code=status.HTTP_200_OK)
+def remove_user_from_study_set(
+        response: Response,
+        study_set_uuid: str = Form(...),
+        user_uuid: str = Form(...),
+        token_uuid: str = Form(...),
+):
+    """
+    Ajax endpoint for removing a study_set
+    :param response: The fastapi response
+    :param study_set_uuid: uuid of the study_set
+    :param user_uuid: the uuid of the user to be removed
+    :param token_uuid: the token_uuid of the user who requested it
+    :return: HTTP_200_OK or HTTP_500
+    """
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+    study_set = ControllerDatabase.get_study_set_by_uuid(study_set_uuid)
+    user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
+    
+    # Check if user has permission
+    if requester_user_id != study_set.creator_user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
+    
+    is_successful = ControllerDatabase.remove_user_from_study_set(
+        study_set.study_set_id, user_id
+    )
+    
     return {"is_successful": is_successful}
 
 
