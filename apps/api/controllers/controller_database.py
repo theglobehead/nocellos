@@ -355,6 +355,36 @@ class ControllerDatabase:
 
         return result
 
+    @staticmethod
+    def get_user_id_by_token_uuid(token_uuid: str) -> int:
+        """
+        Used for deleting a playlist
+        :param token_uuid: the uuid of the token
+        :return: bool of weather or not the deletion was successful
+        """
+        result = 0
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT u.user_id "
+                        "FROM users as u "
+                        "INNER JOIN tokens as t "
+                        "ON t.user_user_id = u.user_id "
+                        "WHERE t.token_uuid = %(token_uuid)s "
+                        "AND u.is_deleted = false "
+                        "AND t.is_deleted = false ",
+                        {"token_uuid": token_uuid}
+                    )
+
+                    if cur.rowcount:
+                        (result, ) = cur.fetchone()
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
     #  Functions for friend_requests table
     @staticmethod
     def get_friend_request_by_query(query_str: str, parameters: dict) -> FriendRequest:
@@ -719,16 +749,21 @@ class ControllerDatabase:
                         "   deck_id, "
                         "   deck_name, "
                         "   deck_uuid, "
-                        "   created, "
-                        "   modified, "
-                        "   is_deleted, "
+                        "   d.created, "
+                        "   d.modified, "
+                        "   d.is_deleted, "
                         "   creator_user_id, "
                         "   is_in_set, "
-                        "   is_public "
-                        "FROM decks "
-                        "WHERE creator_user_id = %(user_id)s "
-                        f"{ show_public_str }"
-                        "AND is_deleted = false ",
+                        "   is_public, "
+                        "   study_set_study_set_id "
+                        "FROM decks as d "
+                        "LEFT JOIN decks_in_users as d_in_u "
+                        "ON d_in_u.deck_deck_id = d.deck_id "
+                        "WHERE ((d_in_u.user_user_id = %(user_id)s "
+                        "AND d_in_u.is_deleted = false)"
+                        "OR (d.creator_user_id = %(user_id)s))"
+                        "AND d.is_deleted = false "
+                        f"{ show_public_str }",
                         {"user_id": user_id}
                     )
                     for (
@@ -741,6 +776,7 @@ class ControllerDatabase:
                         creator_user_id,
                         is_in_set,
                         is_public,
+                        study_set_study_set_id
                     ) in cur.fetchall():
                         new_deck = Deck(
                             deck_id=deck_id,
@@ -1001,7 +1037,7 @@ class ControllerDatabase:
         :param card: Card model. Used for getting the card_uuid, front_text, back_text
         :return: a Card model
         """
-        result = None
+        result = Card()
         card_id = 0
 
         try:
@@ -1127,6 +1163,72 @@ class ControllerDatabase:
         study_set = ControllerDatabase.get_study_set_by_query(query_str, parameters)
 
         return study_set
+    
+    @staticmethod
+    def invite_user_to_study_set(study_set_id: int, user_id: int, can_edit: bool) -> bool:
+        """
+        Used for creating a new study_set
+        :param study_set_id: the id of the study set
+        :param user_id: the id of the invited user
+        :return: bool of weather or not the insert was successful
+        """
+        result = False
+        
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO study_sets_in_users "
+                        "(study_set_study_set_id, user_user_id, can_edit) "
+                        "VALUES (%(study_set_id)s, %(user_id)s, %(can_edit)s) "
+                        "RETURNING study_set_study_set_id ",
+                        {
+                            "study_set_id": study_set_id,
+                            "user_id": user_id,
+                            "can_edit": can_edit,
+                        }
+                    )
+            
+                    if cur.rowcount:
+                        result = True
+
+        except Exception as e:
+            logger.exception(e)
+            
+        return result
+    
+    @staticmethod
+    def remove_user_from_study_set(study_set_id: int, user_id: int) -> bool:
+        """
+        Used for creating a new study_set
+        :param study_set_id: the id of the study set
+        :param user_id: the id of the invited user
+        :return: bool of weather or not the insert was successful
+        """
+        result = False
+        
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE study_sets_in_users "
+                        "SET modified = now(), "
+                        "is_deleted = true "
+                        "WHERE user_user_id = %(user_id)s "
+                        "AND study_set_study_set_id = %(study_set_id)s ",
+                        {
+                            "study_set_id": study_set_id,
+                            "user_id": user_id,
+                        }
+                    )
+                
+                    if cur.rowcount:
+                        result = True
+    
+        except Exception as e:
+            logger.exception(e)
+            
+        return result
 
     @staticmethod
     def get_user_study_sets(user_id: int, is_owner: bool = False) -> List[StudySet]:
@@ -1146,18 +1248,22 @@ class ControllerDatabase:
                 with conn.cursor() as cur:
                     cur.execute(
                         "SELECT "
-                        "   study_set_id, "
-                        "   creator_user_id, "
-                        "   created, "
-                        "   modified, "
-                        "   is_deleted, "
-                        "   study_set_name, "
-                        "   is_public,"
-                        "   study_set_uuid "
-                        "FROM study_sets "
-                        "WHERE creator_user_id = %(user_id)s "
-                        f"{show_public_str}"
-                        "AND is_deleted = false ",
+                        "   s.study_set_id, "
+                        "   s.creator_user_id, "
+                        "   s.created, "
+                        "   s.modified, "
+                        "   s.is_deleted, "
+                        "   s.study_set_name, "
+                        "   s.is_public, "
+                        "   s.study_set_uuid "
+                        "FROM study_sets as s "
+                        "LEFT JOIN study_sets_in_users as s_in_u "
+                        "ON s_in_u.study_set_study_set_id = s.study_set_id "
+                        "WHERE ((s_in_u.user_user_id = %(user_id)s "
+                        "AND s_in_u.is_deleted = false)"
+                        "OR (s.creator_user_id = %(user_id)s))"
+                        "AND s.is_deleted = false "
+                        f"{ show_public_str }",
                         {"user_id": user_id}
                     )
                     for (
@@ -1187,7 +1293,6 @@ class ControllerDatabase:
                             cur, study_set_id
                         )
                         study_sets.append(new_study_sets)
-
         except Exception as e:
             logger.exception(e)
 
