@@ -749,16 +749,21 @@ class ControllerDatabase:
                         "   deck_id, "
                         "   deck_name, "
                         "   deck_uuid, "
-                        "   created, "
-                        "   modified, "
-                        "   is_deleted, "
+                        "   d.created, "
+                        "   d.modified, "
+                        "   d.is_deleted, "
                         "   creator_user_id, "
                         "   is_in_set, "
-                        "   is_public "
-                        "FROM decks "
-                        "WHERE creator_user_id = %(user_id)s "
-                        f"{ show_public_str }"
-                        "AND is_deleted = false ",
+                        "   is_public, "
+                        "   study_set_study_set_id "
+                        "FROM decks as d "
+                        "LEFT JOIN decks_in_users as d_in_u "
+                        "ON d_in_u.deck_deck_id = d.deck_id "
+                        "WHERE ((d_in_u.user_user_id = %(user_id)s "
+                        "AND d_in_u.is_deleted = false)"
+                        "OR (d.creator_user_id = %(user_id)s))"
+                        "AND d.is_deleted = false "
+                        f"{ show_public_str }",
                         {"user_id": user_id}
                     )
                     for (
@@ -771,6 +776,7 @@ class ControllerDatabase:
                         creator_user_id,
                         is_in_set,
                         is_public,
+                        study_set_study_set_id
                     ) in cur.fetchall():
                         new_deck = Deck(
                             deck_id=deck_id,
@@ -1176,18 +1182,22 @@ class ControllerDatabase:
                 with conn.cursor() as cur:
                     cur.execute(
                         "SELECT "
-                        "   study_set_id, "
-                        "   creator_user_id, "
-                        "   created, "
-                        "   modified, "
-                        "   is_deleted, "
-                        "   study_set_name, "
-                        "   is_public,"
-                        "   study_set_uuid "
-                        "FROM study_sets "
-                        "WHERE creator_user_id = %(user_id)s "
-                        f"{show_public_str}"
-                        "AND is_deleted = false ",
+                        "   s.study_set_id, "
+                        "   s.creator_user_id, "
+                        "   s.created, "
+                        "   s.modified, "
+                        "   s.is_deleted, "
+                        "   s.study_set_name, "
+                        "   s.is_public, "
+                        "   s.study_set_uuid "
+                        "FROM study_sets as s "
+                        "LEFT JOIN study_sets_in_users as s_in_u "
+                        "ON s_in_u.study_set_study_set_id = s.study_set_id "
+                        "WHERE ((s_in_u.user_user_id = %(user_id)s "
+                        "AND s_in_u.is_deleted = false)"
+                        "OR (s.creator_user_id = %(user_id)s))"
+                        "AND s.is_deleted = false "
+                        f"{ show_public_str }",
                         {"user_id": user_id}
                     )
                     for (
@@ -1217,7 +1227,6 @@ class ControllerDatabase:
                             cur, study_set_id
                         )
                         study_sets.append(new_study_sets)
-
         except Exception as e:
             logger.exception(e)
 

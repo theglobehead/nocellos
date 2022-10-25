@@ -12,6 +12,7 @@ from models.label import Label
 @dataclass
 class Deck:
     card_count: int = 0
+    can_edit: bool = False
     labels: List[Label] = field(default_factory=list)
 
     deck_id: int = 0
@@ -19,6 +20,7 @@ class Deck:
     deck_name: str = ""
     creator_user_id: int = 0
     is_in_set: bool = False
+    study_set_study_set_id: int = 0
     is_public: bool = False
     created: datetime = datetime.utcnow()
     modified: datetime = datetime.utcnow()
