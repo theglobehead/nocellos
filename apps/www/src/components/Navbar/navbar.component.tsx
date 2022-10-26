@@ -16,7 +16,9 @@ export function Navbar() {
           <Link href="/stats" text="Stats" />
         </li>
       </ul>
-      <Button text="Sign in" />
+      <a href="/register">
+        <Button text="Sign in" />
+      </a>
     </nav>
   );
 }

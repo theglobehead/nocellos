@@ -52,7 +52,7 @@ export function Index() {
         </motion.div>
       ) : (
         <>
-          <h1 className="mb-10 text-3xl">Daily tasks</h1>
+          <h1 className="mb-10 text-4xl">Daily tasks</h1>
 
           <div className="flex flex-wrap gap-10">
             {decks ? (
