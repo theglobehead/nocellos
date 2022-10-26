@@ -1,7 +1,7 @@
 import datetime
 
 import uvicorn
-from fastapi import FastAPI, Form, status, Response
+from fastapi import FastAPI, Form, status, Response, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
 
@@ -73,8 +73,8 @@ def get_searched_users(
 
 @app.post("/get_user_study_sets", status_code=status.HTTP_200_OK)
 def get_user_study_sets(
+        request: Request,
         user_uuid: str = Form(...),
-        token_uuid: str = Form(...),
 ):
     """
     Ajax endpoint for getting a users study sets
@@ -82,6 +82,7 @@ def get_user_study_sets(
     :param token_uuid: the token_uuid of the user who requested it
     :return: A list of dictionaries. Check below
     """
+    token_uuid = request.headers.get("Authorization", default="").replace("Bearer ", "")
     study_sets = []
     user_id = ControllerDatabase.get_user_id_by_uuid(user_uuid)
     requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
@@ -187,6 +188,29 @@ def get_user_friend_requests(
         })
 
     return {"friend_requests": friend_requests}
+
+
+@app.post("/get_user_info", status_code=status.HTTP_200_OK)
+def get_user_friend_requests(
+        user_uuid: str = Form(...),
+):
+    """
+    Used for getting basic info on the user
+    Can also be used to get a users friends, if is_accepted is true
+    :param user_uuid: The uuid of the user
+    :return: A dictionary
+    """
+    user = ControllerDatabase.get_user_by_uuid(user_uuid)
+
+    user_dict = {
+        "user_uuid": user.user_uuid,
+        "user_name": user.user_name,
+        "user_email": user.user_email,
+        "random_id": user.random_id,
+        "created": user.created.strftime("%Y/%m/%m"),
+    }
+
+    return {"user": user_dict}
 
 
 @app.post("/get_user_xp", status_code=status.HTTP_200_OK)
