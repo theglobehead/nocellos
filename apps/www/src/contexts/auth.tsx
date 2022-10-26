@@ -1,7 +1,7 @@
 import { HOST } from '@/consts/env';
 import { useAxios } from '@/hooks';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
+import axiosClient, { AxiosResponse } from 'axios';
 import qs from 'qs';
 import React, { createContext, useCallback, useState } from 'react';
 
@@ -15,19 +15,19 @@ interface RegisterProps extends LoginProps {
 }
 
 interface User {
-  name: string;
-  email: string;
+  user_name: string;
+  user_email: string;
   user_uuid: string;
   token_uuid: string;
 }
 
-type UserMeta = Omit<User, 'name' | 'email'>;
+type UserMeta = Omit<User, 'user_name' | 'user_email'>;
 
 interface IAuthContext {
   login(credentials: LoginProps): void;
   logout(): void;
   register(credentials: RegisterProps): void;
-  user: User;
+  user?: User;
 }
 
 export const AuthContext = createContext<IAuthContext>(undefined);
@@ -41,7 +41,6 @@ export default function AuthProvider({
     token_uuid: '2ffae871-b99e-466a-b479-fcf57526a141',
     user_uuid: '5e67adbd-8941-421a-adb7-a8e9a78b8b24',
   });
-
   const loginMutation = useMutation(
     ['user'],
     async (req: { email: string; password: string }) => {
@@ -99,10 +98,15 @@ export default function AuthProvider({
   }, [logoutMutation]);
 
   const { data: user } = useQuery(['user'], async () => {
-    const { data } = await axios.post<null, AxiosResponse<User>>(
-      `${HOST}/get_user_data`
-    );
-    return { ...data, ...authState };
+    const body = qs.stringify({
+      user_uuid: authState.user_uuid,
+    });
+    const { data } = await axiosClient.post<
+      null,
+      AxiosResponse<{ user: User }>
+    >(`${HOST}/get_user_info`, body);
+    // console.log({ ...data, ...authState }, 'user');
+    return data.user;
   });
 
   return (

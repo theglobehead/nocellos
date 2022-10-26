@@ -1,37 +1,13 @@
 import { DeckPreview } from '@/components';
-import { HOST } from '@/consts/env';
-import { useQuery } from '@tanstack/react-query';
-import axios, { AxiosResponse } from 'axios';
+import { useDecks } from '@/hooks/';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 
-export interface Label {
-  label_name: string;
-}
-interface Deck {
-  card_count: number;
-  deck_uuid: string;
-  deck_name: string;
-  is_public: boolean;
-  labels: Label[];
-}
-
 export function Index() {
   const router = useRouter();
 
-  const { data: decks } = useQuery(['decks'], async () => {
-    const body = new FormData();
-    body.append('user_uuid', '5e67adbd-8941-421a-adb7-a8e9a78b8b24');
-    body.append('requester_user_uuid', '5e67adbd-8941-421a-adb7-a8e9a78b8b24');
-    const { data } = await axios.post<
-      unknown,
-      AxiosResponse<{ decks: Deck[] }>
-    >(`${HOST}/get_user_decks`, body, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return data['decks'];
-  });
+  const { data: decks } = useDecks();
 
   const deckOpenUUID = useMemo(() => {
     if (!decks) return;

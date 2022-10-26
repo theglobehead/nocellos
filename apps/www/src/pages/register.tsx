@@ -1,15 +1,11 @@
 import { Button, Input } from '@/components';
-import { HOST } from '@/consts/env';
-import { useToastEmitter } from '@/hooks';
+import { useAuth } from '@/hooks';
 import {
   EnvelopeIcon,
   KeyIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
-import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
@@ -34,30 +30,7 @@ export default function Register() {
     formState: { errors },
   } = useForm<FormInputs>({ resolver: yupResolver(schema) });
 
-  const { emitInfo } = useToastEmitter();
-
-  const registerMutation = useMutation(
-    ['user'],
-    async (formData: FormInputs) => {
-      const body = new FormData();
-      body.append('email', formData.email);
-      body.append('name', formData.name);
-      body.append('password', formData.password);
-
-      const res = await axios.post(`${HOST}/register_user`, body);
-
-      if (res.status === 201) {
-        emitInfo('Verification has been sent to your email');
-      }
-    }
-  );
-
-  const onRegister = useCallback(
-    (data) => {
-      registerMutation.mutate(data);
-    },
-    [registerMutation]
-  );
+  const { register: _register } = useAuth();
 
   return (
     <div className="absolute max-w-md -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
@@ -67,7 +40,7 @@ export default function Register() {
       </p>
       <form
         className="flex flex-col gap-6 mt-8"
-        onSubmit={handleSubmit(onRegister)}
+        onSubmit={handleSubmit(_register)}
       >
         <Input
           {...register('name')}
