@@ -12,7 +12,7 @@ class CommonUtils:
             database=environ["DB_NAME"],
             user=environ["DB_USER"],
             password=environ["DB_PASSWORD"],
-            port="7673",
+            port="7595",
         )
 
         return conn
