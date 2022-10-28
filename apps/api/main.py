@@ -208,6 +208,7 @@ def get_user_friend_requests(
         "user_email": user.user_email,
         "random_id": user.random_id,
         "created": user.created.strftime("%Y/%m/%m"),
+        "total_xp": ControllerDatabase.get_user_xp_sum_in_timeframe(user_id=user.user_id),
     }
 
     return {"user": user_dict}
