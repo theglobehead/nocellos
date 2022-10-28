@@ -231,6 +231,9 @@ def get_user_xp(
     start_date = datetime.datetime.now().date() - datetime.timedelta(days=6)
     start_date = datetime.datetime.combine(start_date, datetime.time())
     
+    print(start_date)
+    print(datetime.datetime.now())
+
     user_xp = ControllerDatabase.get_user_xp_in_timeframe(
         user_id=user_id,
         start_date=start_date,
@@ -258,6 +261,53 @@ def get_user_xp(
     return {
         "xp_count": xp_count,
         "days": days,
+    }
+
+
+@app.post("/get_user_leaderboard", status_code=status.HTTP_200_OK)
+def get_user_leaderboard(
+        response: Response,
+        user_uuid: str = Form(...),
+        token_uuid: str = Form(...),
+):
+    """
+    Used for getting a users xp in the last 7 days
+    :param response: the fastapi response
+    :param user_uuid: the user_uuid of the user
+    :param token_uuid: the uuid of the users token
+    :return: {
+    "leader_board": [
+            {
+                "user_name": str,
+                "user_uuid": str,
+                "random_id": str,
+                "xp_count": int,
+            }
+        ]
+    }
+    """
+    leader_board = []
+    user = ControllerDatabase.get_user_by_uuid(user_uuid)
+    requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
+
+    # Check if user has permission
+    if requester_user_id != user.user_id:
+        response.status_code = status.HTTP_403_FORBIDDEN
+        return
+    
+    user_friends = ControllerDatabase.get_user_leader_board(user)
+    user_friends.append(user)
+    
+    for user_friend in user_friends:
+        leader_board.append({
+            "user_name": user_friend.user_name,
+            "user_uuid": user_friend.user_uuid,
+            "random_id": user_friend.random_id,
+            "xp_count": user_friend.xp_count,
+        })
+    
+    return {
+        "leader_board": leader_board
     }
 
 
@@ -412,7 +462,7 @@ def accept_friend_request(
         return
 
     is_successful = ControllerDatabase.accept_friend_request(
-        FriendRequest(friend_request)
+        friend_request
     )
 
     return {"is_successful": is_successful}
