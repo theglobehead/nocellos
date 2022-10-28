@@ -417,8 +417,8 @@ class ControllerDatabase:
                     )
                     (
                         friend_request_id,
-                        friend_request_uuid,
                         sender_user_id,
+                        friend_request_uuid,
                         receiver_user_id,
                         is_accepted,
                         modified,
@@ -1704,6 +1704,109 @@ class ControllerDatabase:
                             created=created,
                             xp_count=xp_count,
                         ))
+        except Exception as e:
+            logger.exception(e)
+    
+        return result
+
+    @staticmethod
+    def get_user_xp_sum_in_timeframe(
+            user_id: int,
+            start_date: datetime.datetime,
+            end_date: datetime.datetime
+    ) -> int:
+        """
+        Used for getting the amount of xp a user has earned
+        :param user_id: the id of the user
+        :param start_date: the earliest date that can be fetched
+        :param end_date: the latest date that can be fetched
+        :return: the amount of xp earned
+        """
+        result = 0
+    
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT SUM(xp_count) as xp_count "
+                        "FROM xp "
+                        "WHERE user_user_id = %(user_id)s "
+                        "AND created > %(start_date)s "
+                        "AND created < %(end_date)s "
+                        "AND is_deleted = false ",
+                        {
+                            "user_id": user_id,
+                            "start_date": start_date,
+                            "end_date": end_date,
+                        }
+                    )
+                    
+                    if cur.rowcount:
+                        (result, ) = cur.fetchone()
+                        
+                    if not result:
+                        result = 0
+            
+        except Exception as e:
+            logger.exception(e)
+    
+        return result
+
+    @staticmethod
+    def get_user_leader_board(
+            user: User,
+    ) -> list[User]:
+        """
+        Used for getting leaderboard data for a user
+        :param user: the user
+        :return: the amount of xp earned
+        """
+        result = [user]
+    
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT DISTINCT "
+                        "   users.user_id,"
+                        "   users.user_name,"
+                        "   users.user_uuid, "
+                        "   users.random_id "
+                        "FROM users "
+                        "FULL JOIN friend_requests sender_fr on users.user_id = sender_fr.sender_user_id "
+                        "FULL JOIN friend_requests receiver_fr on users.user_id = receiver_fr.receiver_user_id "
+                        "WHERE sender_fr.receiver_user_id = %(user_id)s "
+                        "OR receiver_fr.sender_user_id = %(user_id)s ",
+                        {
+                            "user_id": user.user_id,
+                        }
+                    )
+
+                    now = datetime.datetime.now()
+                    week_start = now.date() - datetime.timedelta(days=now.weekday())
+                    week_end = week_start + datetime.timedelta(days=6)
+                    
+                    result[0].xp_count = ControllerDatabase.get_user_xp_sum_in_timeframe(
+                        user_id=result[0].user_id,
+                        start_date=datetime.datetime.combine(week_start, datetime.time()),
+                        end_date=datetime.datetime.combine(week_end, datetime.time()),
+                    )
+                    
+                    for (user_id, user_name, user_uuid, random_id) in cur.fetchall():
+                        xp_count = ControllerDatabase.get_user_xp_sum_in_timeframe(
+                            user_id=user_id,
+                            start_date=datetime.datetime.combine(week_start, datetime.time()),
+                            end_date=datetime.datetime.combine(week_end, datetime.time()),
+                        )
+
+                        result.append(User(
+                            user_id=user_id,
+                            user_name=user_name,
+                            user_uuid=user_uuid,
+                            random_id=random_id,
+                            xp_count=xp_count,
+                        ))
+                        
         except Exception as e:
             logger.exception(e)
     
