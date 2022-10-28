@@ -1712,8 +1712,8 @@ class ControllerDatabase:
     @staticmethod
     def get_user_xp_sum_in_timeframe(
             user_id: int,
-            start_date: datetime.datetime,
-            end_date: datetime.datetime
+            start_date: datetime.datetime = None,
+            end_date: datetime.datetime = None
     ) -> int:
         """
         Used for getting the amount of xp a user has earned
@@ -1723,6 +1723,9 @@ class ControllerDatabase:
         :return: the amount of xp earned
         """
         result = 0
+        
+        start_date_str = "AND created > %(start_date)s " if start_date else ""
+        end_date_str = "AND created < %(end_date)s " if end_date else ""
     
         try:
             with CommonUtils.connection() as conn:
@@ -1731,8 +1734,8 @@ class ControllerDatabase:
                         "SELECT SUM(xp_count) as xp_count "
                         "FROM xp "
                         "WHERE user_user_id = %(user_id)s "
-                        "AND created > %(start_date)s "
-                        "AND created < %(end_date)s "
+                        f"{ start_date_str } "
+                        f"{ end_date_str } "
                         "AND is_deleted = false ",
                         {
                             "user_id": user_id,

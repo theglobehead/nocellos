@@ -193,21 +193,29 @@ def get_user_friend_requests(
 @app.post("/get_user_info", status_code=status.HTTP_200_OK)
 def get_user_friend_requests(
         user_uuid: str = Form(...),
+        token_uuid: str = Form(...),
 ):
     """
     Used for getting basic info on the user
     Can also be used to get a users friends, if is_accepted is true
     :param user_uuid: The uuid of the user
+    :param token_uuid: The uuid of the users token
     :return: A dictionary
     """
     user = ControllerDatabase.get_user_by_uuid(user_uuid)
+    token_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid=token_uuid)
+    
+    email_str = ""
+    if token_user_id == user.user_id:
+        email_str = user.user_email
 
     user_dict = {
         "user_uuid": user.user_uuid,
         "user_name": user.user_name,
-        "user_email": user.user_email,
+        "user_email": email_str,
         "random_id": user.random_id,
         "created": user.created.strftime("%Y/%m/%m"),
+        "total_xp": ControllerDatabase.get_user_xp_sum_in_timeframe(user_id=user.user_id),
     }
 
     return {"user": user_dict}
