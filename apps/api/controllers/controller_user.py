@@ -60,8 +60,6 @@ class ControllerUser:
         """
         result = None
 
-        print("eeeeeeeeeeeeeeeeeeeeeee")
-
         user_email_taken = ControllerDatabase.check_if_user_email_taken(email)
 
         if user_email_taken:

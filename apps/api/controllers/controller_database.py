@@ -299,6 +299,8 @@ class ControllerDatabase:
 
     @staticmethod
     def get_token_by_uuid(token_uuid: str) -> Token:
+        token_uuid = token_uuid.replace("Bearer ", "")
+        
         query_str = "WHERE token_uuid = %(token_uuid)s " \
                     "AND is_deleted = false "
         parameters = {"token_uuid": token_uuid}
@@ -365,6 +367,7 @@ class ControllerDatabase:
         :return: bool of weather or not the deletion was successful
         """
         result = 0
+        token_uuid = token_uuid.replace("Bearer ", "")
 
         try:
             with CommonUtils.connection() as conn:
