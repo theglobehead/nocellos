@@ -1,8 +1,9 @@
 import datetime
 
 import uvicorn
-from fastapi import FastAPI, Form, status, Response, Request
+from fastapi import FastAPI, Form, status, Response, Request, Header
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
 
 from jinja2 import Environment, PackageLoader, select_autoescape
@@ -30,6 +31,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 email_conf = ConnectionConfig(
     MAIL_USERNAME=ADMIN_EMAIL_USERNAME,
     MAIL_PASSWORD=ADMIN_EMAIL_PASSWORD,
@@ -46,6 +48,24 @@ jinja_env = Environment(
     loader=PackageLoader("main"),
     autoescape=select_autoescape()
 )
+
+
+@app.get("/verify_email/{user_uuid}", response_class=RedirectResponse, status_code=302)
+async def verify_email(response: Response, user_uuid: str):
+    """
+    Used for verifying a users email.
+    Sets is_email_verified in the bd to true.
+    :param response: The fastapi response
+    :param user_uuid: the uuid of the user
+    :return: Sends the user to the login view
+    """
+    user = ControllerDatabase.get_user_by_uuid(user_uuid)
+    is_successful = ControllerDatabase.set_user_email_verified(user)
+    
+    if is_successful:
+        response.headers["token"] = user.token.token_uuid
+        
+    return "/"
 
 
 # These post methods act as get methods, but they have forms
@@ -103,7 +123,7 @@ def get_user_study_sets(
 @app.post("/get_user_decks", status_code=status.HTTP_200_OK)
 def get_user_decks(
         user_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for getting a users decks
@@ -132,7 +152,7 @@ def get_user_decks(
 def get_deck_cards(
         response: Response,
         deck_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for getting cards in a deck
@@ -163,7 +183,7 @@ def get_deck_cards(
 @app.post("/get_user_friend_requests", status_code=status.HTTP_200_OK)
 def get_user_friend_requests(
         is_accepted: bool = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for getting a users friend_requests.
@@ -193,7 +213,7 @@ def get_user_friend_requests(
 @app.post("/get_user_info", status_code=status.HTTP_200_OK)
 def get_user_friend_requests(
         user_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Used for getting basic info on the user
@@ -276,7 +296,7 @@ def get_user_xp(
 def get_user_leaderboard(
         response: Response,
         user_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Used for getting a users xp in the last 7 days
@@ -370,33 +390,17 @@ async def register_user(
         return {"user_uuid": new_user.user_uuid}
 
 
-@app.post("/verify_email/{user_uuid}")
-async def verify_email(response: Response, user_uuid: str):
-    """
-    Used for verifying a users email.
-    Sets is_email_verified in the bd to true.
-    :param response: The fastapi response
-    :param user_uuid: the uuid of the user
-    :return: Sends the user to the login view
-    """
-    user = ControllerDatabase.get_user_by_uuid(user_uuid)
-    is_successful = ControllerDatabase.set_user_email_verified(user)
-    return {"is_successful": is_successful}
-
-
 @app.post("/login", status_code=status.HTTP_401_UNAUTHORIZED)
 def login(
         response: Response,
         email: str = Form(...),
         password: str = Form(...),
-        remember_me: bool = Form(...)
 ):
     """
     Used for logging a user in.
     :param response: the fastapi response
     :param email: user email
     :param password: user password
-    :param remember_me: bool of weather or not to remember the user
     :return: dict of user_uuid and token_uuid. Token_uuid is "" if remember_me = false
     """
     result = {}
@@ -407,6 +411,7 @@ def login(
             "user_uuid": user.user_uuid,
             "token_uuid": user.token.token_uuid,
         }
+        response.headers["token"] = user.token.token_uuid
         response.status_code = status.HTTP_200_OK
 
     return result
@@ -417,7 +422,7 @@ def send_friend_request(
         response: Response,
         user_uuid: str = Form(...),
         receiver_user_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Used for verifying a users email
@@ -450,7 +455,7 @@ def send_friend_request(
 def accept_friend_request(
         response: Response,
         friend_request_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for accepting a friend request
@@ -481,7 +486,7 @@ def create_study_set(
         response: Response,
         study_set_name: str = Form(...),
         is_public: bool = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for creating a new study set
@@ -512,7 +517,7 @@ def create_deck(
         response: Response,
         deck_name: str = Form(...),
         is_public: bool = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for creating a deck
@@ -544,7 +549,7 @@ def create_card(
         front_text: str = Form(...),
         back_text: str = Form(...),
         deck_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for creating a card in a deck
@@ -582,7 +587,7 @@ def add_label_to_deck(
         response: Response,
         deck_uuid: str = Form(...),
         label_name: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for adding a label to a deck.
@@ -610,7 +615,7 @@ def add_label_to_study_set(
         response: Response,
         study_set_uuid: str = Form(...),
         label_name: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for adding a label to a study set
@@ -638,7 +643,7 @@ def edit_card(
         front_text: str = Form(...),
         back_text: str = Form(...),
         card_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for editing a card
@@ -671,7 +676,7 @@ def invite_user_to_study_set(
         response: Response,
         study_set_uuid: str = Form(...),
         user_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
         can_edit: bool = Form(...),
 ):
     """
@@ -700,7 +705,7 @@ def invite_user_to_study_set(
 @app.post("/update_user_xp", status_code=status.HTTP_200_OK)
 def update_user_xp(
         response: Response,
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
         xp_count: int = Form(...),
 ):
     """
@@ -722,7 +727,7 @@ def update_user_xp(
 def remove_friend_request(
         response: Response,
         friend_request_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for removing a friend request
@@ -750,7 +755,7 @@ def remove_friend_request(
 def remove_card(
         response: Response,
         card_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for removing a card
@@ -777,7 +782,7 @@ def remove_card(
 def remove_deck(
         response: Response,
         deck_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for removing a deck
@@ -803,7 +808,7 @@ def remove_deck(
 def remove_study_set(
         response: Response,
         study_set_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for removing a study_set
@@ -830,7 +835,7 @@ def remove_user_from_study_set(
         response: Response,
         study_set_uuid: str = Form(...),
         user_uuid: str = Form(...),
-        token_uuid: str = Form(...),
+        token_uuid: str = Header(alias="token"),
 ):
     """
     Ajax endpoint for removing a study_set
