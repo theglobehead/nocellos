@@ -3,6 +3,7 @@ import datetime
 import uvicorn
 from fastapi import FastAPI, Form, status, Response, Request, Header
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
 
 from jinja2 import Environment, PackageLoader, select_autoescape
@@ -47,6 +48,24 @@ jinja_env = Environment(
     loader=PackageLoader("main"),
     autoescape=select_autoescape()
 )
+
+
+@app.get("/verify_email/{user_uuid}", response_class=RedirectResponse, status_code=302)
+async def verify_email(response: Response, user_uuid: str):
+    """
+    Used for verifying a users email.
+    Sets is_email_verified in the bd to true.
+    :param response: The fastapi response
+    :param user_uuid: the uuid of the user
+    :return: Sends the user to the login view
+    """
+    user = ControllerDatabase.get_user_by_uuid(user_uuid)
+    is_successful = ControllerDatabase.set_user_email_verified(user)
+    
+    if is_successful:
+        response.headers["token"] = user.token.token_uuid
+        
+    return "/"
 
 
 # These post methods act as get methods, but they have forms
@@ -369,20 +388,6 @@ async def register_user(
 
     if new_user.user_uuid:
         return {"user_uuid": new_user.user_uuid}
-
-
-@app.post("/verify_email/{user_uuid}")
-async def verify_email(response: Response, user_uuid: str):
-    """
-    Used for verifying a users email.
-    Sets is_email_verified in the bd to true.
-    :param response: The fastapi response
-    :param user_uuid: the uuid of the user
-    :return: Sends the user to the login view
-    """
-    user = ControllerDatabase.get_user_by_uuid(user_uuid)
-    is_successful = ControllerDatabase.set_user_email_verified(user)
-    return {"is_successful": is_successful}
 
 
 @app.post("/login", status_code=status.HTTP_401_UNAUTHORIZED)
