@@ -53,6 +53,7 @@ jinja_env = Environment(
 @app.get("/verify_email/{user_uuid}", response_class=RedirectResponse, status_code=302)
 async def verify_email(response: Response, user_uuid: str):
     """
+    CURRENTLY NOT USED. TEMPORARILY REMOVED
     Used for verifying a users email.
     Sets is_email_verified in the bd to true.
     :param response: The fastapi response
@@ -369,19 +370,20 @@ async def register_user(
 
     if form_is_valid:
         try:
-            new_user = ControllerUser.create_user(email=email, name=name, password=password1)
+            new_user = ControllerUser.create_user(email=email, name=name, password=password1, email_verified=True)
 
-            template = jinja_env.get_template("confirm_email_email.html")
+            #  Currently removed
+            # template = jinja_env.get_template("confirm_email_email.html")
 
-            message = MessageSchema(
-                subject="Verify your email",
-                recipients=[email],
-                body=template.render(user=new_user, server_name=SERVER_NAME),
-                subtype=MessageType.html
-            )
+            # message = MessageSchema(
+            #     subject="Verify your email",
+            #     recipients=[email],
+            #     body=template.render(user=new_user, server_name=SERVER_NAME),
+            #     subtype=MessageType.html
+            # )
 
-            fm = FastMail(email_conf)
-            await fm.send_message(message)
+            # fm = FastMail(email_conf)
+            # await fm.send_message(message)
         except Exception as e:
             response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             logger.exception(e)
