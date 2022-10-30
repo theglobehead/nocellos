@@ -29,8 +29,14 @@ class ControllerDatabase:
                 with conn.cursor() as cur:
                     cur.execute(
                         "INSERT INTO USERS "
-                        "(user_name, user_email, hashed_password, password_salt) "
-                        "values (%(user_name)s, %(user_email)s, %(hashed_password)s, %(password_salt)s) "
+                        "(user_name, user_email, hashed_password, password_salt, email_verified) "
+                        "values "
+                        "   (%(user_name)s, "
+                        "   %(user_email)s, "
+                        "   %(hashed_password)s, "
+                        "   %(password_salt)s, "
+                        "   %(email_verified)s"
+                        ") "
                         "RETURNING user_id ",
                         user.to_dict()
                     )
