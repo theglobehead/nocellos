@@ -10,6 +10,7 @@ from models.token import Token
 @dataclass
 class User:
     token: Token = field(default_factory=Token)
+    xp_count: int = 0
 
     user_id: int = 0
     user_uuid: str = ""

@@ -37,7 +37,7 @@ class ControllerUser:
         return result
 
     @staticmethod
-    def create_user(email: str, name: str, password: str) -> User:
+    def create_user(email: str, name: str, password: str, email_verified: bool = False) -> User:
         salt = ControllerUser.generate_salt()
         hashed_password = ControllerUser.hash_password(password, salt)
 
@@ -46,6 +46,7 @@ class ControllerUser:
             user_email=email,
             password_salt=salt,
             hashed_password=hashed_password,
+            email_verified=email_verified,
         )
 
         return ControllerDatabase.insert_user(user)
@@ -59,8 +60,6 @@ class ControllerUser:
         :return: Returns the User, if the form is valid, else it returns false
         """
         result = None
-
-        print("eeeeeeeeeeeeeeeeeeeeeee")
 
         user_email_taken = ControllerDatabase.check_if_user_email_taken(email)
 
