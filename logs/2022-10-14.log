@@ -1,0 +1,210 @@
+[32m2022-10-14 11:59:04.963[0m | [31m[1mERROR   [0m | [36m__main__[0m:[36merror_page[0m:[36m59[0m - [31m[1m404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000019BA4F85CA0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-2, started daemon 15652)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000019BA4F859D0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-2, started daemon 15652)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-2, started daemon 15652)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1568, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-2, started daemon 15652)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000019BBDEDB820>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-2, started daemon 15652)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 56554)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1568, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000019BA572C700>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000019BBDEDB820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000019BBDEDB820>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 56554)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1568, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000019BBDEDB820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000019BA5902B80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000019BBDEFA490>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000019BBDEFA490>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000019BA5875670>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000019BA5902D30>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000019BBDEFA490>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000019BA5902AF0>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000019BBDEFA490>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000019BBDE924F0>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000019BBDEDB820>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000019BBDEFA490>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000019BBDEFF670>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000019BBDEC4DD0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000019BBDEFF5E0>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1568>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000019BBDE924F0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000019BBDEFF5E0>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1568>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000019BA5BCCA60>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000019BA5BCC160>
+               └ <Flask 'main'>
+> File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+         │    └ <function Flask.dispatch_request at 0x0000019BA5BCC0D0>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1926, in dispatch_request
+    self.raise_routing_exception(req)
+    │    │                       └ <Request 'http://127.0.0.1:5000/login/' [GET]>
+    │    └ <function Flask.raise_routing_exception at 0x0000019BA5BCC040>
+    └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1908, in raise_routing_exception
+    raise request.routing_exception
+          │       └ <NotFound '404: Not Found'>
+          └ <Request 'http://127.0.0.1:5000/login/' [GET]>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\ctx.py", line 350, in match_request
+    result = self.url_adapter.match(return_rule=True)
+             │    │           └ <function MapAdapter.match at 0x0000019BA5B2E8B0>
+             │    └ <werkzeug.routing.MapAdapter object at 0x0000019BBDEFA820>
+             └ <RequestContext 'http://127.0.0.1:5000/login/' [GET] of main>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\routing.py", line 1945, in match
+    raise NotFound()
+          └ <class 'werkzeug.exceptions.NotFound'>
+
+[31m[1mwerkzeug.exceptions.NotFound[0m:[1m 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.[0m
+[32m2022-10-14 12:00:16.394[0m | [31m[1mERROR   [0m | [36m__main__[0m:[36merror_page[0m:[36m59[0m - [31m[1m404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000019BA4F85CA0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-6, started daemon 16308)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000019BA4F859D0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-6, started daemon 16308)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-6, started daemon 16308)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=2052, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-6, started daemon 16308)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000019BBDEDB820>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-6, started daemon 16308)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 56649)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=2052, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000019BA572C700>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000019BBDEDB820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000019BBDEDB820>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 56649)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=2052, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000019BBDEDB820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000019BA5902B80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000019BBE233D60>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000019BBE233D60>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000019BA5875670>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000019BA5902D30>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000019BBE233D60>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000019BA5902AF0>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000019BBE233D60>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000019BBDE924F0>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000019BBDEDB820>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000019BBE233D60>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000019BBE21AD30>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000019BBDEC4DD0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000019BBE21AAF0>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=2052>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000019BBDE924F0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000019BBE21AAF0>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=2052>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000019BA5BCCA60>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000019BA5BCC160>
+               └ <Flask 'main'>
+> File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+         │    └ <function Flask.dispatch_request at 0x0000019BA5BCC0D0>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1926, in dispatch_request
+    self.raise_routing_exception(req)
+    │    │                       └ <Request 'http://127.0.0.1:5000/login/' [GET]>
+    │    └ <function Flask.raise_routing_exception at 0x0000019BA5BCC040>
+    └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1908, in raise_routing_exception
+    raise request.routing_exception
+          │       └ <NotFound '404: Not Found'>
+          └ <Request 'http://127.0.0.1:5000/login/' [GET]>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\ctx.py", line 350, in match_request
+    result = self.url_adapter.match(return_rule=True)
+             │    │           └ <function MapAdapter.match at 0x0000019BA5B2E8B0>
+             │    └ <werkzeug.routing.MapAdapter object at 0x0000019BBE2337F0>
+             └ <RequestContext 'http://127.0.0.1:5000/login/' [GET] of main>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\routing.py", line 1945, in match
+    raise NotFound()
+          └ <class 'werkzeug.exceptions.NotFound'>
+
+[31m[1mwerkzeug.exceptions.NotFound[0m:[1m 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.[0m

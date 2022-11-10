@@ -1,0 +1,1641 @@
+[32m2022-10-11 12:49:31.115[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000026F0D4BE8B0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-2, started daemon 5732)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000026F0D4BE5E0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-2, started daemon 5732)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-2, started daemon 5732)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1100, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-2, started daemon 5732)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-2, started daemon 5732)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 63811)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1100, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000026F0DCA7550>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 63811)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1100, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000026F0DEBE9D0>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000026F2646D160>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F2646D160>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000026F0DDEE4C0>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000026F0DEBEB80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000026F2646D160>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000026F0DEBE940>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F2646D160>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000026F26405340>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F2646D160>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000026F2646EAF0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000026F26433F90>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000026F2646EA60>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1100>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000026F26405340>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000026F2646EA60>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1100>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000026F0F1468B0>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000026F0F144F70>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000026F0F1464C0>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000026F26400A60>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m84[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 9, 22, 29, 516480), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000026F0F708A90>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000026F0F708A60>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 12:49:34.843[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000026F0D4BE8B0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-3, started daemon 5504)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000026F0D4BE5E0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-3, started daemon 5504)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-3, started daemon 5504)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1144, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-3, started daemon 5504)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-3, started daemon 5504)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 63833)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1144, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000026F0DCA7550>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 63833)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1144, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000026F0DEBE9D0>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000026F2646D100>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F2646D100>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000026F0DDEE4C0>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000026F0DEBEB80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000026F2646D100>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000026F0DEBE940>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F2646D100>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000026F26405340>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F2646D100>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000026F2646EB80>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000026F26433F90>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000026F2646EAF0>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1144>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000026F26405340>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000026F2646EAF0>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1144>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000026F0F1468B0>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000026F0F144F70>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000026F0F1464C0>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000026F26400A60>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m84[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 9, 22, 29, 516480), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000026F0F708A90>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000026F0F708A60>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 12:49:38.658[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000026F0D4BE8B0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-4, started daemon 23476)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000026F0D4BE5E0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-4, started daemon 23476)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-4, started daemon 23476)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1628, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-4, started daemon 23476)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-4, started daemon 23476)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 63836)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1628, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000026F0DCA7550>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 63836)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1628, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000026F0DEBE9D0>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000026F26591F40>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F26591F40>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000026F0DDEE4C0>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000026F0DEBEB80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000026F26591F40>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000026F0DEBE940>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F26591F40>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000026F26405340>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F26591F40>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000026F2646EC10>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000026F26433F90>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000026F2646EB80>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1628>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000026F26405340>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000026F2646EB80>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1628>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000026F0F1468B0>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000026F0F144F70>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000026F0F1464C0>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000026F26400A60>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m84[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 9, 22, 29, 516480), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000026F0F708A90>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000026F0F708A60>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 12:49:39.659[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000026F0D4BE8B0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-5, started daemon 21436)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000026F0D4BE5E0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-5, started daemon 21436)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-5, started daemon 21436)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1572, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-5, started daemon 21436)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-5, started daemon 21436)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 63837)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1572, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000026F0DCA7550>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 63837)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1572, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000026F0DEBE9D0>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000026F26591430>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F26591430>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000026F0DDEE4C0>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000026F0DEBEB80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000026F26591430>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000026F0DEBE940>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F26591430>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000026F26405340>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F26591430>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000026F2656B4C0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000026F26458900>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000026F2656B430>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1572>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000026F26405340>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000026F2656B430>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1572>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000026F0F1468B0>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000026F0F144F70>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000026F0F1464C0>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000026F26400A60>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m84[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 9, 22, 29, 516480), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000026F0F708A90>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000026F0F708A60>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 12:49:43.573[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000026F0D4BE8B0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-6, started daemon 21668)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000026F0D4BE5E0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-6, started daemon 21668)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-6, started daemon 21668)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1676, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-6, started daemon 21668)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-6, started daemon 21668)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 63844)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1676, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000026F0DCA7550>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 63844)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1676, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000026F0DEBE9D0>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000026F265910A0>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F265910A0>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000026F0DDEE4C0>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000026F0DEBEB80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000026F265910A0>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000026F0DEBE940>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F265910A0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000026F26405340>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000026F264564F0>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000026F265910A0>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000026F2646E9D0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000026F26458900>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000026F2646EC10>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1676>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000026F26405340>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000026F2646EC10>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1676>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000026F0F1468B0>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000026F0F144F70>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000026F0F1464C0>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000026F26400A60>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m84[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 9, 22, 29, 516480), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000026F0F708A90>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000026F0F708A60>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 13:21:50.975[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000022CDEA65CA0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-2, started daemon 21176)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000022CDEA659D0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-2, started daemon 21176)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-2, started daemon 21176)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1492, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-2, started daemon 21176)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-2, started daemon 21176)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 63999)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1492, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000022CDF02C700>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 63999)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1492, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000022CDF1E2B80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CB550>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CB550>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000022CDF164670>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000022CDF1E2D30>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CB550>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000022CDF1E2AF0>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CB550>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CB550>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000022CF77CF670>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000022CF77B6660>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF77CF5E0>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1492>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF77CF5E0>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1492>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000022CDF4ABA60>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000022CDF4AB160>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000022CDF4AB670>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000022CF775F430>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m81[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 10, 21, 44, 732225), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7F0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7C0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 13:21:53.986[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000022CDEA65CA0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-3, started daemon 92)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000022CDEA659D0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-3, started daemon 92)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-3, started daemon 92)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1564, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-3, started daemon 92)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-3, started daemon 92)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 64002)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1564, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000022CDF02C700>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 64002)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1564, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000022CDF1E2B80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CBC10>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CBC10>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000022CDF164670>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000022CDF1E2D30>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CBC10>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000022CDF1E2AF0>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CBC10>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CBC10>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000022CF77CF9D0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000022CF7794DD0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF77CF940>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1564>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF77CF940>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1564>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000022CDF4ABA60>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000022CDF4AB160>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000022CDF4AB670>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000022CF775F430>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m81[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 10, 21, 44, 732225), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7F0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7C0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 13:21:57.815[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000022CDEA65CA0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-4, started daemon 24856)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000022CDEA659D0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-4, started daemon 24856)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-4, started daemon 24856)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1596, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-4, started daemon 24856)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-4, started daemon 24856)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 64005)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1596, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000022CDF02C700>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 64005)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1596, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000022CDF1E2B80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CBA00>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CBA00>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000022CDF164670>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000022CDF1E2D30>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CBA00>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000022CDF1E2AF0>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CBA00>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF77CBA00>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000022CF77CF9D0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000022CF7794DD0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF77CF940>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1596>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF77CF940>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1596>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000022CDF4ABA60>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000022CDF4AB160>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000022CDF4AB670>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000022CF775F430>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m81[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 10, 21, 44, 732225), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7F0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7C0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 13:22:04.180[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000022CDEA65CA0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-5, started daemon 16572)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000022CDEA659D0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-5, started daemon 16572)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-5, started daemon 16572)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1628, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-5, started daemon 16572)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-5, started daemon 16572)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 64009)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1628, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000022CDF02C700>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 64009)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1628, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000022CDF1E2B80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B1A0D0>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B1A0D0>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000022CDF164670>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000022CDF1E2D30>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B1A0D0>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000022CDF1E2AF0>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B1A0D0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B1A0D0>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000022CF77CFA60>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000022CF7794DD0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF77CF9D0>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1628>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF77CF9D0>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1628>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000022CDF4ABA60>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000022CDF4AB160>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000022CDF4AB670>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000022CF775F430>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m81[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 10, 21, 44, 732225), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7F0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7C0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 13:22:43.429[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000022CDEA65CA0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-6, started daemon 8136)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000022CDEA659D0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-6, started daemon 8136)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-6, started daemon 8136)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1620, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-6, started daemon 8136)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-6, started daemon 8136)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 64021)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1620, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000022CDF02C700>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 64021)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1620, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000022CDF1E2B80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B328E0>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B328E0>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000022CDF164670>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000022CDF1E2D30>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B328E0>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000022CDF1E2AF0>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B328E0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B328E0>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000022CF7ACAE50>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000022CF7794DD0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF77CFA60>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1620>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF77CFA60>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1620>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000022CDF4ABA60>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000022CDF4AB160>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000022CDF4AB670>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000022CF775F430>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m81[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 10, 21, 44, 732225), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7F0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7C0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 13:22:53.818[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000022CDEA65CA0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-7, started daemon 24356)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000022CDEA659D0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-7, started daemon 24356)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-7, started daemon 24356)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1680, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-7, started daemon 24356)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-7, started daemon 24356)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 64029)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1680, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000022CDF02C700>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 64029)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1680, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000022CDF1E2B80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B1AD90>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B1AD90>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000022CDF164670>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000022CDF1E2D30>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B1AD90>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000022CDF1E2AF0>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B1AD90>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B1AD90>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000022CF7B25430>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000022CF7794DD0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF7ACAE50>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1680>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF7ACAE50>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1680>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000022CDF4ABA60>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000022CDF4AB160>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000022CDF4AB670>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000022CF775F430>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m81[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 10, 21, 44, 732225), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7F0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7C0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 13:23:02.778[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000022CDEA65CA0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-8, started daemon 19904)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000022CDEA659D0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-8, started daemon 19904)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-8, started daemon 19904)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1712, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-8, started daemon 19904)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-8, started daemon 19904)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 64032)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1712, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000022CDF02C700>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 64032)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1712, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000022CDF1E2B80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B576D0>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B576D0>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000022CDF164670>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000022CDF1E2D30>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B576D0>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000022CDF1E2AF0>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B576D0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B576D0>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000022CF7B25DC0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000022CF7AF9E40>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF7B25430>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1712>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF7B25430>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1712>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000022CDF4ABA60>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000022CDF4AB160>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000022CDF4AB670>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000022CF775F430>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m81[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 10, 21, 44, 732225), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7F0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7C0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 13:23:10.365[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000022CDEA65CA0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-9, started daemon 14572)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000022CDEA659D0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-9, started daemon 14572)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-9, started daemon 14572)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1688, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-9, started daemon 14572)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-9, started daemon 14572)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 64037)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1688, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000022CDF02C700>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 64037)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1688, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000022CDF1E2B80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B577F0>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B577F0>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000022CDF164670>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000022CDF1E2D30>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B577F0>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000022CDF1E2AF0>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B577F0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B577F0>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000022CF77CF940>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000022CF7AF9E40>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF7B25DC0>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1688>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF7B25DC0>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1688>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000022CDF4ABA60>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000022CDF4AB160>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000022CDF4AB670>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000022CF775F430>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m81[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 10, 21, 44, 732225), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7F0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7C0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 13:23:42.059[0m | [31m[1mERROR   [0m | [36mcontrollers.controller_database[0m:[36mget_user_by_query[0m:[36m118[0m - [31m[1mcannot unpack non-iterable NoneType object[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000022CDEA65CA0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-10, started daemon 5092)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000022CDEA659D0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-10, started daemon 5092)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-10, started daemon 5092)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1644, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-10, started daemon 5092)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-10, started daemon 5092)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 64043)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1644, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000022CDF02C700>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 64043)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1644, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000022CDF1E2B80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B57A60>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B57A60>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000022CDF164670>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000022CDF1E2D30>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B57A60>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000022CDF1E2AF0>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B57A60>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B57A60>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000022CF77CF820>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000022CF7AF9BA0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF77CF940>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1644>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF77CF940>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1644>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000022CDF4ABA60>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000022CDF4AB160>
+               └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1948, in full_dispatch_request
+    rv = self.preprocess_request()
+         │    └ <function Flask.preprocess_request at 0x0000022CDF4AB670>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2242, in preprocess_request
+    rv = func()
+         └ <function check_user_in at 0x0000022CF775F430>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\[0m[32m[1mmain.py[0m", line [33m81[0m, in [35mcheck_user_in[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user[0m[1m([0m[1mtoken[0m[35m[1m.[0m[1muser_user_id[0m[1m)[0m
+    [36m       │                  │        │     └ [0m[36m[1m0[0m
+    [36m       │                  │        └ [0m[36m[1mToken(token_id=0, token_uuid='', user_user_id=0, created=datetime.datetime(2022, 10, 11, 10, 21, 44, 732225), is_deleted=False)[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7F0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m138[0m, in [35mget_user[0m
+    [1muser[0m [35m[1m=[0m [1mControllerDatabase[0m[35m[1m.[0m[1mget_user_by_query[0m[1m([0m[1mquery_str[0m[1m,[0m [1mparameters[0m[1m)[0m
+    [36m       │                  │                 │          └ [0m[36m[1m{'user_id': 0}[0m
+    [36m       │                  │                 └ [0m[36m[1m'WHERE user_id = %(user_id)s AND is_deleted = false '[0m
+    [36m       │                  └ [0m[36m[1m<staticmethod object at 0x0000022CDFA6E7C0>[0m
+    [36m       └ [0m[36m[1m<class 'controllers.controller_database.ControllerDatabase'>[0m
+
+> File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\controllers\[0m[32m[1mcontroller_database.py[0m", line [33m92[0m, in [35mget_user_by_query[0m
+    [1m([0m
+
+[31m[1mTypeError[0m:[1m cannot unpack non-iterable NoneType object[0m
+[32m2022-10-11 13:24:34.467[0m | [31m[1mERROR   [0m | [36m__main__[0m:[36merror_page[0m:[36m59[0m - [31m[1mCould not build url for endpoint 'login.login'. Did you mean 'login' instead?[0m
+[33m[1mTraceback (most recent call last):[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m937[0m, in [35m_bootstrap[0m
+    [1mself[0m[35m[1m.[0m[1m_bootstrap_inner[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread._bootstrap_inner at 0x0000022CDEA65CA0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-23, started daemon 19992)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m980[0m, in [35m_bootstrap_inner[0m
+    [1mself[0m[35m[1m.[0m[1mrun[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function Thread.run at 0x0000022CDEA659D0>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-23, started daemon 19992)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1mthreading.py[0m", line [33m917[0m, in [35mrun[0m
+    [1mself[0m[35m[1m.[0m[1m_target[0m[1m([0m[35m[1m*[0m[1mself[0m[35m[1m.[0m[1m_args[0m[1m,[0m [35m[1m**[0m[1mself[0m[35m[1m.[0m[1m_kwargs[0m[1m)[0m
+    [36m│    │        │    │        │    └ [0m[36m[1m{}[0m
+    [36m│    │        │    │        └ [0m[36m[1m<Thread(Thread-23, started daemon 19992)>[0m
+    [36m│    │        │    └ [0m[36m[1m(<socket.socket fd=1716, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr...[0m
+    [36m│    │        └ [0m[36m[1m<Thread(Thread-23, started daemon 19992)>[0m
+    [36m│    └ [0m[36m[1m<bound method ThreadingMixIn.process_request_thread of <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>>[0m
+    [36m└ [0m[36m[1m<Thread(Thread-23, started daemon 19992)>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m683[0m, in [35mprocess_request_thread[0m
+    [1mself[0m[35m[1m.[0m[1mfinish_request[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m)[0m
+    [36m│    │              │        └ [0m[36m[1m('127.0.0.1', 64071)[0m
+    [36m│    │              └ [0m[36m[1m<socket.socket fd=1716, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<function BaseServer.finish_request at 0x0000022CDF02C700>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m360[0m, in [35mfinish_request[0m
+    [1mself[0m[35m[1m.[0m[1mRequestHandlerClass[0m[1m([0m[1mrequest[0m[1m,[0m [1mclient_address[0m[1m,[0m [1mself[0m[1m)[0m
+    [36m│    │                   │        │               └ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+    [36m│    │                   │        └ [0m[36m[1m('127.0.0.1', 64071)[0m
+    [36m│    │                   └ [0m[36m[1m<socket.socket fd=1716, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 5000), raddr=...[0m
+    [36m│    └ [0m[36m[1m<class 'werkzeug.serving.WSGIRequestHandler'>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>[0m
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\[0m[32m[1msocketserver.py[0m", line [33m747[0m, in [35m__init__[0m
+    [1mself[0m[35m[1m.[0m[1mhandle[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle at 0x0000022CDF1E2B80>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B32160>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 345, in handle
+    BaseHTTPRequestHandler.handle(self)
+    │                      │      └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B32160>
+    │                      └ <function BaseHTTPRequestHandler.handle at 0x0000022CDF164670>
+    └ <class 'http.server.BaseHTTPRequestHandler'>
+
+  File "[32mC:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\lib\http\[0m[32m[1mserver.py[0m", line [33m425[0m, in [35mhandle[0m
+    [1mself[0m[35m[1m.[0m[1mhandle_one_request[0m[1m([0m[1m)[0m
+    [36m│    └ [0m[36m[1m<function WSGIRequestHandler.handle_one_request at 0x0000022CDF1E2D30>[0m
+    [36m└ [0m[36m[1m<werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B32160>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 379, in handle_one_request
+    return self.run_wsgi()
+           │    └ <function WSGIRequestHandler.run_wsgi at 0x0000022CDF1E2AF0>
+           └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B32160>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 323, in run_wsgi
+    execute(self.server.app)
+    │       │    │      └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+    │       │    └ <werkzeug.serving.ThreadedWSGIServer object at 0x0000022CF77AA820>
+    │       └ <werkzeug.serving.WSGIRequestHandler object at 0x0000022CF7B32160>
+    └ <function WSGIRequestHandler.run_wsgi.<locals>.execute at 0x0000022CF7B65670>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\serving.py", line 314, in execute
+    for data in application_iter:
+                └ <generator object DebuggedApplication.debug_application at 0x0000022CF7AF9C80>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\debug\__init__.py", line 304, in debug_application
+    app_iter = self.app(environ, start_response)
+               │    │   │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF7B65310>
+               │    │   └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1716>, 'wsgi.errors': <_io.TextIOW...
+               │    └ <Flask 'main'>
+               └ <werkzeug.debug.DebuggedApplication object at 0x0000022CF77624F0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2464, in __call__
+    return self.wsgi_app(environ, start_response)
+           │    │        │        └ <function WSGIRequestHandler.run_wsgi.<locals>.start_response at 0x0000022CF7B65310>
+           │    │        └ {'wsgi.version': (1, 0), 'wsgi.url_scheme': 'http', 'wsgi.input': <_io.BufferedReader name=1716>, 'wsgi.errors': <_io.TextIOW...
+           │    └ <function Flask.wsgi_app at 0x0000022CDF4ABA60>
+           └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+               │    └ <function Flask.full_dispatch_request at 0x0000022CDF4AB160>
+               └ <Flask 'main'>
+> File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+         │    └ <function Flask.dispatch_request at 0x0000022CDF4AB0D0>
+         └ <Flask 'main'>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+           │    │              │    │           │   └ {}
+           │    │              │    │           └ <Request 'http://127.0.0.1:5000/dashboard' [GET]>
+           │    │              │    └ 'dashboard'
+           │    │              └ <Rule '/dashboard' (OPTIONS, GET, HEAD, POST) -> dashboard>
+           │    └ {'static': <bound method _PackageBoundObject.send_static_file of <Flask 'main'>>, 'home': <function home at 0x0000022CF775F3A...
+           └ <Flask 'main'>
+
+  File "[32mC:\Users\xmovi\OneDrive\Dators\python code\github\nocellos\utils\[0m[32m[1mflask_utils.py[0m", line [33m31[0m, in [35mdecorated_function[0m
+    [1mresult[0m [35m[1m=[0m [1mredirect[0m[1m([0m[1murl_for[0m[1m([0m[36m"login.login"[0m[1m)[0m[1m)[0m
+    [36m         │        └ [0m[36m[1m<function url_for at 0x0000022CDF45BCA0>[0m
+    [36m         └ [0m[36m[1m<function redirect at 0x0000022CDEDDD5E0>[0m
+
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\helpers.py", line 370, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+           │      │   │                             │         └ {'_external': False, '_anchor': None, '_method': None, '_scheme': None}
+           │      │   │                             └ 'login.login'
+           │      │   └ <function Flask.handle_url_build_error at 0x0000022CDF4AB5E0>
+           │      └ <Flask 'main'>
+           └ <flask.ctx.AppContext object at 0x0000022CF7B32820>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\app.py", line 2216, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+    │       │         │          └ <traceback object at 0x0000022CF7B6D100>
+    │       │         └ BuildError('login.login', {}, None)
+    │       └ <class 'werkzeug.routing.BuildError'>
+    └ <function reraise at 0x0000022CDF36EAF0>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+          └ BuildError('login.login', {}, None)
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\flask\helpers.py", line 357, in url_for
+    rv = url_adapter.build(
+         │           └ <function MapAdapter.build at 0x0000022CDF40EDC0>
+         └ <werkzeug.routing.MapAdapter object at 0x0000022CF7B32B20>
+  File "C:\Users\xmovi\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\LocalCache\local-packages\Python39\site-packages\werkzeug\routing.py", line 2179, in build
+    raise BuildError(endpoint, values, method, self)
+          │          │         │       │       └ <werkzeug.routing.MapAdapter object at 0x0000022CF7B32B20>
+          │          │         │       └ None
+          │          │         └ {}
+          │          └ 'login.login'
+          └ <class 'werkzeug.routing.BuildError'>
+
+[31m[1mwerkzeug.routing.BuildError[0m:[1m Could not build url for endpoint 'login.login'. Did you mean 'login' instead?[0m
