@@ -866,4 +866,4 @@ def remove_user_from_study_set(
 
 if __name__ == "__main__":
     logger.add("./logs/{time:YYYY-MM-DD}.log", colorize=True, rotation="00:00")
-    uvicorn.run(app='main:app', reload=True)
+    uvicorn.run(app='main:app', reload=True, port=os.environ.get("PORT", default=8000))
