@@ -1,3 +1,4 @@
+import datetime
 from typing import List, Dict
 
 from models.card import Card
@@ -7,6 +8,7 @@ from models.label import Label
 from models.study_set import StudySet
 from models.token import Token
 from models.user import User
+from models.xp import Xp
 from utils.common_utils import CommonUtils
 from loguru import logger
 
@@ -27,8 +29,14 @@ class ControllerDatabase:
                 with conn.cursor() as cur:
                     cur.execute(
                         "INSERT INTO USERS "
-                        "(user_name, user_email, hashed_password, password_salt) "
-                        "values (%(user_name)s, %(user_email)s, %(hashed_password)s, %(password_salt)s) "
+                        "(user_name, user_email, hashed_password, password_salt, email_verified) "
+                        "values "
+                        "   (%(user_name)s, "
+                        "   %(user_email)s, "
+                        "   %(hashed_password)s, "
+                        "   %(password_salt)s, "
+                        "   %(email_verified)s"
+                        ") "
                         "RETURNING user_id ",
                         user.to_dict()
                     )
@@ -297,6 +305,8 @@ class ControllerDatabase:
 
     @staticmethod
     def get_token_by_uuid(token_uuid: str) -> Token:
+        token_uuid = token_uuid.replace("Bearer ", "")
+        
         query_str = "WHERE token_uuid = %(token_uuid)s " \
                     "AND is_deleted = false "
         parameters = {"token_uuid": token_uuid}
@@ -355,6 +365,37 @@ class ControllerDatabase:
 
         return result
 
+    @staticmethod
+    def get_user_id_by_token_uuid(token_uuid: str) -> int:
+        """
+        Used for deleting a playlist
+        :param token_uuid: the uuid of the token
+        :return: bool of weather or not the deletion was successful
+        """
+        result = 0
+        token_uuid = token_uuid.replace("Bearer ", "")
+
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT u.user_id "
+                        "FROM users as u "
+                        "INNER JOIN tokens as t "
+                        "ON t.user_user_id = u.user_id "
+                        "WHERE t.token_uuid = %(token_uuid)s "
+                        "AND u.is_deleted = false "
+                        "AND t.is_deleted = false ",
+                        {"token_uuid": token_uuid}
+                    )
+
+                    if cur.rowcount:
+                        (result, ) = cur.fetchone()
+        except Exception as e:
+            logger.exception(e)
+
+        return result
+
     #  Functions for friend_requests table
     @staticmethod
     def get_friend_request_by_query(query_str: str, parameters: dict) -> FriendRequest:
@@ -385,8 +426,8 @@ class ControllerDatabase:
                     )
                     (
                         friend_request_id,
-                        friend_request_uuid,
                         sender_user_id,
+                        friend_request_uuid,
                         receiver_user_id,
                         is_accepted,
                         modified,
@@ -719,16 +760,21 @@ class ControllerDatabase:
                         "   deck_id, "
                         "   deck_name, "
                         "   deck_uuid, "
-                        "   created, "
-                        "   modified, "
-                        "   is_deleted, "
+                        "   d.created, "
+                        "   d.modified, "
+                        "   d.is_deleted, "
                         "   creator_user_id, "
                         "   is_in_set, "
-                        "   is_public "
-                        "FROM decks "
-                        "WHERE creator_user_id = %(user_id)s "
-                        f"{ show_public_str }"
-                        "AND is_deleted = false ",
+                        "   is_public, "
+                        "   study_set_study_set_id "
+                        "FROM decks as d "
+                        "LEFT JOIN decks_in_users as d_in_u "
+                        "ON d_in_u.deck_deck_id = d.deck_id "
+                        "WHERE ((d_in_u.user_user_id = %(user_id)s "
+                        "AND d_in_u.is_deleted = false)"
+                        "OR (d.creator_user_id = %(user_id)s))"
+                        "AND d.is_deleted = false "
+                        f"{ show_public_str }",
                         {"user_id": user_id}
                     )
                     for (
@@ -741,6 +787,7 @@ class ControllerDatabase:
                         creator_user_id,
                         is_in_set,
                         is_public,
+                        study_set_study_set_id
                     ) in cur.fetchall():
                         new_deck = Deck(
                             deck_id=deck_id,
@@ -1001,7 +1048,7 @@ class ControllerDatabase:
         :param card: Card model. Used for getting the card_uuid, front_text, back_text
         :return: a Card model
         """
-        result = None
+        result = Card()
         card_id = 0
 
         try:
@@ -1127,6 +1174,72 @@ class ControllerDatabase:
         study_set = ControllerDatabase.get_study_set_by_query(query_str, parameters)
 
         return study_set
+    
+    @staticmethod
+    def invite_user_to_study_set(study_set_id: int, user_id: int, can_edit: bool) -> bool:
+        """
+        Used for creating a new study_set
+        :param study_set_id: the id of the study set
+        :param user_id: the id of the invited user
+        :return: bool of weather or not the insert was successful
+        """
+        result = False
+        
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "INSERT INTO study_sets_in_users "
+                        "(study_set_study_set_id, user_user_id, can_edit) "
+                        "VALUES (%(study_set_id)s, %(user_id)s, %(can_edit)s) "
+                        "RETURNING study_set_study_set_id ",
+                        {
+                            "study_set_id": study_set_id,
+                            "user_id": user_id,
+                            "can_edit": can_edit,
+                        }
+                    )
+            
+                    if cur.rowcount:
+                        result = True
+
+        except Exception as e:
+            logger.exception(e)
+            
+        return result
+    
+    @staticmethod
+    def remove_user_from_study_set(study_set_id: int, user_id: int) -> bool:
+        """
+        Used for creating a new study_set
+        :param study_set_id: the id of the study set
+        :param user_id: the id of the invited user
+        :return: bool of weather or not the insert was successful
+        """
+        result = False
+        
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "UPDATE study_sets_in_users "
+                        "SET modified = now(), "
+                        "is_deleted = true "
+                        "WHERE user_user_id = %(user_id)s "
+                        "AND study_set_study_set_id = %(study_set_id)s ",
+                        {
+                            "study_set_id": study_set_id,
+                            "user_id": user_id,
+                        }
+                    )
+                
+                    if cur.rowcount:
+                        result = True
+    
+        except Exception as e:
+            logger.exception(e)
+            
+        return result
 
     @staticmethod
     def get_user_study_sets(user_id: int, is_owner: bool = False) -> List[StudySet]:
@@ -1146,18 +1259,22 @@ class ControllerDatabase:
                 with conn.cursor() as cur:
                     cur.execute(
                         "SELECT "
-                        "   study_set_id, "
-                        "   creator_user_id, "
-                        "   created, "
-                        "   modified, "
-                        "   is_deleted, "
-                        "   study_set_name, "
-                        "   is_public,"
-                        "   study_set_uuid "
-                        "FROM study_sets "
-                        "WHERE creator_user_id = %(user_id)s "
-                        f"{show_public_str}"
-                        "AND is_deleted = false ",
+                        "   s.study_set_id, "
+                        "   s.creator_user_id, "
+                        "   s.created, "
+                        "   s.modified, "
+                        "   s.is_deleted, "
+                        "   s.study_set_name, "
+                        "   s.is_public, "
+                        "   s.study_set_uuid "
+                        "FROM study_sets as s "
+                        "LEFT JOIN study_sets_in_users as s_in_u "
+                        "ON s_in_u.study_set_study_set_id = s.study_set_id "
+                        "WHERE ((s_in_u.user_user_id = %(user_id)s "
+                        "AND s_in_u.is_deleted = false)"
+                        "OR (s.creator_user_id = %(user_id)s))"
+                        "AND s.is_deleted = false "
+                        f"{ show_public_str }",
                         {"user_id": user_id}
                     )
                     for (
@@ -1187,7 +1304,6 @@ class ControllerDatabase:
                             cur, study_set_id
                         )
                         study_sets.append(new_study_sets)
-
         except Exception as e:
             logger.exception(e)
 
@@ -1503,4 +1619,207 @@ class ControllerDatabase:
         except Exception as e:
             logger.exception(e)
 
+        return result
+    
+    # Functions for the xp table
+    @staticmethod
+    def update_user_xp(user_id: int, xp_count: int) -> bool:
+        """
+        Used for updating a users xp.
+        If no xp earned today it creates a new xp row
+        If already exists, it simply updates today's row
+        :param user_id: the id of the user
+        :param xp_count: the amount of xp earned
+        :return: bool of weather or not everything was successful
+        """
+        result = False
+
+        start_date = datetime.datetime.now().date()
+        start_date = datetime.datetime.combine(start_date, datetime.time())
+        
+        todays_xp = ControllerDatabase.get_user_xp_in_timeframe(
+            user_id, start_date, datetime.datetime.now()
+        )
+        
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    if todays_xp and len(todays_xp):
+                        xp_id = todays_xp[0].xp_id
+                        
+                        cur.execute(
+                            "UPDATE xp "
+                            "SET xp_count = xp_count + %(xp_count)s "
+                            "WHERE xp_id = %(xp_id)s ",
+                            {
+                                "xp_count": xp_count,
+                                "xp_id": xp_id,
+                            }
+                        )
+                    else:
+                        cur.execute(
+                            "INSERT INTO xp "
+                            "(user_user_id, xp_count) "
+                            "VALUES (%(user_id)s, %(xp_count)s) ",
+                            {
+                                "xp_count": xp_count,
+                                "user_id": user_id,
+                            }
+                        )
+                        
+                    result = True
+        except Exception as e:
+            logger.exception(e)
+            
+        return result
+
+    @staticmethod
+    def get_user_xp_in_timeframe(
+            user_id: int,
+            start_date: datetime.datetime,
+            end_date: datetime.datetime
+    ) -> List[Xp]:
+        """
+        Used for updating a users xp.
+        If no xp earned today it creates a new xp row
+        If already exists, it simply updates today's row
+        :param user_id: the id of the user
+        :param start_date: the earliest date that can be fetched
+        :param end_date: the latest date that can be fetched
+        :return: the amount of xp earned
+        """
+        result = []
+        
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT xp_id, created, xp_count "
+                        "FROM xp "
+                        "WHERE user_user_id = %(user_id)s "
+                        "AND created > %(start_date)s "
+                        "AND created < %(end_date)s "
+                        "AND is_deleted = false ",
+                        {
+                            "user_id": user_id,
+                            "start_date": start_date,
+                            "end_date": end_date,
+                        }
+                    )
+                    
+                    for xp_id, created, xp_count in cur.fetchall():
+                        result.append(Xp(
+                            xp_id=xp_id,
+                            created=created,
+                            xp_count=xp_count,
+                        ))
+        except Exception as e:
+            logger.exception(e)
+    
+        return result
+
+    @staticmethod
+    def get_user_xp_sum_in_timeframe(
+            user_id: int,
+            start_date: datetime.datetime = None,
+            end_date: datetime.datetime = None
+    ) -> int:
+        """
+        Used for getting the amount of xp a user has earned
+        :param user_id: the id of the user
+        :param start_date: the earliest date that can be fetched
+        :param end_date: the latest date that can be fetched
+        :return: the amount of xp earned
+        """
+        result = 0
+        
+        start_date_str = "AND created > %(start_date)s " if start_date else ""
+        end_date_str = "AND created < %(end_date)s " if end_date else ""
+    
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT SUM(xp_count) as xp_count "
+                        "FROM xp "
+                        "WHERE user_user_id = %(user_id)s "
+                        f"{ start_date_str } "
+                        f"{ end_date_str } "
+                        "AND is_deleted = false ",
+                        {
+                            "user_id": user_id,
+                            "start_date": start_date,
+                            "end_date": end_date,
+                        }
+                    )
+                    
+                    if cur.rowcount:
+                        (result, ) = cur.fetchone()
+                        
+                    if not result:
+                        result = 0
+            
+        except Exception as e:
+            logger.exception(e)
+    
+        return result
+
+    @staticmethod
+    def get_user_leader_board(
+            user: User,
+    ) -> List[User]:
+        """
+        Used for getting leaderboard data for a user
+        :param user: the user
+        :return: the amount of xp earned
+        """
+        result = [user]
+    
+        try:
+            with CommonUtils.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        "SELECT DISTINCT "
+                        "   users.user_id,"
+                        "   users.user_name,"
+                        "   users.user_uuid, "
+                        "   users.random_id "
+                        "FROM users "
+                        "FULL JOIN friend_requests sender_fr on users.user_id = sender_fr.sender_user_id "
+                        "FULL JOIN friend_requests receiver_fr on users.user_id = receiver_fr.receiver_user_id "
+                        "WHERE sender_fr.receiver_user_id = %(user_id)s "
+                        "OR receiver_fr.sender_user_id = %(user_id)s ",
+                        {
+                            "user_id": user.user_id,
+                        }
+                    )
+
+                    now = datetime.datetime.now()
+                    week_start = now.date() - datetime.timedelta(days=now.weekday())
+                    week_end = week_start + datetime.timedelta(days=6)
+                    
+                    result[0].xp_count = ControllerDatabase.get_user_xp_sum_in_timeframe(
+                        user_id=result[0].user_id,
+                        start_date=datetime.datetime.combine(week_start, datetime.time()),
+                        end_date=datetime.datetime.combine(week_end, datetime.time()),
+                    )
+                    
+                    for (user_id, user_name, user_uuid, random_id) in cur.fetchall():
+                        xp_count = ControllerDatabase.get_user_xp_sum_in_timeframe(
+                            user_id=user_id,
+                            start_date=datetime.datetime.combine(week_start, datetime.time()),
+                            end_date=datetime.datetime.combine(week_end, datetime.time()),
+                        )
+
+                        result.append(User(
+                            user_id=user_id,
+                            user_name=user_name,
+                            user_uuid=user_uuid,
+                            random_id=random_id,
+                            xp_count=xp_count,
+                        ))
+                        
+        except Exception as e:
+            logger.exception(e)
+    
         return result
