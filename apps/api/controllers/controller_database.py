@@ -1678,7 +1678,7 @@ class ControllerDatabase:
             user_id: int,
             start_date: datetime.datetime,
             end_date: datetime.datetime
-    ) -> list[Xp]:
+    ) -> List[Xp]:
         """
         Used for updating a users xp.
         If no xp earned today it creates a new xp row
@@ -1767,7 +1767,7 @@ class ControllerDatabase:
     @staticmethod
     def get_user_leader_board(
             user: User,
-    ) -> list[User]:
+    ) -> List[User]:
         """
         Used for getting leaderboard data for a user
         :param user: the user
