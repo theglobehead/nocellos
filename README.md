@@ -8,7 +8,7 @@ Nocellos is a flash-card app made by a group of three students for the Ventspils
 The idea of the app is to allow for students to organize their notes and review them more effectively.
 They can invite their friends/classmates and create common study sets, helping each other. 
 There they can also view each other's progress and compete with each other on the leaderboard each week  
-You can visit the website here: [nocello s.vercel.app](https://nocellos.vercel.app/)  
+You can visit the website here: [nocellos.vercel.app](https://nocellos.vercel.app/)  
 Designs on Figma: [Here](https://www.figma.com/file/Gh1fpY8fzGORZKxYOMiHqc/Nocellos?node-id=0%3A1&t=ZhGc7fMdFSgBHyz6-1)
 
 ## Setup locally  
