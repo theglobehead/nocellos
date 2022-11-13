@@ -18,11 +18,18 @@ Designs on Figma: [Here](https://www.figma.com/file/Gh1fpY8fzGORZKxYOMiHqc/Nocel
 <img display="inline-block" alt="Next.js" src="https://user-images.githubusercontent.com/76264011/201494824-b8bedfaf-0434-4dcc-a9e2-8bf047c34ba3.png" width="50px" height="50px"><img display="inline-block" alt="Tailwind" src="https://user-images.githubusercontent.com/76264011/201494945-f962dd4e-ef3f-4450-9ebe-ba99a512050e.png" width="50px" height="50px">
 <img display="inline-block" alt="FastAPI" src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/fastapi/fastapi-plain.svg" width="50px" height="50px">
 <img display="inline-block" alt="PostgreSQL" src="https://github.com/devicons/devicon/raw/master/icons/postgresql/postgresql-plain-wordmark.svg" width="50px" height="50px">
+<img display="inline-block" alt="Docker" src="https://user-images.githubusercontent.com/76264011/201534112-bbd31d5f-eca5-4f7a-89cd-ce8d61c64e6a.png" width="50px" height="50px">
 
 ### Clone repository  
 
 ```shell
 git clone https://github.com/theglobehead/nocellos.git
+```
+
+### Install dependencies
+
+```shell
+yarn
 ```
 
 ### Run api  
