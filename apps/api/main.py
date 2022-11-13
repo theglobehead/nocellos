@@ -14,6 +14,7 @@ from controllers.constants import ADMIN_EMAIL, ADMIN_EMAIL_PASSWORD, SERVER_NAME
 from controllers.controller_database import ControllerDatabase
 from controllers.controller_labels import ControllerLabels
 from controllers.controller_user import ControllerUser
+from models.token import Token
 from models.card import Card
 from models.deck import Deck
 from models.friend_request import FriendRequest
@@ -149,20 +150,23 @@ def get_user_decks(
     return {"decks": decks}
 
 
-@app.post("/get_deck_cards", status_code=status.HTTP_200_OK)
-def get_deck_cards(
+@app.post("/get_deck_details", status_code=status.HTTP_200_OK)
+def get_deck_details(
         response: Response,
         deck_uuid: str = Form(...),
         token_uuid: str = Header(alias="token"),
 ):
     """
-    Ajax endpoint for getting cards in a deck
+    Ajax endpoint for getting the details of a deck
     :param response: The fastapi response
     :param deck_uuid: uuid of the deck
     :param token_uuid: the token_uuid of the user who requested it
-    :return: A list of dictionaries. Check below
+    :return: A dictionary. Check below
+    
+    }
     """
-    cards = []
+    deck_dict = {}
+
     deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
     requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
     
@@ -171,14 +175,24 @@ def get_deck_cards(
         response.status_code = status.HTTP_403_FORBIDDEN
         return
 
+    cards = []
     for card in ControllerDatabase.get_deck_cards(deck.deck_id):
         cards.append({
             "card_uuid": card.card_uuid,
             "front_text": card.front_text,
             "back_text": card.back_text,
         })
+        
+    deck_dict = {
+        "deck_name": deck.deck_name,
+        "deck_uuid": deck.deck_uuid,
+        "card_count": deck.card_count,
+        "is_public": deck.is_public,
+        "labels": ControllerLabels.labels_to_dict(labels=deck.labels),
+        "cards": cards,
+    }
 
-    return {"cards": cards}
+    return {"deck": deck_dict}
 
 
 @app.post("/get_user_friend_requests", status_code=status.HTTP_200_OK)
@@ -260,9 +274,6 @@ def get_user_xp(
     start_date = datetime.datetime.now().date() - datetime.timedelta(days=6)
     start_date = datetime.datetime.combine(start_date, datetime.time())
     
-    print(start_date)
-    print(datetime.datetime.now())
-
     user_xp = ControllerDatabase.get_user_xp_in_timeframe(
         user_id=user_id,
         start_date=start_date,
@@ -361,6 +372,7 @@ async def register_user(
     :return: HTTP_201_CREATED
     """
     new_user = User()
+    new_token = Token()
     form_is_valid = validate_form(
         email=email,
         name=name,
@@ -384,12 +396,18 @@ async def register_user(
 
             # fm = FastMail(email_conf)
             # await fm.send_message(message)
+
+            new_token = ControllerDatabase.insert_token(Token(user_user_id=new_user.user_id))
+            
         except Exception as e:
             response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             logger.exception(e)
 
     if new_user.user_uuid:
-        return {"user_uuid": new_user.user_uuid}
+        return {
+            "user_uuid": new_user.user_uuid,
+            "token_uuid": new_token.token_uuid,
+        }
 
 
 @app.post("/login", status_code=status.HTTP_401_UNAUTHORIZED)
