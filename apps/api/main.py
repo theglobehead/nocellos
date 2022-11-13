@@ -14,6 +14,7 @@ from controllers.constants import ADMIN_EMAIL, ADMIN_EMAIL_PASSWORD, SERVER_NAME
 from controllers.controller_database import ControllerDatabase
 from controllers.controller_labels import ControllerLabels
 from controllers.controller_user import ControllerUser
+from models.token import Token
 from models.card import Card
 from models.deck import Deck
 from models.friend_request import FriendRequest
@@ -371,6 +372,7 @@ async def register_user(
     :return: HTTP_201_CREATED
     """
     new_user = User()
+    new_token = Token()
     form_is_valid = validate_form(
         email=email,
         name=name,
@@ -394,12 +396,18 @@ async def register_user(
 
             # fm = FastMail(email_conf)
             # await fm.send_message(message)
+
+            new_token = ControllerDatabase.insert_token(Token(user_user_id=new_user.user_id))
+            
         except Exception as e:
             response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             logger.exception(e)
 
     if new_user.user_uuid:
-        return {"user_uuid": new_user.user_uuid}
+        return {
+            "user_uuid": new_user.user_uuid,
+            "token_uuid": new_token.token_uuid,
+        }
 
 
 @app.post("/login", status_code=status.HTTP_401_UNAUTHORIZED)

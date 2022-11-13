@@ -71,7 +71,6 @@ class ControllerUser:
 
                 if user.hashed_password == hashed_password:
                     token = ControllerUser.create_token(user)
-                    print(token, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
                     user.token = token
                     result = user
 
