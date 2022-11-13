@@ -149,20 +149,23 @@ def get_user_decks(
     return {"decks": decks}
 
 
-@app.post("/get_deck_cards", status_code=status.HTTP_200_OK)
-def get_deck_cards(
+@app.post("/get_deck_details", status_code=status.HTTP_200_OK)
+def get_deck_details(
         response: Response,
         deck_uuid: str = Form(...),
         token_uuid: str = Header(alias="token"),
 ):
     """
-    Ajax endpoint for getting cards in a deck
+    Ajax endpoint for getting the details of a deck
     :param response: The fastapi response
     :param deck_uuid: uuid of the deck
     :param token_uuid: the token_uuid of the user who requested it
-    :return: A list of dictionaries. Check below
+    :return: A dictionary. Check below
+    
+    }
     """
-    cards = []
+    deck_dict = {}
+
     deck = ControllerDatabase.get_deck_by_uuid(deck_uuid)
     requester_user_id = ControllerDatabase.get_user_id_by_token_uuid(token_uuid)
     
@@ -171,14 +174,24 @@ def get_deck_cards(
         response.status_code = status.HTTP_403_FORBIDDEN
         return
 
+    cards = []
     for card in ControllerDatabase.get_deck_cards(deck.deck_id):
         cards.append({
             "card_uuid": card.card_uuid,
             "front_text": card.front_text,
             "back_text": card.back_text,
         })
+        
+    deck_dict = {
+        "deck_name": deck.deck_name,
+        "deck_uuid": deck.deck_uuid,
+        "card_count": deck.card_count,
+        "is_public": deck.is_public,
+        "labels": ControllerLabels.labels_to_dict(labels=deck.labels),
+        "cards": cards,
+    }
 
-    return {"cards": cards}
+    return {"deck": deck_dict}
 
 
 @app.post("/get_user_friend_requests", status_code=status.HTTP_200_OK)
@@ -260,9 +273,6 @@ def get_user_xp(
     start_date = datetime.datetime.now().date() - datetime.timedelta(days=6)
     start_date = datetime.datetime.combine(start_date, datetime.time())
     
-    print(start_date)
-    print(datetime.datetime.now())
-
     user_xp = ControllerDatabase.get_user_xp_in_timeframe(
         user_id=user_id,
         start_date=start_date,
